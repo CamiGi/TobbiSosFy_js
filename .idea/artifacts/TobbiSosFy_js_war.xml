@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="TobbiSosFy_js:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>TobbiSosFy_js</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="TobbiSosFy_js-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="TobbiSosFy_js:war exploded" />
+    </root>
+  </artifact>
+</component>
