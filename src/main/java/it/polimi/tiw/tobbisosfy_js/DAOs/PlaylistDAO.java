@@ -1,8 +1,8 @@
 package it.polimi.tiw.tobbisosfy_js.DAOs;
 
-import it.polimi.tiw.tobbisosfy.beans.Playlist;
-import it.polimi.tiw.tobbisosfy.beans.Track;
-import it.polimi.tiw.tobbisosfy.beans.User;
+import it.polimi.tiw.tobbisosfy_js.beans.Playlist;
+import it.polimi.tiw.tobbisosfy_js.beans.Track;
+import it.polimi.tiw.tobbisosfy_js.beans.User;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

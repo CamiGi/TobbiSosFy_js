@@ -1,5 +1,8 @@
 package it.polimi.tiw.tobbisosfy_js.beans;
 
+import java.beans.JavaBean;
+
+@JavaBean
 public class Album {
     private final String title;
     private final int year;

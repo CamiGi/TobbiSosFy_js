@@ -1,12 +1,8 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
-import it.polimi.tiw.tobbisosfy.DAOs.PlaylistDAO;
-import it.polimi.tiw.tobbisosfy.DAOs.TrackDAO;
-import it.polimi.tiw.tobbisosfy.beans.*;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
+import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
+import it.polimi.tiw.tobbisosfy_js.beans.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -33,7 +29,6 @@ import java.util.ArrayList;
 public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN ALTRA SOLO PER L?ALTRA COSA playlist - track
 
     private static final long serialVersionUID = 1L;
-    private TemplateEngine templateEngine;
     private Connection connection = null;
     private User u;
     private String audioFP = "";
@@ -58,11 +53,6 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         }
 
         ServletContext servletContext = getServletContext();
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        this.templateEngine = new TemplateEngine();
-        this.templateEngine.setTemplateResolver(templateResolver);
-        templateResolver.setSuffix(".html");
         imgFP = getServletContext().getInitParameter("imagepath");
         audioFP = getServletContext().getInitParameter("trackpath");
     }
@@ -76,7 +66,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         PlaylistDAO playlistDAO = new PlaylistDAO(connection);
         TrackDAO trackDAO = new TrackDAO(connection);
         getServletContext().getContextPath();
-        final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
+        //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         this.setU((User) req.getSession().getAttribute("user"));  //setto lo user che mi serve per tutta la classe
         ArrayList<Playlist> playlists;
         String path;
@@ -105,10 +95,10 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         }
 
         path = "/HomePage.html";
-        ctx.setVariable("playlists", playlists);
+        /*ctx.setVariable("playlists", playlists);
         ctx.setVariable("user", u);
         ctx.setVariable("songs", songs);
-        templateEngine.process(path, ctx, resp.getWriter());
+        templateEngine.process(path, ctx, resp.getWriter());*/
     }
 
     @Override

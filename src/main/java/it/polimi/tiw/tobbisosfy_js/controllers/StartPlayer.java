@@ -1,12 +1,8 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
-import it.polimi.tiw.tobbisosfy.DAOs.TrackDAO;
-import it.polimi.tiw.tobbisosfy.beans.Track;
-import it.polimi.tiw.tobbisosfy.beans.User;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
+import it.polimi.tiw.tobbisosfy_js.beans.Track;
+import it.polimi.tiw.tobbisosfy_js.beans.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,7 +18,6 @@ import java.sql.SQLException;
 @WebServlet ("/StartPlayer")
 public class StartPlayer extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private TemplateEngine templateEngine;
     private Connection connection = null;
 
     public StartPlayer() {
@@ -41,11 +36,6 @@ public class StartPlayer extends HttpServlet {
             throw new UnavailableException("Couldn't get db connection");
         }
         ServletContext servletContext = getServletContext();
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        this.templateEngine = new TemplateEngine();
-        this.templateEngine.setTemplateResolver(templateResolver);
-        templateResolver.setSuffix(".html");
     }
 
     @Override
@@ -53,32 +43,28 @@ public class StartPlayer extends HttpServlet {
         Track track;
         TrackDAO trFinder = new TrackDAO(connection);
         String path = request.getContextPath();
-        final WebContext ctx = DBServletInitializer.createContext(request, response, getServletContext());
         int trID;
 
         try {
             trID = Integer.parseInt(request.getParameter("track"));
             track = trFinder.getTrack(trID, ((User)request.getSession().getAttribute("user")).getUsername());
         } catch (NumberFormatException e) {
-            ctx.setVariable("error", "Erroneous track ID");
             response.sendRedirect(path+"/ShowError");
             return;
         } catch (SQLException e) {
-            ctx.setVariable("error", "Track not found");
             response.sendRedirect(path+"/ShowError");
             return;
         } catch (Exception e){
             e.printStackTrace();
-            ctx.setVariable("error", e.getMessage());
             response.sendRedirect(path+"/ShowError");
             return;
         }
 
-        ctx.setVariable("track", track);
+        /*ctx.setVariable("track", track);
         ctx.setVariable("playlist", request.getParameter("playlist"));
         ctx.setVariable("group", request.getParameter("group"));
         //o le mandi nella request o provi a beccarle da ctx
-        templateEngine.process("/PlayerPage.html", ctx, response.getWriter());
+        templateEngine.process("/PlayerPage.html", ctx, response.getWriter());*/
     }
 
     @Override

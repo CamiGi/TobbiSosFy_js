@@ -1,11 +1,7 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
-import it.polimi.tiw.tobbisosfy.DAOs.*;
-import it.polimi.tiw.tobbisosfy.beans.User;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import it.polimi.tiw.tobbisosfy_js.DAOs.*;
+import it.polimi.tiw.tobbisosfy_js.beans.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -22,7 +18,6 @@ import java.sql.SQLException;
 public class CheckLogin extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
-    private TemplateEngine templateEngine;
 
     public CheckLogin() {
         super();
@@ -38,11 +33,6 @@ public class CheckLogin extends HttpServlet {
             throw new UnavailableException("Couldn't get db connection");
         }
         ServletContext servletContext = getServletContext();
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        this.templateEngine = new TemplateEngine();
-        this.templateEngine.setTemplateResolver(templateResolver);
-        templateResolver.setSuffix(".html");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -56,11 +46,8 @@ public class CheckLogin extends HttpServlet {
         String usrn = request.getParameter("username");
         String pwd = request.getParameter("pwd");
         String path = getServletContext().getContextPath();
-        final WebContext ctx = DBServletInitializer.createContext(request, response, getServletContext());
 
         if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
-            ctx.setVariable("error", "Missing parameters");
-            templateEngine.process("/index.html", ctx, response.getWriter());
             return;
         }
 
@@ -69,13 +56,9 @@ public class CheckLogin extends HttpServlet {
         try {
             u = usr.login(usrn, pwd);
         } catch (Exception e) {
-            ctx.setVariable("error", e.getMessage());
-            templateEngine.process("/index.html", ctx, response.getWriter());
             return;
         }
         if (u == null) {
-            ctx.setVariable("error", "An error occurred while creating user");
-            templateEngine.process("/index.html", ctx, response.getWriter());
             return;
         } else {
             request.getSession().setAttribute("user", u);

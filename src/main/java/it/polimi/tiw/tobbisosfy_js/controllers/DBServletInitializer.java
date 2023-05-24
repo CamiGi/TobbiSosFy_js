@@ -1,7 +1,5 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
-import org.thymeleaf.context.WebContext;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,9 +21,5 @@ public class DBServletInitializer {
             e.printStackTrace();
         }
         return null;
-    }
-
-    static WebContext createContext (HttpServletRequest request, HttpServletResponse response, ServletContext servletContext) {
-        return new WebContext(request, response, servletContext, request.getLocale());
     }
 }

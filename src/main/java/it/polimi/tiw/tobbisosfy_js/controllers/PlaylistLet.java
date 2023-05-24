@@ -1,8 +1,8 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
-import it.polimi.tiw.tobbisosfy.DAOs.PlaylistDAO;
-import it.polimi.tiw.tobbisosfy.DAOs.TrackDAO;
-import it.polimi.tiw.tobbisosfy.beans.*;
+import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
+import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
+import it.polimi.tiw.tobbisosfy_js.beans.*;
 
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;

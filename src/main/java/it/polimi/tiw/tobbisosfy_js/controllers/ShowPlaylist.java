@@ -1,14 +1,10 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
-import it.polimi.tiw.tobbisosfy.DAOs.PlaylistDAO;
-import it.polimi.tiw.tobbisosfy.DAOs.TrackDAO;
-import it.polimi.tiw.tobbisosfy.beans.Playlist;
-import it.polimi.tiw.tobbisosfy.beans.Track;
-import it.polimi.tiw.tobbisosfy.beans.User;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
+import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
+import it.polimi.tiw.tobbisosfy_js.beans.Playlist;
+import it.polimi.tiw.tobbisosfy_js.beans.Track;
+import it.polimi.tiw.tobbisosfy_js.beans.User;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -25,7 +21,6 @@ import java.util.ArrayList;
 @WebServlet("/ShowPlaylist")
 public class ShowPlaylist extends HttpServlet {
     private static final long serialVersionUID = 1L;
-    private TemplateEngine templateEngine;
     private Connection connection = null;
 
     public ShowPlaylist() {
@@ -44,11 +39,6 @@ public class ShowPlaylist extends HttpServlet {
             throw new UnavailableException("Couldn't get db connection");
         }
         ServletContext servletContext = getServletContext();
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        this.templateEngine = new TemplateEngine();
-        this.templateEngine.setTemplateResolver(templateResolver);
-        templateResolver.setSuffix(".html");
     }
 
     @Override
@@ -57,7 +47,7 @@ public class ShowPlaylist extends HttpServlet {
         int group;
         boolean next;
         PlaylistDAO plFinder = new PlaylistDAO(connection);
-        final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
+        //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         User user = (User) req.getSession().getAttribute("user");
         Playlist playlist;
         ArrayList<Track> tracks;
@@ -105,14 +95,14 @@ public class ShowPlaylist extends HttpServlet {
         System.out.println(shownTracks.size() + " tracce mostrate");
         next = group+5<tracks.size();
 
-        ctx.setVariable("playlist", playlist);
+        /*ctx.setVariable("playlist", playlist);
         ctx.setVariable("tracks", shownTracks);
         ctx.setVariable("addTrks", addableTracks);
         ctx.setVariable("group", group/5);
         ctx.setVariable("next", next);
         System.out.println("Rendering playlist page");
         //System.out.println("'C:'"+shownTracks.get(0).getMp3Uri());
-        templateEngine.process("/PlaylistPage.html", ctx, resp.getWriter());
+        templateEngine.process("/PlaylistPage.html", ctx, resp.getWriter());*/
     }
 
     @Override

@@ -1,11 +1,5 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
-import it.polimi.tiw.tobbisosfy.DAOs.UserDAO;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
-import org.thymeleaf.templatemode.TemplateMode;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
-
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -21,7 +15,6 @@ import java.sql.SQLException;
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
-    private TemplateEngine templateEngine;
 
     public Register() {
         super();
@@ -36,41 +29,29 @@ public class Register extends HttpServlet {
             throw new UnavailableException("Couldn't get db connection");
         }
         ServletContext servletContext = getServletContext();
-        ServletContextTemplateResolver templateResolver = new ServletContextTemplateResolver(servletContext);
-        templateResolver.setTemplateMode(TemplateMode.HTML);
-        this.templateEngine = new TemplateEngine();
-        this.templateEngine.setTemplateResolver(templateResolver);
-        templateResolver.setSuffix(".html");
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String usrn = request.getParameter("nickname");
         String pwd = request.getParameter("password");
-        UserDAO creator = new UserDAO(connection);
-        final WebContext ctx = DBServletInitializer.createContext(request, response, getServletContext());
         String path = getServletContext().getContextPath();
 
         if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
-            registrationFailed(response, ctx, "Missing parameters");
             return;
         }
 
         //does all the controls on the password
         if (pwd.length() < 8) {
-            registrationFailed(response, ctx, "Password is too short");
             return;
         }
         if (pwd.length() > 20) {
-            registrationFailed(response, ctx, "Password is too long");
             return;
         }
         if (pwd.toLowerCase().equals(pwd)) {
-            registrationFailed(response, ctx, "Password has no uppercase chars");
             return;
         }
         if (pwd.toUpperCase().equals(pwd)) {
-            registrationFailed(response, ctx, "Password has no lowercase chars");
             return;
         }
         if (!pwd.contains("0") &&
@@ -83,7 +64,7 @@ public class Register extends HttpServlet {
             !pwd.contains("7") &&
             !pwd.contains("8") &&
             !pwd.contains("9")) {
-            registrationFailed(response, ctx, "Password has no numeric chars");
+            //registrationFailed(response, ctx, "Password has no numeric chars");
             return;
         }
         if (!pwd.contains("-") &&
@@ -126,8 +107,6 @@ public class Register extends HttpServlet {
     }
 
     private void registrationFailed(HttpServletResponse response, WebContext ctx, String err) throws IOException {
-        ctx.setVariable("error", err);
-        templateEngine.process("/RegistrationPage.html", ctx, response.getWriter());
     }
 
     public void destroy() {

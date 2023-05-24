@@ -1,6 +1,6 @@
 package it.polimi.tiw.tobbisosfy_js.DAOs;
 
-import it.polimi.tiw.tobbisosfy.beans.*;
+import it.polimi.tiw.tobbisosfy_js.beans.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
