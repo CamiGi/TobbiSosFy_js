@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Playlist</title>
+    <link rel="stylesheet" type="text/css" media="all" href="css/homestyle.css" />
+</head>
+<body>
+<a class="logout">Logout</a>
+<div class="title">
+    <h1>playlist</h1>
+</div>
+<a class="back">Home</a>
+<div class="page">
+    <div class="trks">
+        <div>
+            <a class="button"><</a>
+        </div>
+        <div class="tab">
+            <table>
+                <tr>
+                    <td >This playlist does not contain any tracks</td>
+                    <td>
+                        <img>
+                        <a ></a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <a class="button" >></a>
+        </div>
+    </div>
+    <div >
+        <form method="POST">
+            <fieldset class="frm">
+                <legend>Add songs to the playlist</legend>
+                <div >
+                    <input type="checkbox" name="tracks">
+                    <label ></label></td>
+                </div>
+            </fieldset>
+            <input class="center" type="submit" value="Submit">
+        </form>
+    </div>
+    <div  class="frm">There are no tracks to add to this playlist</div>
+</div>
+</body>
+</html>

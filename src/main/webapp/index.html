@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" media="all" href="css/openingstyle.css"/>
+</head>
+<body>
+<h2>LogIn TobbiSosFy Music Manager</h2>
+<div class="box1">
+    <form action="CheckLogin"
+          method="POST">
+        <div class="field">
+            username<br><br><label>
+            <input type="text" name="username" required="required">
+            </label>
+        </div>
+        <div class="field">
+            password<br><br><label>
+            <input type="password" name="pwd" required="required">
+            </label>
+        </div>
+        <div id="err" th:text="${error}"></div>
+        <div class="field">
+            <input type="submit" value="login">
+        </div>
+    </form>
+</div>
+<div class="box2">
+    New to TobbiSosFy? Register&nbsp
+        <a href="RegistrationPage.html">here</a>!
+</div>
+</body>
+</html>

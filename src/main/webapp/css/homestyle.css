@@ -1,0 +1,348 @@
+html {
+    height: 100%;
+
+    background-color: rgb(13, 16, 23);
+
+    font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Kaku Gothic Pro, Meiryo, MS Gothic;
+    color: ivory;
+
+    /*height: 100%;*/
+}
+.body{
+    background: black;
+    color: ivory;
+    min-height: 100vh;
+    min-width: 100vh;
+}
+.username{
+    font-size: 25px;
+    font-weight: 700;
+    line-height: 21px;
+
+    position: absolute;
+    top: 5%;
+    left: 85%;
+
+    text-align: center;
+
+    background-color: rgb(13, 16, 23);
+    padding: 15px 25px;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+.ply:link, a.ply:link {
+    text-decoration: none;
+    color: deepskyblue;
+}
+
+.ply:visited, a.ply:visited {
+    color: deepskyblue;
+}
+
+.ply:hover, a.ply:hover {
+    cursor: pointer;
+}
+
+select {
+    min-width: 100px;
+}
+
+.logout, .back{
+    font-size: 13px;
+    font-weight: 700;
+    color: black;
+    line-height: 14px;
+
+    position: absolute;
+    top: 5.5%;
+
+    text-align: center;
+
+    background-color: ivory;
+    padding: 13px 15px;
+
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 30px;
+}
+
+.logout {
+    left: 5%;
+}
+
+.back {
+    right: 5%;
+}
+
+.one, .newPlaylist, .newTrack{
+    position: absolute;
+    top: 20%;
+    left: 5%;
+    padding: 10px;
+    flex: auto;
+}
+
+.one, .newPlaylist, .newTrack :hover{
+
+}
+
+.newTrack{
+    left: 60%;
+
+}
+
+.newPlaylist{
+    left: 20%;
+}
+
+p{
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 21px;
+}
+
+.fs{
+    max-width: 380px;
+}
+
+dt{
+    font-size: 18px;
+    line-height: 25px;
+}
+
+dd{
+    color: #aaaaaa;
+}
+
+label{
+    font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Kaku Gothic Pro, Meiryo, MS Gothic;
+    font-size: 15px;
+    line-height: 25px;
+    padding: 3px;
+    margin-top: 7px;
+    margin-bottom: 7px;
+}
+.text{
+    background-color: rgb(13, 16, 23);
+    border: 1px solid rgb(100, 100, 100);
+    color: ivory;
+    font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Kaku Gothic Pro, Meiryo, MS Gothic;
+    height: 24px;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+legend{
+    font-size: 13px;
+    line-height: 25px;
+    padding: 3px;
+    font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Kaku Gothic Pro, Meiryo, MS Gothic;
+    align-content: center;
+    border-radius: 10px;
+}
+
+input[type="checkbox"] {
+    background-clip: content-box;
+    cursor: pointer;
+    /*clip: rect(1px, 1px, 1px, 1px);
+    position: absolute;*/
+    margin: 0;
+    padding: 2px 0 0 24px;
+    background: cadetblue left center no-repeat;
+}
+
+input[type="checkbox"]:checked{
+    background-color: cadetblue;
+}
+
+/*button{
+    background-color: black;
+    font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Kaku Gothic Pro, Meiryo, MS Gothic;
+    font-size: 15px;
+    cursor: pointer;
+    color: cadetblue;
+    font-weight: 700;
+    border-radius: 10px;
+    margin-top: 15px;
+}*/
+
+input[type="submit"]{
+    background-color: rgb(13, 16, 23);
+    font-family: "helvetica";
+    font-size: 15px;
+    cursor: pointer;
+    color: cadetblue;
+    font-weight: 700;
+    border-radius: 10px;
+    margin-top: 15px;
+    border-color: white;
+    border-width: 1px;
+    padding: 5px;
+    position: relative;
+    flex: auto;
+}
+
+input[type="submit"]:hover{
+    left: 0.5em;
+    padding: 7px;
+}
+
+input[type="submit"]:active{
+    background-color: lightslategrey;
+    color: ivory;
+    border-color: black;
+}
+
+input[type="text"]:active{
+    border-color: ivory;
+}
+
+input[type="checkbox"]{
+    flex: auto;
+    position: relative;
+}
+
+input[type="checkbox"]:hover{
+    left:.1em;
+}
+
+.button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: solid 2px ivory;
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    color: ivory;
+}
+
+a.button:link, .button:link{
+    color:ivory;
+    font-size: 32px;
+}
+
+a.button:visited, .button:visited {
+    color: ivory;
+}
+
+.il, a.il:link {
+    color: ivory;
+}
+
+.shine {
+    display: inline-grid;
+    align-items: center;
+    justify-content: center;
+
+    border: 2px solid ivory;
+    border-radius: 32px;
+
+    min-width: 100px;
+    max-width: 200px;
+    min-height: 200px;
+    max-height: 300px;
+    padding: 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 20px;
+
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.button:hover, a.button:hover {
+    border-color: deepskyblue;
+    color: deepskyblue;
+    cursor: pointer;
+}
+
+.shine:hover {
+    border-color: deepskyblue;
+    color: deepskyblue;
+}
+
+.il:hover {
+    color: deepskyblue;
+    cursor: pointer;
+}
+
+h1 {
+    font-size: 25px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.title {
+    position: absolute;
+    top: 5%;
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: 2px solid ivory;
+    border-radius: 32px;
+    padding: 10px 50px;
+
+    max-width: 400px;
+}
+
+.tab {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 5px;
+}
+
+.page {
+    position: absolute;
+    width: 99%;
+    margin-top: 120px;
+    min-height: 100px;
+    min-width: 900px;
+}
+
+.trks {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.frm {
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+    margin-top: 20px;
+
+    border: 2px dashed ivory;
+    border-radius: 32px;
+    padding: 10px;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    max-width: 800px;
+    min-width: 800px;
+}
+
+.center {
+    margin-left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.error {
+    margin-top: 20%;
+    margin-left: 5%;
+}
+
+img {
+    max-width: 190px;
+    max-height: 270px;
+    border-radius: 8px;
+}

@@ -1,0 +1,100 @@
+html {
+    height: 100%;
+
+    background-image: url("../resources/playerBG.webp");
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    font-family: "Arial", sans-serif;
+    color: ivory;
+}
+
+.logout {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+
+    text-align: center;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px 25px;
+
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 30px;
+}
+
+.back {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 15px 25px;
+
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 30px;
+}
+
+.back td + td {
+    border-left:2px solid rgb(100, 100, 100);
+}
+
+td.entry {
+    padding: 20px;
+    max-width: 800px;
+}
+
+td.data {
+    max-width: 600px;
+    min-width: 100px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: rgba(0, 0, 0, 0.5);
+
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 32px;
+    padding: 20px;
+
+    max-width: 1200px;
+    height: auto;
+}
+
+.info {
+    font-size: 25px;
+    color: ghostwhite;
+}
+
+.player {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+img {
+    max-width: 300px;
+    height: auto;
+    border: 4px solid rgb(100, 100, 100);
+    border-radius: 32px;
+}
+
+a:link {
+    color: ivory;
+    text-decoration: none;
+}
+
+a:hover {
+    cursor: pointer;
+}
+
+a:visited {
+    color: ivory;
+}
