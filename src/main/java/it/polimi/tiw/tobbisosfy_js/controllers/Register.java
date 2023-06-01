@@ -86,28 +86,29 @@ public class Register extends HttpServlet {
             !pwd.contains(">") &&
             !pwd.contains("<") &&
             !pwd.contains(":")) {
-            registrationFailed(response, ctx, "Password has no special chars");
+            //registrationFailed(response, ctx, "Password has no special chars");
             return;
         }
         if (!pwd.equals(request.getParameter("conf"))) {
-            registrationFailed(response, ctx, "Password and confirmation are different");
+            //registrationFailed(response, ctx, "Password and confirmation are different");
             return;
         }
 
         try {
-            creator.addUser(usrn, pwd);
+            //creator.addUser(usrn, pwd);
         } catch (Exception e) {
-            if (e.getMessage().contains("Duplicate entry"))
-                registrationFailed(response, ctx, "Username already taken");
-            else
-                registrationFailed(response, ctx, e.getMessage());
-            return;
+            if (e.getMessage().contains("Duplicate entry")) {
+                //registrationFailed(response, ctx, "Username already taken");
+            } else {
+                //registrationFailed(response, ctx, e.getMessage());
+                return;
+            }
         }
         response.sendRedirect(path + "/UserRegisteredPage.html");
     }
 
-    private void registrationFailed(HttpServletResponse response, WebContext ctx, String err) throws IOException {
-    }
+    //private void registrationFailed(HttpServletResponse response, WebContext ctx, String err) throws IOException {
+    //}
 
     public void destroy() {
         try {
