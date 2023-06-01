@@ -3,18 +3,22 @@ package it.polimi.tiw.tobbisosfy_js.controllers;
 import it.polimi.tiw.tobbisosfy_js.DAOs.*;
 import it.polimi.tiw.tobbisosfy_js.beans.User;
 
-import javax.servlet.ServletContext;
+import org.apache.commons.lang3.StringEscapeUtils;
+
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet("/CheckLogin")
+@MultipartConfig
 public class CheckLogin extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
@@ -32,7 +36,6 @@ public class CheckLogin extends HttpServlet {
         } catch (SQLException e) {
             throw new UnavailableException("Couldn't get db connection");
         }
-        ServletContext servletContext = getServletContext();
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -43,11 +46,13 @@ public class CheckLogin extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String usrn = request.getParameter("username");
-        String pwd = request.getParameter("pwd");
-        String path = getServletContext().getContextPath();
+        String usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
+        String pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
+        PrintWriter out = response.getWriter();
 
         if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println("Credentials must not be empty");
             return;
         }
 
@@ -56,15 +61,20 @@ public class CheckLogin extends HttpServlet {
         try {
             u = usr.login(usrn, pwd);
         } catch (Exception e) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println(e.getMessage());
             return;
         }
         if (u == null) {
-            return;
+            response.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+            out.println("Internal server error");
         } else {
             request.getSession().setAttribute("user", u);
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("application/json");
+            response.setCharacterEncoding("UTF-8");
+            response.getWriter().println(usrn);
         }
-        response.sendRedirect(path+"/Home");
-        //response.sendRedirect(path+"/ShowPlaylist?playlist=1&group=0");
     }
 
     public void destroy() {

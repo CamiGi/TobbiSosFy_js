@@ -1,28 +1,27 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<html lang="en">
 <head>
-    <meta charset="ISO-8859-1">
+    <meta charset="UTF-8">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" media="all" href="css/openingstyle.css"/>
+    <script src="utils.js" charset="UTF-8" defer></script>
+    <script src="login.js" charset="UTF-8" defer></script>
 </head>
 <body>
 <h2>LogIn TobbiSosFy Music Manager</h2>
 <div class="box1">
-    <form action="CheckLogin"
-          method="POST">
+    <form action="#">
         <div class="field">
-            username<br><br><label>
+            username<br><br>
             <input type="text" name="username" required="required">
-            </label>
         </div>
         <div class="field">
-            password<br><br><label>
+            password<br><br>
             <input type="password" name="pwd" required="required">
-            </label>
         </div>
-        <div id="err" th:text="${error}"></div>
+        <p id="err"></p>
         <div class="field">
-            <input type="submit" value="login">
+            <input id="loginbutton" type="submit" value="login">
         </div>
     </form>
 </div>

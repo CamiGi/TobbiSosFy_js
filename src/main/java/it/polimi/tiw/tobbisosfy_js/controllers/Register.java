@@ -15,7 +15,7 @@ import java.sql.SQLException;
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
-
+/*
     public Register() {
         super();
     }
@@ -118,4 +118,5 @@ public class Register extends HttpServlet {
             e.printStackTrace();
         }
     }
+    */
 }
