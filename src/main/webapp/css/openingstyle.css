@@ -91,7 +91,7 @@ a:hover {
     text-decoration: underline;
 }
 
-#err {
+#errLog, #errReg {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -102,4 +102,12 @@ a:hover {
     color: red;
     font-size: 20px;
     font-family: "Arial", sans-serif;
+}
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
 }

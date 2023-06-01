@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 
@@ -15,7 +16,7 @@ import java.sql.SQLException;
 public class Register extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
-/*
+
     public Register() {
         super();
     }
@@ -35,17 +36,23 @@ public class Register extends HttpServlet {
             throws ServletException, IOException {
         String usrn = request.getParameter("nickname");
         String pwd = request.getParameter("password");
-        String path = getServletContext().getContextPath();
+        PrintWriter out = response.getWriter();
 
         if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println("All fields must not be empty");
             return;
         }
 
         //does all the controls on the password
         if (pwd.length() < 8) {
+            response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            out.println("Password length must be at least 8 chars");
             return;
         }
         if (pwd.length() > 20) {
+            response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
+            out.println("Password length must be at most 20 chars");
             return;
         }
         if (pwd.toLowerCase().equals(pwd)) {
@@ -103,10 +110,7 @@ public class Register extends HttpServlet {
                 registrationFailed(response, ctx, e.getMessage());
             return;
         }
-        response.sendRedirect(path + "/UserRegisteredPage.html");
-    }
-
-    private void registrationFailed(HttpServletResponse response, WebContext ctx, String err) throws IOException {
+        //response.sendRedirect(path + "/UserRegisteredPage.html");
     }
 
     public void destroy() {
@@ -118,5 +122,5 @@ public class Register extends HttpServlet {
             e.printStackTrace();
         }
     }
-    */
+
 }

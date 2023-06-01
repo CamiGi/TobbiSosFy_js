@@ -8,26 +8,72 @@
     <script src="login.js" charset="UTF-8" defer></script>
 </head>
 <body>
-<h2>LogIn TobbiSosFy Music Manager</h2>
-<div class="box1">
-    <form action="#">
-        <div class="field">
-            username<br><br>
-            <input type="text" name="username" required="required">
-        </div>
-        <div class="field">
-            password<br><br>
-            <input type="password" name="pwd" required="required">
-        </div>
-        <p id="err"></p>
-        <div class="field">
-            <input id="loginbutton" type="submit" value="login">
-        </div>
-    </form>
+<div id="login">
+    <h2>LogIn TobbiSosFy Music Manager</h2>
+    <div class="box1">
+        <form action="#">
+            <div class="field">
+                username<br><br>
+                <input type="text" name="username" required="required">
+            </div>
+            <div class="field">
+                password<br><br>
+                <input type="password" name="pwd" required="required">
+            </div>
+            <p id="errLog"></p>
+            <div class="field">
+                <input id="loginButton" type="submit" value="login">
+            </div>
+        </form>
+    </div>
+    <div class="box2">
+        New to TobbiSosFy? Register&nbsp
+            <a id="register" href="RegistrationPage.html">here</a>!
+    </div>
 </div>
-<div class="box2">
-    New to TobbiSosFy? Register&nbsp
-        <a href="RegistrationPage.html">here</a>!
+
+<div id="registration" class="hidden">
+    <h2>Register to TobbiSosFy Music Manager</h2>
+    <div class="box1">
+        <form action="Register"
+              method="POST">
+            <div class="field">
+                username<br><br><label>
+                <input type="text" name="nickname" required="required">
+            </label>
+            </div>
+            <div class="field">
+                password*<br><br><label>
+                <input type="text" name="password" required="required">
+            </label>
+            </div>
+            <div class="field">
+                confirm password*<br><br><label>
+                <input type="text" name="conf" required="required">
+            </label>
+            </div>
+            <p id="errReg"></p>
+            <div class="field">
+                <input id="regButton" class="in" type="submit" value="register">
+            </div>
+        </form>
+    </div>
+    <div class="box2">
+        *Password must contain:
+        <ul>
+            <li>at least 8 characters</li>
+            <li>at most 20 characters</li>
+            <li>at least one numeric character</li>
+            <li>at least one uppercase character</li>
+            <li>at least one special character</li>
+        </ul>
+    </div>
+</div>
+
+<div id="userRegistered" class="hidden">
+    you've been successfully registered, click
+    <a id="back" href="index.html">here</a>
+    to login
 </div>
 </body>
 </html>

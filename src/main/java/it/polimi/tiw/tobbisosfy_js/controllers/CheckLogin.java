@@ -61,12 +61,15 @@ public class CheckLogin extends HttpServlet {
         try {
             u = usr.login(usrn, pwd);
         } catch (Exception e) {
-            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            if (e.getMessage().contains("not found"))
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            else
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             out.println(e.getMessage());
             return;
         }
         if (u == null) {
-            response.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.println("Internal server error");
         } else {
             request.getSession().setAttribute("user", u);

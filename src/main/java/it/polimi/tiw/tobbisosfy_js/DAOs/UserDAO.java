@@ -65,7 +65,7 @@ public class UserDAO {
 
         if (code != 1){
             con.rollback();
-            throw new Exception("ATTENTION something went wrong: 600");
+            throw new Exception("ATTENTION something went wrong: 500");
         }
     }
 
