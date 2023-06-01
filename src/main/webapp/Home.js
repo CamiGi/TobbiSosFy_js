@@ -6,6 +6,41 @@ window.onload = function() {
     };*/
     console.log("Hello world!");
 
+    makeCall("GET", 'Home', form,
+        function(x) {
+            if (x.readyState === XMLHttpRequest.DONE) {
+                //let username= x.responseText;
+                const username = JSON.parse(x);
+                switch (x.status) {
+                    case 200:
+                        sessionStorage.setItem('username', x.user);
+                        sessionStorage.setItem('myPlaylists', []<Playlist>(x.playlists));
+                        sessionStorage.setItem('myTracks', []<Track>(x.tracks));
+                        window.location.href = "/Home";
+                        console.log("Welcome "+sessionStorage.getItem('username'));
+                        break;
+                    case 400: // bad request
+                        document.getElementById("errLog").textContent = message;
+                        break;
+                    case 401: // unauthorized
+                        document.getElementById("errLog").textContent = message;
+                        break;
+                    case 500: // server error
+                        document.getElementById("errLog").textContent = message;
+                        break;
+                }
+            }
+        }
+    );
+
+    document.getElementById("username").innerHTML = sessionStorage.getItem('username');
+    let playlists = []<Playlist>sessionStorage.getItem('myPlaylists');
+    document.getElementById("pllysts").innerHTML = playlists;
+    for(let i=0; i < playlists.length; i++){
+        document.getElementById("ply").innerHTML = playlists[i].title;
+        document.getElementById("pdate").innerHTML = playlists[i].date;
+    }
+
     document.getElementById("myplaylists").style.visibility = 'hidden';
     document.getElementById("newPlaylist").style.visibility = 'hidden';
     document.getElementById("newTrack").style.visibility = 'hidden';
@@ -16,9 +51,6 @@ window.onload = function() {
     document.getElementById("PlayerPage").style.visibility = 'hidden';
     document.getElementById("ErrorPage").style.visibility = 'hidden';
 
-    /*document.getElementById("navMP").addEventListener("click", showDivs(true,false,false), false);
-    document.getElementById("navNP").addEventListener("click", showDivs(false,true,false), false);
-    document.getElementById("navNT").addEventListener("click", showDivs(false,false,true), false);*/
     document.getElementById("navMP").onclick = function(){showDivs(true, false, false)};
     document.getElementById("navNP").onclick = function(){showDivs(false,true,false)};
     document.getElementById("navNT").onclick = function(){showDivs(false,false,true)};
@@ -54,8 +86,57 @@ function showDivs(mp, np, nt){
     }
 }
 
+export class Playlist{
+    id;
+    title;
+    date;
+    user;
+}
+
+export class Track{
+    id;
+    title;
+    album;
+    mp3Uri;
+    user;
+}
+
 function showHome(){
 }
+
+(function() { // avoid variables ending up in the global scope
+    document.getElementById("addNewTrack").addEventListener('click', (e) => {
+        let form = e.target.closest("form");
+        if (form.checkValidity()) {
+            makeCall("POST", 'Home', form,
+                function(x) {
+                    if (x.readyState === XMLHttpRequest.DONE) {
+                        let message = x.responseText;
+                        switch (x.status) {
+                            case 200:
+                                /*sessionStorage.setItem('username', message);
+                                console.log("Welcome "+sessionStorage.getItem('username'));*/
+                                window.location.href = "/Home";
+                                break;
+                            case 400: // bad request
+                                document.getElementById("errLog").textContent = message;
+                                break;
+                            case 401: // unauthorized
+                                document.getElementById("errLog").textContent = message;
+                                break;
+                            case 500: // server error
+                                document.getElementById("errLog").textContent = message;
+                                break;
+                        }
+                    }
+                }
+            );
+        } else {
+            form.reportValidity();
+        }
+    });
+
+})();
 
 function logout(){
     //redirecta a alla pagina di login

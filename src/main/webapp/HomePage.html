@@ -21,7 +21,7 @@
     </nav>
     <div class="one" id="myplaylists">
         <p class="myplaylists">My playlists</p>
-            <dl>
+            <dl id="pllysts">
                 <dt>
                     <a class="ply" id="ply" href="/ShowPlaylist"></a>
                 </dt>
@@ -136,7 +136,7 @@
             <label for="aname">Artist name</label><br>
             <input class="text" type="text" id="aname" name="aname" required="required"><br>
 
-            <input type="submit" value="Submit"><br>
+            <input type="submit" value="Submit" id="addNewTrack"><br>
         </form>
 
     </div>
@@ -149,7 +149,7 @@
             <fieldset class="fs">
                 <legend>My songs</legend><br>
                     <div id="youdonthaveanysong">You don't have any song</div>
-                    <div required="required">
+                    <div required="required" id="selectionSong">
                         <input type="checkbox" name="song">
                         <label id="song"></label>
                         <br>
