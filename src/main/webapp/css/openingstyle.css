@@ -29,7 +29,7 @@ h2 {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 7%;
+    margin-top: 40px;
 }
 
 .field {
@@ -96,7 +96,6 @@ a:hover {
     justify-content: center;
     align-items: center;
 
-    margin-top: 5%;
     margin-bottom: 5%;
 
     color: red;
@@ -110,4 +109,16 @@ a:hover {
 
 .hidden {
     display: none;
+}
+
+img {
+    max-width: 80px;
+}
+
+.center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 40px;
 }

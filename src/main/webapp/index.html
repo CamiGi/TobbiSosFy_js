@@ -2,12 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="resources/TobbiSosFy logo.png">
     <title>Login</title>
     <link rel="stylesheet" type="text/css" media="all" href="css/openingstyle.css"/>
     <script src="utils.js" charset="UTF-8" defer></script>
     <script src="login.js" charset="UTF-8" defer></script>
 </head>
 <body>
+<div class="center">
+    <img src="resources/TobbiSosFy logo.png" alt="Logo">
+</div>
 <div id="login">
     <h2>LogIn TobbiSosFy Music Manager</h2>
     <div class="box1">
@@ -35,8 +39,7 @@
 <div id="registration" class="hidden">
     <h2>Register to TobbiSosFy Music Manager</h2>
     <div class="box1">
-        <form action="Register"
-              method="POST">
+        <form action="#">
             <div class="field">
                 username<br><br><label>
                 <input type="text" name="nickname" required="required">
@@ -71,9 +74,11 @@
 </div>
 
 <div id="userRegistered" class="hidden">
-    you've been successfully registered, click
-    <a id="back" href="index.html">here</a>
-    to login
+    <div class="box2">
+        you've been successfully registered, click
+        <a id="back" href="index.html">here</a>
+        to login
+    </div>
 </div>
 </body>
 </html>
