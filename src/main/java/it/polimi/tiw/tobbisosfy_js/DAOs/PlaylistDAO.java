@@ -18,9 +18,9 @@ public class PlaylistDAO {
     private ResultSet result;
 
 
-    public PlaylistDAO(Connection con){
+    public PlaylistDAO(Connection con, String trackPath, String imgPath){
         this.con = con;
-        td = new TrackDAO(con);
+        td = new TrackDAO(con, trackPath, imgPath);
     }
 
     /**

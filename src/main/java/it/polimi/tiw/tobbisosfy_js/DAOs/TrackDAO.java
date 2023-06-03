@@ -14,9 +14,13 @@ public class TrackDAO {
     private ResultSet result;
     private PreparedStatement pstatement = null;
     private PreparedStatement ps;
+    private final String audioPath;
+    private final String imgPath;
 
-    public TrackDAO(Connection con){
+    public TrackDAO(Connection con, String audioPath, String imgPath){
         this.con=con;
+        this.audioPath = audioPath;
+        this.imgPath = imgPath;
     }
 
     /**
@@ -223,14 +227,14 @@ public class TrackDAO {
 
         //costruisco la track
         artist = new Artist(result.getString("name"));
-        album = new Album(resultAlbum.getString("name"), resultAlbum.getInt("year"), Genre.valueOf(resultAlbum.getString("genre")), artist, resultAlbum.getString("img"));
+        album = new Album(resultAlbum.getString("name"), resultAlbum.getInt("year"), Genre.valueOf(resultAlbum.getString("genre")), artist, imgPath+resultAlbum.getString("img"));
         String queryUser = "SELECT * FROM user WHERE username=?";
         ps = con.prepareStatement(queryUser);
         ps.setString(1,resultTrack.getString("username"));
         result = ps.executeQuery();
         result.next();
         u = new User(result.getString("username"), result.getString("password"));
-        t = new Track(resultTrack.getString("title"), album, resultTrack.getString("file"), u);
+        t = new Track(resultTrack.getString("title"), album, audioPath+resultTrack.getString("file"), u);
         t.setId(trackID);
 
         return t;

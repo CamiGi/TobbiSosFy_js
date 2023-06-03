@@ -63,9 +63,8 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PlaylistDAO playlistDAO = new PlaylistDAO(connection);
-        TrackDAO trackDAO = new TrackDAO(connection);
-        getServletContext().getContextPath();
+        PlaylistDAO playlistDAO = new PlaylistDAO(connection, audioFP, imgFP);
+        TrackDAO trackDAO = new TrackDAO(connection, audioFP, imgFP);
         //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         this.setU((User) req.getSession().getAttribute("user"));  //setto lo user che mi serve per tutta la classe
         ArrayList<Playlist> playlists;
@@ -104,7 +103,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        TrackDAO td = new TrackDAO(connection);
+        TrackDAO td = new TrackDAO(connection, audioFP, imgFP);
         String ctxPath = req.getContextPath();
         String error = ctxPath + "/ShowError?error=";
 

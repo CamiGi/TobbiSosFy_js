@@ -4,6 +4,7 @@ import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
 import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
 import it.polimi.tiw.tobbisosfy_js.beans.*;
 
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.annotation.WebServlet;
@@ -45,10 +46,12 @@ public class PlaylistLet  extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
+        ServletContext ctx = getServletContext();
+        String trackPath = ctx.getInitParameter("trackpath"),
+                imgPath = ctx.getInitParameter("imgpath");
         this.setU((User) req.getSession().getAttribute("user"));
-        PlaylistDAO pd = new PlaylistDAO(connection);
-        TrackDAO td = new TrackDAO(connection);
+        PlaylistDAO pd = new PlaylistDAO(connection, trackPath, imgPath);
+        TrackDAO td = new TrackDAO(connection, trackPath, imgPath);
         String error = req.getContextPath() + "/ShowError?error=";
         String ctxPath = req.getContextPath();
         //System.out.println(req.getParameterValues("song"));

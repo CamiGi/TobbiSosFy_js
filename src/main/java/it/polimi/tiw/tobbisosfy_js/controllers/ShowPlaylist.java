@@ -6,6 +6,7 @@ import it.polimi.tiw.tobbisosfy_js.beans.Playlist;
 import it.polimi.tiw.tobbisosfy_js.beans.Track;
 import it.polimi.tiw.tobbisosfy_js.beans.User;
 
+import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -46,21 +47,24 @@ public class ShowPlaylist extends HttpServlet {
         int plID;
         int group;
         boolean next;
-        PlaylistDAO plFinder = new PlaylistDAO(connection);
         //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         User user = (User) req.getSession().getAttribute("user");
         Playlist playlist;
         ArrayList<Track> tracks;
         ArrayList<Track> shownTracks;
         ArrayList<Track> addableTracks;
-        String error = getServletContext().getContextPath() + "/ShowError?error=";
+        ServletContext ctx = getServletContext();
+        PlaylistDAO plFinder = new PlaylistDAO(connection, ctx.getInitParameter("trackpath"),
+                ctx.getInitParameter("imgpath"));
+        String error = ctx.getContextPath() + "/ShowError?error=";
 
         System.out.println("Start searching for playlist");
         try {
             plID = Integer.parseInt(req.getParameter("playlist"));
             playlist = plFinder.getPlaylistFromId(plID, user);
             tracks = plFinder.getTracksFromPlaylist(playlist);
-            addableTracks = new TrackDAO(connection).getTracksFromUser(user);
+            addableTracks = new TrackDAO(connection, ctx.getInitParameter("trackpath"),
+                    ctx.getInitParameter("imgpath")).getTracksFromUser(user);
         } catch (NumberFormatException e) {
             System.out.println("Invalid playlist ID");
             error += "Invalid playlist ID";
@@ -109,7 +113,9 @@ public class ShowPlaylist extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String[] tracks = req.getParameterValues("tracks");
         ArrayList<Integer> trIDs;
-        PlaylistDAO plfinder = new PlaylistDAO(connection);
+        ServletContext ctx = getServletContext();
+        PlaylistDAO plfinder = new PlaylistDAO(connection, ctx.getInitParameter("trackpath"),
+                ctx.getInitParameter("imgpath"));
         Playlist playlist;
         String path = getServletContext().getContextPath();
         String error = path + "/ShowError?error=";

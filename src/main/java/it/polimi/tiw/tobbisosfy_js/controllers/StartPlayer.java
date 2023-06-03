@@ -41,7 +41,8 @@ public class StartPlayer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Track track;
-        TrackDAO trFinder = new TrackDAO(connection);
+        TrackDAO trFinder = new TrackDAO(connection, getServletContext().getInitParameter("trackpath"),
+                getServletContext().getInitParameter("imgpath"));
         String path = request.getContextPath();
         int trID;
 
