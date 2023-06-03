@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = () => {
     let register = document.getElementById("register");
     //register.onclick = show("registration", true);
     register.addEventListener('click',
@@ -9,17 +9,7 @@ window.onload = function() {
     });
 };
 
-let show = function show(el, visibility) { //to show/hide an element
-    let page = document.getElementById(el);
-    if (visibility) {
-        page.className = "visible";
-    }
-    else {
-        page.className = "hidden";
-    }
-};
-
-(function() { // avoid variables ending up in the global scope
+(() => { // avoid variables ending up in the global scope
     document.getElementById("loginButton").addEventListener('click', (e) => {
         let form = e.target.closest("form");
         if (form.checkValidity()) {

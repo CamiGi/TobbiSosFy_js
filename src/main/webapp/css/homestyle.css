@@ -529,3 +529,11 @@ a:hover {
 a:visited {
     color: ivory;
 }
+
+.visible {
+    display: block;
+}
+
+.hidden {
+    display: none;
+}

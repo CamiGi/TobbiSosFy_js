@@ -4,17 +4,21 @@
     <meta charset="UTF-8">
     <title>Home</title>
     <link rel="stylesheet" type="text/css" media="all" href="css/homestyle.css"/>
+    <script src="utils.js" charset="UTF-8" defer></script>
+    <script type="module" src="Home.js" charset="UTF-8" defer></script>
+    <script src="playlistPage.js" charset="UTF-8" defer></script>
+    <!--gli script basta metterli solo una volta nell'header-->
 </head>
 <body>
-<script type="module" src="Home.js" defer></script>
+<!--<script type="module" src="Home.js" defer></script>-->
 <div class="username" id="username"></div>
 <a class="logout" id="logout" onclick="logout()">Logout</a>
 
 <div class="HomePage">
-    <script type="module" src="Home.js" defer></script>
+    <!--<script type="module" src="Home.js" defer></script>-->
 
     <nav class="nav">
-        <script type="module" src="Home.js" defer></script>
+        <!--<script type="module" src="Home.js" defer></script>-->
         <a id="navMP">My Playlists</a>
         <a id="navNP">New Playlist</a>
         <a id="navNT">New Track</a>
@@ -163,12 +167,13 @@
     <div class="title">
         <h1>playlist</h1>
     </div>
+    <a class="back" id="backHome" href="Home">Home</a>
     <div class="page">
         <div class="trks">
             <div>
-                <a class="button"><</a>
+                <a class="hidden" id="prevButton"><</a>
             </div>
-            <div class="tab">
+            <div id="tab">
                 <table>
                     <tr>
                         <td >This playlist does not contain any tracks</td>
@@ -180,7 +185,7 @@
                 </table>
             </div>
             <div>
-                <a class="button" >></a>
+                <a class="hidden" id="nextButton" >></a>
             </div>
         </div>
         <div >
@@ -195,10 +200,22 @@
                 <input class="center" type="submit" value="Submit">
             </form>
         </div>
-        <div  class="frm">There are no tracks to add to this playlist</div>
+        <div  class="frm" id="frm">There are no tracks to add to this playlist</div>
     </div>
 </div>
 <div class="PlayerPage" id="PlayerPage">
+    <div class="back" id="back">
+        <table>
+            <tr>
+                <td>
+                    <a href="Home">Home</a>
+                </td>
+                <td>
+                    <a href="#">Playlist</a>
+                </td>
+            </tr>
+        </table>
+    </div>
     <div class="box">
         <div class="info">
             <table>

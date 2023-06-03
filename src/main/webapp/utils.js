@@ -13,3 +13,13 @@ function makeCall(method, url, formElement, cback, reset = true) {
         formElement.reset();
     }
 }
+
+function show(el, visibility) { //to show/hide an element
+    let page = document.getElementById(el);
+    if (visibility) {
+        page.className = "visible";
+    }
+    else {
+        page.className = "hidden";
+    }
+}
