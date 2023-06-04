@@ -551,7 +551,7 @@ a:visited {
     background-color: rgb(22, 27, 33);
 }
 
-.backgroundTab {
+.backgroundTab, .activeTab {
     border: 2px solid rgb(22, 27, 33);
 }
 
