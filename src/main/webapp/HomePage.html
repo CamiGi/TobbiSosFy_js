@@ -163,32 +163,37 @@
         </form>
     </div>
 </div>
+
 <div class="PlaylistPage" id="PlaylistPage">
     <div class="title">
         <h1>playlist</h1>
     </div>
     <a class="back" id="backHome" href="Home">Home</a>
+    <div id="showTab" class="activeTab">Playlist Tracks</div>
+    <div id="showForm" class="backgroundTab">Add Tracks</div>
     <div class="page">
-        <div class="trks">
-            <div>
-                <a class="hidden" id="prevButton"><</a>
-            </div>
-            <div id="tab">
-                <table>
-                    <tr>
-                        <td >This playlist does not contain any tracks</td>
-                        <td>
-                            <img>
-                            <a ></a>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-            <div>
-                <a class="hidden" id="nextButton" >></a>
+        <div id="trks">
+            <div class="trks">
+                <div class="hidden" id="prevButton">
+                    <a class="button" href="#"><</a>
+                </div>
+                <div id="tab">
+                    <table>
+                        <tr>
+                            <td >This playlist does not contain any tracks</td>
+                            <td>
+                                <img>
+                                <a ></a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="hidden" id="nextButton">
+                    <a class="button" href="#">></a>
+                </div>
             </div>
         </div>
-        <div >
+        <div class="hidden" id="frm">
             <form method="POST">
                 <fieldset class="frm">
                     <legend>Add songs to the playlist</legend>
@@ -200,10 +205,10 @@
                 <input class="center" type="submit" value="Submit">
             </form>
         </div>
-        <div  class="frm" id="frm">There are no tracks to add to this playlist</div>
     </div>
 </div>
-<div class="PlayerPage" id="PlayerPage">
+
+<div class="hidden" id="PlayerPage">
     <div class="back" id="back">
         <table>
             <tr>
@@ -260,7 +265,7 @@
         </div>
     </div>
 </div>
-<div class="ErrorPage" id="ErrorPage">
+<div class="hidden" id="ErrorPage">
     <title>Error</title>
     <a class="logout">Logout</a>
     <div class="error">

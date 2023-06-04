@@ -6,18 +6,21 @@
             printGroup();
             printTracksToAdd();
         });
+
     document.getElementById("prevButton").addEventListener('click',
         (e) => {
             e.preventDefault();
             checkGroup();
             printGroup();
         });
+
     document.getElementById("nextButton").addEventListener('click',
         (e) => {
             e.preventDefault();
             checkGroup();
             printGroup();
         });
+
     document.getElementById("back").addEventListener('click',
         (e) => {
         //necessario?
@@ -25,6 +28,24 @@
             checkGroup();
             printGroup();
             printTracksToAdd();
+        });
+
+    document.getElementById("showForm").addEventListener('click',
+        (e) => {
+            e.preventDefault();
+            show("trks", false);
+            e.target.className = "activeTab";
+            show("frm", true);
+            document.getElementById("showTab").className = "backgroundTab";
+        });
+
+    document.getElementById("showTab").addEventListener('click',
+        (e) => {
+            e.preventDefault();
+            show("frm", false);
+            e.target.className = "activeTab";
+            show("trks", true);
+            document.getElementById("showForm").className = "backgroundTab";
         });
 })();
 
