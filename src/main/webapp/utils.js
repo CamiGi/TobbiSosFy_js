@@ -14,8 +14,8 @@ function makeCall(method, url, formElement, cback, reset = true) {
     }
 }
 
-function show(el, visibility) { //to show/hide an element
-    let page = document.getElementById(el);
+function show(elementId, visibility) { //to show/hide an element
+    let page = document.getElementById(elementId);
     if (visibility) {
         page.className = "visible";
     }

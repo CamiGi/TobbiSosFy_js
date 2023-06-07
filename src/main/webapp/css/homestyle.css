@@ -289,7 +289,7 @@ h1 {
     max-width: 400px;
 }
 
-.tab {
+#tab {
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 5px;
@@ -555,7 +555,7 @@ a:visited {
     border: 2px solid rgb(22, 27, 33);
 }
 
-#showTab, #showForm {
+#showTab, #showForm, #showMod {
     position: absolute;
     margin-top: 100px;
 
@@ -569,6 +569,10 @@ a:visited {
     margin-left: 125px;
 }
 
-#showTab:hover, #showForm:hover {
+#showMod {
+    margin-left: 228px;
+}
+
+#showTab:hover, #showForm:hover, #showMod {
     cursor: pointer;
 }

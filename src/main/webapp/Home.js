@@ -6,14 +6,14 @@ window.onload = function() {
     };*/
     console.log("Hello world!");
 
-    makeCall("GET", 'Home', form,
+    makeCall("GET", 'Home', form, //con le get non si inviano form, quindi al suo posto metti null
         function(x) {
             if (x.readyState === XMLHttpRequest.DONE) {
                 //let username= x.responseText;
                 const username = JSON.parse(x);
                 switch (x.status) {
                     case 200:
-                        sessionStorage.setItem('username', x.user);
+                        sessionStorage.setItem('username', x.user); // Lo username lo c'é gia' da dopo il login, non serve risettarlo
                         sessionStorage.setItem('myPlaylists', []<Playlist>(x.playlists));
                         sessionStorage.setItem('myTracks', []<Track>(x.tracks));
                         window.location.href = "/Home";

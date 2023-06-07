@@ -164,13 +164,14 @@
     </div>
 </div>
 
-<div class="PlaylistPage" id="PlaylistPage">
+<div class="visible" id="PlaylistPage">
     <div class="title">
         <h1>playlist</h1>
     </div>
     <a class="back" id="backHome" href="Home">Home</a>
     <div id="showTab" class="activeTab">Playlist Tracks</div>
     <div id="showForm" class="backgroundTab">Add Tracks</div>
+    <div id="showMod" class="backgroundTab">Change Order</div>
     <div class="page">
         <div id="trks">
             <div class="trks">
@@ -204,6 +205,12 @@
                 </fieldset>
                 <input class="center" type="submit" value="Submit">
             </form>
+        </div>
+        <div class="hidden" id="order">
+            Qua si modifica l'ordine delle tracce della playlist (per Cami). <br>
+            Nelle specifiche dice che é una pagina a parte, ma dice anche che tutta l'applicazione va fatta
+            su un'unica pagina (a parte il login) quindi io ho considerato questo (al massimo creiamo la
+            pagina staccata ed eliminiamo questa scheda)
         </div>
     </div>
 </div>

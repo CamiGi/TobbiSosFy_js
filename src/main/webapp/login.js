@@ -14,7 +14,7 @@ window.onload = () => {
         let form = e.target.closest("form");
         if (form.checkValidity()) {
             makeCall("POST", 'CheckLogin', form,
-                function(x) {
+                (x) => {
                     if (x.readyState === XMLHttpRequest.DONE) {
                         let message = x.responseText;
                         switch (x.status) {
