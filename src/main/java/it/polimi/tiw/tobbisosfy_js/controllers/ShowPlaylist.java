@@ -1,12 +1,13 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
 import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
 import it.polimi.tiw.tobbisosfy_js.beans.Playlist;
 import it.polimi.tiw.tobbisosfy_js.beans.Track;
 import it.polimi.tiw.tobbisosfy_js.beans.User;
 
-import javax.servlet.Servlet;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -39,24 +41,22 @@ public class ShowPlaylist extends HttpServlet {
             e.printStackTrace();
             throw new UnavailableException("Couldn't get db connection");
         }
-        ServletContext servletContext = getServletContext();
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int plID;
-        int group;
-        boolean next;
         //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         User user = (User) req.getSession().getAttribute("user");
         Playlist playlist;
         ArrayList<Track> tracks;
-        ArrayList<Track> shownTracks;
         ArrayList<Track> addableTracks;
         ServletContext ctx = getServletContext();
         PlaylistDAO plFinder = new PlaylistDAO(connection, ctx.getInitParameter("trackpath"),
                 ctx.getInitParameter("imgpath"));
-        String error = ctx.getContextPath() + "/ShowError?error=";
+        Gson gson;
+        String jsonPTracks, jsonUTracks;
+        PrintWriter out = resp.getWriter();
 
         System.out.println("Start searching for playlist");
         try {
@@ -66,19 +66,16 @@ public class ShowPlaylist extends HttpServlet {
             addableTracks = new TrackDAO(connection, ctx.getInitParameter("trackpath"),
                     ctx.getInitParameter("imgpath")).getTracksFromUser(user);
         } catch (NumberFormatException e) {
-            System.out.println("Invalid playlist ID");
-            error += "Invalid playlist ID";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println("Invalid playlist ID");
             return;
         } catch (SQLException e) {
-            System.out.println("This playlist does not exist or you haven't got the authorization to see it");
-            error += "This playlist does not exist or you haven't got the authorization to see it";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            out.println("This playlist does not exist or you haven't got the authorization to see it");
             return;
         } catch (Exception e) {
-            System.out.println(e.getMessage());
-            error += e.getMessage();
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println(e.getMessage());
             return;
         }
 
@@ -90,23 +87,13 @@ public class ShowPlaylist extends HttpServlet {
                 }
             }
         }
-        group = 5*Integer.parseInt(req.getParameter("group"));//////////
-        shownTracks = new ArrayList<>(5);
+        gson = new GsonBuilder().create();
+        jsonPTracks = gson.toJson(tracks);
+        jsonUTracks = gson.toJson(addableTracks);
 
-        for (int c=group; c<group+5 && c<tracks.size(); c++)
-            shownTracks.add(tracks.get(c));
-
-        System.out.println(shownTracks.size() + " tracce mostrate");
-        next = group+5<tracks.size();
-
-        /*ctx.setVariable("playlist", playlist);
-        ctx.setVariable("tracks", shownTracks);
-        ctx.setVariable("addTrks", addableTracks);
-        ctx.setVariable("group", group/5);
-        ctx.setVariable("next", next);
-        System.out.println("Rendering playlist page");
-        //System.out.println("'C:'"+shownTracks.get(0).getMp3Uri());
-        templateEngine.process("/PlaylistPage.html", ctx, resp.getWriter());*/
+        resp.setStatus(HttpServletResponse.SC_OK);
+        out.println(jsonPTracks);
+        out.println(jsonUTracks);
     }
 
     @Override

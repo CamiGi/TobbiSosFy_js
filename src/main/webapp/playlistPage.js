@@ -16,7 +16,7 @@
                             if (x.status === 200) {
                                 //lettura JSON delle tracce della playlist
                                 //lettura JSON delle tracce che si possono aggiungere
-                                checkGroup();
+                                PrintButtons();
                                 printGroup();
                                 printTracksToAdd();
                             }
@@ -31,14 +31,14 @@
     document.getElementById("prevButton").addEventListener('click',
         (e) => {
             e.preventDefault();
-            checkGroup();
+            PrintButtons();
             printGroup();
         });
 
     document.getElementById("nextButton").addEventListener('click',
         (e) => {
             e.preventDefault();
-            checkGroup();
+            PrintButtons();
             printGroup();
         });
 
@@ -46,7 +46,7 @@
         (e) => {
         //necessario?
             e.preventDefault();
-            checkGroup();
+            PrintButtons();
             printGroup();
             printTracksToAdd();
         });
@@ -86,14 +86,88 @@
     );
 })();
 
-function checkGroup() {     //shows/hides prev/next button in the playlist page
+function PrintButtons() {     //shows/hides prev/next button in the playlist page
+    let prevB = "prevButton";
+    let nextB = "nextButton";
+    let group = jQuery.url.param("group");
 
+    if(group > 0) {
+        show(prevB, true);
+    }
+    else {
+        show(prevB, false);
+    }
+
+    if(5*group < tracce.daJSON.size) {
+        show(nextB, true);
+    }
+    else {
+        show(nextB, false);
+    }
 }
 
 function printGroup() {     //prints a group of 1~5 tracks in the playlist page
-    
+    let tab = document.getElementById("tab");
+    let table = document.createElement("TABLE");
+    let row = table.insertRow(0);
+    let data;
+    let group = 5*jQuery.url.param("group");
+    let anchor;
+    let image;
+
+    for (let i=group; i<group+5 && i<playlistTracks.length; i++) {
+        data = row.insertCell(i-group);
+        data.className = "shine";
+
+        anchor = document.createElement("A");
+        anchor.setAttribute("href", "/StartPlayer?track="+playlistTracks.elements[i].id);
+        anchor.innerText = tracce.elements[i].title;
+        data.appendChild(anchor);
+
+        image = document.createElement("IMG");
+        image.setAttribute("src", playlistTracks.elements[i].image);
+        data.appendChild(image);
+    }
+
+    table.appendChild(row);
+    tab.appendChild(table);
 }
 
 function printTracksToAdd() {   //prints the tracks a user can add to a playlist in the playlist page
-    
+    let element = document.getElementById("frm");
+    let form = document.createElement("FORM");
+    let input;
+    let label;
+    let t;
+
+    for (let i=0; i<userTracks.length; i++) {
+        t = userTracks[i];
+
+        if (!tracks.includes(t)) {
+            input = document.createElement("INPUT");
+            input.setAttribute("type", "checkbox");
+            input.setAttribute("name", "tracks");
+            input.id = t.id;
+            //input.setAttribute("id", t.id);
+            form.appendChild(input);
+
+            label = document.createElement("LABEL");
+            label.setAttribute("for", t.id);
+            label.innerText = t.title + " - " + t.album.title + " - " + t.album.genre +
+                +" - " + t.album.artist.artistName;
+            form.appendChild(label);
+        }
+    }
+
+    if (input !== null) {
+        element.innerText = "";
+        input = document.createElement("input");
+        input.setAttribute("type", "submit");
+        //input.setAttribute("id", "addTracksToPlaylist");
+        input.setAttribute("value", "Submit");
+        input.id = "addTracksToPlaylist";
+        input.className = "center";
+        form.appendChild(input);
+        element.appendChild(form);
+    }
 }
