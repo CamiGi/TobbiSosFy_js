@@ -235,7 +235,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
 
             Artist artist = new Artist(aName);
             Album album = new Album(aTitle, aDate, aGenre, artist,  imgName);
-            Track track = new Track(tTitle, album, audioName, u);
+            Track track = new Track(tTitle, album, audioName, u.getUsername());
 
             try {
                 System.out.println("Ora aggiungo la track al server");

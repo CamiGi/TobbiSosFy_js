@@ -178,17 +178,9 @@
                 <div class="hidden" id="prevButton">
                     <a class="button" href="#"><</a>
                 </div>
-                <div id="tab">
-                    <table>
-                        <tr>
-                            <td >This playlist does not contain any tracks</td>
-                            <td>
-                                <img>
-                                <a ></a>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
+
+                <div id="tab"></div>
+
                 <div class="hidden" id="nextButton">
                     <a class="button" href="#">></a>
                 </div>
@@ -198,10 +190,7 @@
             <form method="POST">
                 <fieldset class="frm">
                     <legend>Add songs to the playlist</legend>
-                    <div >
-                        <input type="checkbox" name="tracks">
-                        <label ></label>
-                    </div>
+
                 </fieldset>
                 <input class="center" type="submit" value="Submit">
             </form>
@@ -216,14 +205,14 @@
 </div>
 
 <div class="hidden" id="PlayerPage">
-    <div class="back" id="back">
+    <div class="back">
         <table>
             <tr>
                 <td>
-                    <a href="Home">Home</a>
+                    <a href="Home" id="goHome">Home</a>
                 </td>
                 <td>
-                    <a href="#">Playlist</a>
+                    <a href="#" id="backPlaylist">Playlist</a>
                 </td>
             </tr>
         </table>
@@ -273,9 +262,8 @@
     </div>
 </div>
 <div class="hidden" id="ErrorPage">
-    <title>Error</title>
     <a class="logout">Logout</a>
-    <div class="error">
+    <div class="error" id="error">
         <div>Something went wrong during the elaboration of your request. &nbsp
         </div>
         <div>

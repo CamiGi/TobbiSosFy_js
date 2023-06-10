@@ -3,7 +3,6 @@ package it.polimi.tiw.tobbisosfy_js.controllers;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
-import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
 import it.polimi.tiw.tobbisosfy_js.beans.Playlist;
 import it.polimi.tiw.tobbisosfy_js.beans.Track;
 import it.polimi.tiw.tobbisosfy_js.beans.User;
@@ -50,12 +49,11 @@ public class ShowPlaylist extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         Playlist playlist;
         ArrayList<Track> tracks;
-        ArrayList<Track> addableTracks;
         ServletContext ctx = getServletContext();
         PlaylistDAO plFinder = new PlaylistDAO(connection, ctx.getInitParameter("trackpath"),
                 ctx.getInitParameter("imgpath"));
         Gson gson;
-        String jsonPTracks, jsonUTracks;
+        String jsonPTracks;
         PrintWriter out = resp.getWriter();
 
         System.out.println("Start searching for playlist");
@@ -63,8 +61,6 @@ public class ShowPlaylist extends HttpServlet {
             plID = Integer.parseInt(req.getParameter("playlist"));
             playlist = plFinder.getPlaylistFromId(plID, user);
             tracks = plFinder.getTracksFromPlaylist(playlist);
-            addableTracks = new TrackDAO(connection, ctx.getInitParameter("trackpath"),
-                    ctx.getInitParameter("imgpath")).getTracksFromUser(user);
         } catch (NumberFormatException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             out.println("Invalid playlist ID");
@@ -78,22 +74,11 @@ public class ShowPlaylist extends HttpServlet {
             out.println(e.getMessage());
             return;
         }
-
-        for (int i=addableTracks.size()-1; i>=0; i--) {
-            for (Track t : tracks) {
-                if (t.getId() == addableTracks.get(i).getId()) {
-                    addableTracks.remove(i);
-                    break;
-                }
-            }
-        }
         gson = new GsonBuilder().create();
         jsonPTracks = gson.toJson(tracks);
-        jsonUTracks = gson.toJson(addableTracks);
 
         resp.setStatus(HttpServletResponse.SC_OK);
         out.println(jsonPTracks);
-        out.println(jsonUTracks);
     }
 
     @Override

@@ -1,3 +1,8 @@
+//SECURYTY UPDATE:
+// mandando una o piu' tracce come stringa JSON si vedono tutti gli attributi, tra cui lo user, quindi
+// é possibile vedere la password di uno user dalle sue tracce! Per risolvere ho fatto che l'attributo user
+// della classe Track é solo lo username
+
 window.onload = function() {
     /*if(username.toString().length>0){
         document.getElementById("username").textContent = username.toString();

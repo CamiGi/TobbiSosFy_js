@@ -1,5 +1,7 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import it.polimi.tiw.tobbisosfy_js.DAOs.*;
 import it.polimi.tiw.tobbisosfy_js.beans.User;
 

@@ -23,3 +23,10 @@ function show(elementId, visibility) { //to show/hide an element
         page.className = "hidden";
     }
 }
+
+function warn(currentPage, status, message) { //to show the error page
+    let error = document.getElementById("error");
+    error.innerHTML = "Error: " + status + "<br />" + message;
+    show(currentPage, false);
+    show("errorPage", true);
+}

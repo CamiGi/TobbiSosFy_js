@@ -29,7 +29,7 @@ public class TrackDAO {
      * @throws SQLException
      * @throws Exception
      */
-    public void addTrack(String title, Album album, String mp3Uri, User user) throws SQLException, Exception {
+    public void addTrack(String title, Album album, String mp3Uri, String user) throws SQLException, Exception {
         int rescode;
         String queryArID = "SELECT ID, name FROM artist WHERE name= ?";
         pstatement = con.prepareStatement(queryArID);   //vedo se ho l'artista
@@ -120,14 +120,14 @@ public class TrackDAO {
     }
 
     //creo track: title, albumID, file, username
-    private int newTrack(String title, Album album, String mp3Uri, User user) throws SQLException{
+    private int newTrack(String title, Album album, String mp3Uri, String user) throws SQLException{
         int code;
         try{
             ps=con.prepareStatement("SELECT ID FROM album WHERE name=?");  //chiedo al db l'id dell'album col nome che compare nell'oggetto track
             ps.setString(1, album.getTitle());
             ResultSet re =ps.executeQuery();
             ps=con.prepareStatement("SELECT username FROM user WHERE username=?");  //chiedo al db l'id dell'album col nome che compare nell'oggetto track
-            ps.setString(1,user.getUsername());
+            ps.setString(1,user);
             ResultSet re1 =ps.executeQuery();
             //NULL, title, albumID, file, username
             String queryNewTrack = "INSERT INTO track VALUES (?, ?, ?, ?, ?)";
@@ -234,7 +234,7 @@ public class TrackDAO {
         result = ps.executeQuery();
         result.next();
         u = new User(result.getString("username"), result.getString("password"));
-        t = new Track(resultTrack.getString("title"), album, audioPath+resultTrack.getString("file"), u);
+        t = new Track(resultTrack.getString("title"), album, audioPath+resultTrack.getString("file"), u.getUsername());
         t.setId(trackID);
 
         return t;

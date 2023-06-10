@@ -8,9 +8,9 @@ public class Track {
     private final String title;
     private final Album album;
     private final String mp3Uri;
-    private final User user;
+    private final String user;
 
-    public Track(String title, Album album, String mp3Uri, User user){
+    public Track(String title, Album album, String mp3Uri, String user){
         this.album=album;
         this.title=title.toLowerCase();
         this.mp3Uri=mp3Uri;
@@ -33,7 +33,7 @@ public class Track {
         return mp3Uri;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 
