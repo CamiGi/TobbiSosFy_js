@@ -97,6 +97,7 @@ a:hover {
     align-items: center;
 
     margin-bottom: 5%;
+    max-width: 300px;
 
     color: red;
     font-size: 20px;

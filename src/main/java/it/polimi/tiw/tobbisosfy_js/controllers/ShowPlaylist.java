@@ -78,6 +78,8 @@ public class ShowPlaylist extends HttpServlet {
         jsonPTracks = gson.toJson(tracks);
 
         resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
         out.println(jsonPTracks);
     }
 

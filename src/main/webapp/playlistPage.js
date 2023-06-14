@@ -1,12 +1,12 @@
 {
     let playlistTracks;
+    let group;
 
     (() => {
         document.getElementById("ply").addEventListener('click',
             (e) => {
                 e.preventDefault();
-                makeCall("GET", "ShowPlaylist?playlist=" + jQuery.url.param("playlist")
-                    + "&group=0", null, (x) => {
+                makeCall("GET", e.target.getAttribute("href"), null, (x) => {
                         switch (x.readyState) {
                             case XMLHttpRequest.UNSENT:
                                 window.reportError("Couldn't send the request, try later");
@@ -16,9 +16,11 @@
                                 break;
                             case XMLHttpRequest.DONE:
                                 let resp = x.responseText;
-                                let tracks = JSON.parse(resp);
 
                                 if (x.status === 200) {
+                                    let tracks = JSON.parse(resp);
+                                    group = 0;
+
                                     for (let i=0; i<tracks.length; i++) {
                                         playlistTracks.push(new Track(tracks[i][0], tracks[i][1],
                                             tracks[i][2], tracks[i][3]));
@@ -37,6 +39,10 @@
         document.getElementById("prevButton").addEventListener('click',
             (e) => {
                 e.preventDefault();
+
+                if(group > 0) {
+                    group = group-1;
+                }
                 printButtons();
                 printGroup();
             });
@@ -44,6 +50,7 @@
         document.getElementById("nextButton").addEventListener('click',
             (e) => {
                 e.preventDefault();
+                group = group+1;
                 printButtons();
                 printGroup();
             });
@@ -139,7 +146,6 @@
     function printButtons() {     //shows/hides prev/next button in the playlist page
         let prevB = "prevButton";
         let nextB = "nextButton";
-        let group = jQuery.url.param("group");
 
         if (group > 0) {
             show(prevB, true);
@@ -159,12 +165,11 @@
         let table = document.createElement("TABLE");
         let row = table.insertRow(0);
         let data;
-        let group = 5 * jQuery.url.param("group");
         let anchor;
         let image;
 
         if (playlistTracks.length > 0) {
-            for (let i = group; i < group + 5 && i < playlistTracks.length; i++) {
+            for (let i = group; i < 5*group+5 && i < playlistTracks.length; i++) {
                 data = row.insertCell(i - group);
                 data.className = "shine";
 

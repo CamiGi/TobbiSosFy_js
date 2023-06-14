@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="shortcut icon" href="resources/TobbiSosFy logo.png">
     <title>Home</title>
     <link rel="stylesheet" type="text/css" media="all" href="css/homestyle.css"/>
     <script src="utils.js" charset="UTF-8" defer></script>
@@ -27,13 +28,13 @@
         <p class="myplaylists">My playlists</p>
             <dl id="pllysts">
                 <dt>
-                    <a class="ply" id="ply" href="/ShowPlaylist"></a>
+                    <a class="ply" id="ply" href="ShowPlaylist?playlist=1">MKplaylist</a>
                 </dt>
                 <dd id="pdate"></dd>
             </dl>
     </div>
 
-    <div class="newTrack" id="newTrack">
+    <div class="hidden" id="newTrack">
         <p>Add a new track</p>
         <form action="Home" method="POST" enctype="multipart/form-data"> <!--enctype="multipart/form-data"-->
             <label for="ttitle">Track Title</label><br>
@@ -145,7 +146,7 @@
 
     </div>
 
-    <div class="newPlaylist" id="newPlaylist">
+    <div class="hidden" id="newPlaylist">
         <p>Add a new playlist</p>
         <form action="PLinsert" method="POST">
             <label for="ptitle">Playlist Title</label><br>
@@ -153,7 +154,7 @@
             <fieldset class="fs">
                 <legend>My songs</legend><br>
                     <div id="youdonthaveanysong">You don't have any song</div>
-                    <div required="required" id="selectionSong">
+                    <div id="selectionSong">
                         <input type="checkbox" name="song">
                         <label id="song"></label>
                         <br>
@@ -164,7 +165,7 @@
     </div>
 </div>
 
-<div class="visible" id="PlaylistPage">
+<div class="hidden" id="PlaylistPage">
     <div class="title">
         <h1>playlist</h1>
     </div>

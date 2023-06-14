@@ -20,8 +20,8 @@ window.onload = () => {
                         switch (x.status) {
                             case 200:
                                 sessionStorage.setItem('username', message);
-                                window.location.href = "/Home";
                                 console.log("Welcome "+sessionStorage.getItem('username'));
+                                window.location.href = 'HomePage.html';
                                 break;
                             case 400: // bad request
                                 document.getElementById("errLog").textContent = message;
