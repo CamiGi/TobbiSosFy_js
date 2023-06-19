@@ -25,7 +25,7 @@ public class Register extends HttpServlet {
     public Register() {
         super();
     }
-    @Override
+    /*@Override
     public void init() throws ServletException {
         try {
             connection = DBServletInitializer.init(getServletContext());
@@ -138,6 +138,6 @@ public class Register extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
 }

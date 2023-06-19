@@ -3,6 +3,12 @@
 // é possibile vedere la password di uno user dalle sue tracce! Per risolvere ho fatto che l'attributo user
 // della classe Track é solo lo username
 
+//Grande Marco!!
+
+let tracks; //da rendere pubblico che serve anche a Marco
+let playlists;
+let u_name;
+
 window.onload = function() {
     /*if(username.toString().length>0){
         document.getElementById("username").textContent = username.toString();
@@ -11,68 +17,90 @@ window.onload = function() {
     };*/
     console.log("Hello world!");
 
-    makeCall("GET", 'Home', form, //con le get non si inviano form, quindi al suo posto metti null
-        function(x) {
-            if (x.readyState === XMLHttpRequest.DONE) {
-                //let username= x.responseText;
-                const username = JSON.parse(x);
-                switch (x.status) {
-                    case 200:
-                        sessionStorage.setItem('username', x.user); // Lo username lo c'é gia' da dopo il login, non serve risettarlo
-                        sessionStorage.setItem('myPlaylists', []<Playlist>(x.playlists));
-                        sessionStorage.setItem('myTracks', []<Track>(x.tracks));
-                        window.location.href = "/Home";
-                        console.log("Welcome "+sessionStorage.getItem('username'));
-                        break;
-                    case 400: // bad request
-                        document.getElementById("errLog").textContent = message;
-                        break;
-                    case 401: // unauthorized
-                        document.getElementById("errLog").textContent = message;
-                        break;
-                    case 500: // server error
-                        document.getElementById("errLog").textContent = message;
-                        break;
-                }
+    makeCall("GET", 'Home', null, //con le get non si inviano form, quindi al suo posto metti null
+        (x) => {
+            switch(x.readyState){
+                case XMLHttpRequest.DONE:
+
+                    document.getElementById("myplaylists").style.visibility = 'visible';
+                    document.getElementById("newPlaylist").style.visibility = 'hidden';
+                    document.getElementById("newTrack").style.visibility = 'hidden';
+
+                    showDivs(true, false, false);
+
+                    document.getElementById("PlaylistPage").style.visibility = 'hidden';
+                    document.getElementById("PlayerPage").style.visibility = 'hidden';
+                    document.getElementById("ErrorPage").style.visibility = 'hidden';
+
+                    document.getElementById("navMP").onclick = function(){showDivs(true, false, false)};
+                    document.getElementById("navNP").onclick = function(){showDivs(false,true,false)};
+                    document.getElementById("navNT").onclick = function(){showDivs(false,false,true)};
+
+                    let testo_risposta = x.responseText;
+                    let res = JSON.parse(testo_risposta);
+                    let ans = res["Answer"];
+
+                    //setto i dati
+                    tracks = ans[1];
+                    playlists = ans[0];
+                    tracks = tracks["Tracks"];
+                    playlists = playlists["Playlists"];
+                    console.log(playlists);
+                    console.log(tracks);
+                    let t = tracks[0];
+                    console.log(t);
+                    u_name = t["user"];
+                    console.log(u_name);
+
+                    //setto lo username, playlists e tracks
+                    document.getElementById("username").innerText = u_name;
+
+                    //setto la pagina playlist : FARE IL CASO IN CUI TRACKS O PLAYLISTS è VUOTA
+                    let dl = document.getElementById("ply");
+                    let anchor;
+                    let dt;
+                    let dd;
+
+                    //if(playlists.length == 0){
+                    //    dl.innerText = "You don't have any palylist yet";
+                    //}
+
+                    for(let i=0; i < playlists.length; i++){
+                        anchor = document.createElement("A");
+                        dt = document.createElement("DT");
+                        dd = document.createElement("DD");
+                        anchor.setAttribute("id", "ply");
+                        anchor.setAttribute("class", "ply");
+                        anchor.setAttribute("href", "ShowPlaylist?playlist="+playlists[i].id);
+                        anchor.innerHTML = playlists[i].title;
+                        dt.appendChild(anchor);
+                        dl.appendChild(dt);
+                        dd.setAttribute("id", "pdate");
+                        dd.innerHTML = playlists[i].date;
+                        dl.appendChild(dd);
+                    }
+
+                    //preventdefault: fa in modo che la href non vadano alla pagina
+
+                    //setto la pagina NewTrack
+
+                    //creare script con il controllo dei dati inseriti e invio form
+
+                    //setto la pagina NewPlaylist
+
+                    //creare script per inviare nuova playlist e controllo dati inseriti
+                    break;
+                case XMLHttpRequest.UNSENT:
+                    window.reportError("Couldn't send the request, try later");
+                    break;
+                case XMLHttpRequest.LOADING:
+                    document.getElementById("tab").textContent = "Home page is loading, please wait...";
+                    break;
             }
         }
     );
 
-    document.getElementById("username").innerHTML = sessionStorage.getItem('username');
-    let playlists = []<Playlist>sessionStorage.getItem('myPlaylists');
-    document.getElementById("pllysts").innerHTML = playlists;
-    for(let i=0; i < playlists.length; i++){
-        document.getElementById("ply").innerHTML = playlists[i].title;
-        document.getElementById("pdate").innerHTML = playlists[i].date;
-    }
 
-    document.getElementById("myplaylists").style.visibility = 'hidden';
-    document.getElementById("newPlaylist").style.visibility = 'hidden';
-    document.getElementById("newTrack").style.visibility = 'hidden';
-
-    showDivs(true, false, false);
-
-    document.getElementById("PlaylistPage").style.visibility = 'hidden';
-    document.getElementById("PlayerPage").style.visibility = 'hidden';
-    document.getElementById("ErrorPage").style.visibility = 'hidden';
-
-    document.getElementById("navMP").onclick = function(){showDivs(true, false, false)};
-    document.getElementById("navNP").onclick = function(){showDivs(false,true,false)};
-    document.getElementById("navNT").onclick = function(){showDivs(false,false,true)};
-
-    //setto la pagina playlist
-    document.getElementById("ply").innerHTML = "Playlist 1";
-    document.getElementById("pdate").innerHTML = "Date 1";
-    document.getElementById("ply").onclick = function(){playlistSelected(id)} //capire come mettergli l'id
-
-    //preventdefault: fa in modo che la href non vadano alla pagina
-
-    //setto la pagina NewTrack
-        //creare script con il controllo dei dati inseriti e invio form
-
-    //setto la pagina NewPlaylist
-    document.getElementById("song").innerHTML = "track1 - album1 - artist 1"
-        //creare script per inviare nuova playlist e controllo dati inseriti
 };
 
 function showDivs(mp, np, nt){

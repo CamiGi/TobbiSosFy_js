@@ -1,5 +1,7 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
 import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
 import it.polimi.tiw.tobbisosfy_js.beans.*;
@@ -16,6 +18,7 @@ import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -68,9 +71,16 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         this.setU((User) req.getSession().getAttribute("user"));  //setto lo user che mi serve per tutta la classe
         ArrayList<Playlist> playlists;
-        String path;
+        String path = req.getContextPath();
         String error = req.getContextPath() + "/ShowError?error=";
         ArrayList<Track> songs;
+
+        String jsonPTracks;
+        String jsonPPlaylists;
+        String jsonUser;
+
+        Gson gson;
+        PrintWriter out = resp.getWriter();
 
         try {
             playlists = playlistDAO.getPlaylists(u);
@@ -93,11 +103,36 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             return;
         }
 
-        path = "/HomePage.html";
+        path = path + "/HomePage.html";
+        //request.getSession().setAttribute("user", user);
+        /*req.getSession().setAttribute("playlists", playlists);
+        System.out.println("Settata playlist");
+        req.getSession().setAttribute("user", u);
+        System.out.println("Settato username");
+        req.getSession().setAttribute("songs", songs);
+        System.out.println("Settate songs");*/
+
+        gson = new GsonBuilder().create();
+        jsonPTracks = gson.toJson(songs);
+        jsonPPlaylists = gson.toJson(playlists);
+        jsonUser = gson.toJson(u);
+
+
+        resp.setStatus(HttpServletResponse.SC_OK);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        String st1="{\"Playlists\":";
+        String st2="{\"Tracks\":";
+        out.println("{\"Answer\":["+st1+jsonPPlaylists+"},"+st2+jsonPTracks+"}"+"]}");
+        //out.println(jsonPPlaylists);
+        //out.println(jsonPTracks);
+        System.out.println(jsonPTracks);
+        System.out.println(jsonPPlaylists);
+        System.out.println(jsonUser);
+        //resp.getWriter();
         /*ctx.setVariable("playlists", playlists);
         ctx.setVariable("user", u);
-        ctx.setVariable("songs", songs);
-        templateEngine.process(path, ctx, resp.getWriter());*/
+        ctx.setVariable("songs", songs);*/
     }
 
     @Override

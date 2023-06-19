@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="shortcut icon" href="resources/TobbiSosFy logo.png">
     <title>Home</title>
     <link rel="stylesheet" type="text/css" media="all" href="css/homestyle.css"/>
+    <link rel="shortcut icon" href="resources/TobbiSosFy logo.png">
+    <meta name=”viewport” content=”width=device-width, initial-scale=1″>
     <script src="utils.js" charset="UTF-8" defer></script>
     <script type="module" src="Home.js" charset="UTF-8" defer></script>
     <script src="playlistPage.js" charset="UTF-8" defer></script>
@@ -28,13 +29,13 @@
         <p class="myplaylists">My playlists</p>
             <dl id="pllysts">
                 <dt>
-                    <a class="ply" id="ply" href="ShowPlaylist?playlist=1">MKplaylist</a>
+
                 </dt>
                 <dd id="pdate"></dd>
             </dl>
     </div>
 
-    <div class="hidden" id="newTrack">
+    <div class="newTrack" id="newTrack">
         <p>Add a new track</p>
         <form action="Home" method="POST" enctype="multipart/form-data"> <!--enctype="multipart/form-data"-->
             <label for="ttitle">Track Title</label><br>
@@ -146,7 +147,7 @@
 
     </div>
 
-    <div class="hidden" id="newPlaylist">
+    <div class="newPlaylist" id="newPlaylist">
         <p>Add a new playlist</p>
         <form action="PLinsert" method="POST">
             <label for="ptitle">Playlist Title</label><br>

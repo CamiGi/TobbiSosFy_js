@@ -8,12 +8,12 @@ public class Playlist {
     private int id;
     private final String title;
     private final Date date;
-    private final User user;
+    private final String user;
 
     public Playlist(String title, Date date, User user) {
         this.title =title.toLowerCase();
         this.date=date;
-        this.user = user;
+        this.user = user.getUsername();
     }
 
     public void setId(int id){
@@ -24,7 +24,7 @@ public class Playlist {
         return id;
     }
 
-    public User getUser() {
+    public String getUser() {
         return user;
     }
 

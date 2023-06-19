@@ -35,7 +35,7 @@ public class PlaylistDAO {
 
         ps = con.prepareStatement(queryplst);
         ps.setString(1,playlist.getTitle());
-        ps.setString(2,playlist.getUser().getUsername());
+        ps.setString(2,playlist.getUser());
         result = ps.executeQuery();
 
         result.next();
@@ -47,7 +47,7 @@ public class PlaylistDAO {
             ps.setString(1, null);
             ps.setString(2,playlist.getTitle());
             ps.setDate(3,playlist.getDate());
-            ps.setString(4,playlist.getUser().getUsername());
+            ps.setString(4,playlist.getUser());
             code = ps.executeUpdate();
         } else {
             throw new Exception("ATTENZIONE qualcosa non è andato bene: 500");
@@ -61,7 +61,7 @@ public class PlaylistDAO {
         String queryPlID = "SELECT ID FROM playlist WHERE title=? AND userID=?";
         ps = con.prepareStatement(queryPlID);
         ps.setString(1,playlist.getTitle());
-        ps.setString(2, playlist.getUser().getUsername());
+        ps.setString(2, playlist.getUser());
         result = ps.executeQuery();
         result.next();
         int h = result.getInt("ID");
@@ -171,7 +171,7 @@ public class PlaylistDAO {
             while (!resultTrack.isAfterLast()) {
                 tid = resultTrack.getInt("tr.ID");
                 //rs.add(td.getTrack(tid));  //uso il metodo privato che dato un id di Track restituisce l'oggetto Track
-                rs.add(td.getTrack(tid, playlist.getUser().getUsername()));
+                rs.add(td.getTrack(tid, playlist.getUser()));
                 resultTrack.next();
             }
         } else {
@@ -194,7 +194,7 @@ public class PlaylistDAO {
         ps = con.prepareStatement(queryIdP);
         ps.setString(1,playlist.getTitle());
         ps.setDate(2,playlist.getDate());
-        ps.setString(3,playlist.getUser().getUsername());
+        ps.setString(3,playlist.getUser());
 
         result = ps.executeQuery();
         if (result.isBeforeFirst()){

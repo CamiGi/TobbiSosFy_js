@@ -7,6 +7,7 @@ import it.polimi.tiw.tobbisosfy_js.beans.User;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.annotation.MultipartConfig;
@@ -50,6 +51,7 @@ public class CheckLogin extends HttpServlet {
             throws ServletException, IOException {
         String usrn = StringEscapeUtils.escapeJava(request.getParameter("username"));
         String pwd = StringEscapeUtils.escapeJava(request.getParameter("pwd"));
+        String path = getServletContext().getContextPath();
         PrintWriter out = response.getWriter();
 
         if (usrn == null || usrn.isEmpty() || pwd == null || pwd.isEmpty()) {
@@ -79,6 +81,13 @@ public class CheckLogin extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().println(usrn);
+            //response.sendRedirect(path+"/Home");
+            response.sendRedirect("http://localhost:8080/TobbiSosFy_js_war_exploded/"+"/Home");
+            System.out.println("SONO ARRIVATA QUI");
+            /*RequestDispatcher dispatcher = request.getRequestDispatcher(path+"Home");
+            dispatcher.forward(request, response);*/
+            System.out.println("SONO ARRIVATA QUA");
+            return;
         }
     }
 
