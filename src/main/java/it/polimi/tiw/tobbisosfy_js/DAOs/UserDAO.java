@@ -46,6 +46,16 @@ public class UserDAO {
         return new User(result.getString("username"), result.getString("password"));
     }
 
+    public User findUser(String username) throws SQLException, Exception{
+        String queryUsername = "SELECT * FROM user WHERE username=?";
+        ps = con.prepareStatement(queryUsername);
+        ps.setString(1,username);
+        ResultSet result = ps.executeQuery();
+
+        result.next();
+        return new User(result.getString("username"), result.getString("password"));
+    }
+
     /**
      * Aggiungo un nuovo utente
      * @param username

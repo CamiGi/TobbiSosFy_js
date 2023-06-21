@@ -1,6 +1,7 @@
 {
     let playlistTracks;
     let group;
+    let ttracks = tracks;
 
     (() => {
         document.getElementById("ply").addEventListener('click',

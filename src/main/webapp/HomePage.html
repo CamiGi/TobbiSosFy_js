@@ -6,6 +6,9 @@
     <link rel="stylesheet" type="text/css" media="all" href="css/homestyle.css"/>
     <link rel="shortcut icon" href="resources/TobbiSosFy logo.png">
     <meta name=”viewport” content=”width=device-width, initial-scale=1″>
+    <script type='text/javascript' >
+        window.glob = "tracks";
+    </script>
     <script src="utils.js" charset="UTF-8" defer></script>
     <script type="module" src="Home.js" charset="UTF-8" defer></script>
     <script src="playlistPage.js" charset="UTF-8" defer></script>
@@ -17,19 +20,18 @@
 <a class="logout" id="logout" onclick="logout()">Logout</a>
 
 <div class="HomePage">
-    <!--<script type="module" src="Home.js" defer></script>-->
 
     <nav class="nav">
-        <!--<script type="module" src="Home.js" defer></script>-->
-        <a id="navMP">My Playlists</a>
-        <a id="navNP">New Playlist</a>
-        <a id="navNT">New Track</a>
+        <a id="navMP" class="nav_el">My Playlists</a>
+        <a id="navNP" class="nav_el">New Playlist</a>
+        <a id="navNT" class="nav_el">New Track</a>
     </nav>
     <div class="one" id="myplaylists">
         <p class="myplaylists">My playlists</p>
             <dl id="pllysts">
+                <dt id="empty_pl">You don't have any playlist yet</dt>
                 <dt>
-
+                    <a class="ply" id="ply" href="ShowPlaylist?playlist=1"></a>
                 </dt>
                 <dd id="pdate"></dd>
             </dl>
@@ -41,99 +43,96 @@
             <label for="ttitle">Track Title</label><br>
             <input class="text" type="text" id="ttitle" name="ttitle" required="required"><br>
             <label for="audio" >Select audio file: </label>
-            <input class="tfile" type="file" name="audio" id="audio"><br>
-            <!--<legend id="div1" >Drop here the audio file</legend>-->
+            <input class="tfile" type="file" name="audio" id="audio" required="required"><br>
             <label for="talbum">Album</label><br>
             <input class="text" type="text" id="talbum" name="talbum" required="required"><br>
             <label for="dalbum">Year of release: </label>
-            <select class="text" name="dalbum" id="dalbum">
-                <option>year!!!!!!!</option>
+            <select class="text" name="dalbum" id="dalbum" required="required">
             </select>
             <br>
             <label for="img" >Select album image: </label>
-            <input class="afile" type="file" name="img" id="img"><br>
+            <input class="afile" type="file" name="img" id="img" required="required"><br>
             <fieldset id="galbum">
                 <legend>Genre</legend>
                     <table>
-                        <!-- tr riga e dentro ha la colonna che è td -->
                         <tr>
                             <td>
                                 <input type="radio" id="classic" value="CLASSIC" name="g" checked="checked">
-                                <label for ="classic">Classic</label>
+                                <label for ="classic" class="lalabel">Classic</label>
                             </td>
                             <td>
                                 <input type="radio" id="jazz" value="JAZZ" name="g">
-                                <label for="jazz">Jazz</label><br>
+                                <label for="jazz" class="lalabel">Jazz</label><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <input type="radio" id="blues" value="BLUES" name="g">
-                                <label for="blues">Blues</label>
+                                <label for="blues" class="lalabel">Blues</label>
                             </td>
                             <td>
                                 <input type="radio" id="gospel" value="GOSPEL" name="g">
-                                <label for="gospel">Gospel</label><br>
+                                <label for="gospel" class="lalabel">Gospel</label><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <input type="radio" id="soul" value="SOUL" name="g">
-                                <label for="soul">Soul</label>
+                                <label for="soul" class="lalabel">Soul</label>
                             </td>
                             <td>
                                 <input type="radio" id="pop" value="POP" name="g">
-                                <label for="pop">Pop</label><br>
+                                <label for="pop" class="lalabel">Pop</label><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <input type="radio" id="rock" value="ROCK" name="g">
-                                <label for="rock">Rock</label>
+                                <label for="rock" class="lalabel">Rock</label>
                             </td>
                             <td>
                                 <input type="radio" id="country" value="COUNTRY" name="g">
-                                <label for="country">Country</label><br>
+                                <label for="country" class="lalabel">Country</label><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <input type="radio" id="disco" value="DISCO" name="g">
-                                <label for="disco">Disco</label>
+                                <label for="disco" class="lalabel">Disco</label>
                             </td>
                             <td>
                                 <input type="radio" id="techno" value="TECHNO" name="g">
-                                <label for="techno">Techno</label><br>
+                                <label for="techno" class="lalabel">Techno</label><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <input type="radio" id="raggae" value="RAGGAE" name="g">
-                                <label for="raggae">Raggae</label>
+                                <label for="raggae" class="lalabel">Raggae</label>
                             </td>
                             <td>
                                 <input type="radio" id="salsa" value="SALSA" name="g">
-                                <label for="salsa">Salsa</label><br>
+                                <label for="salsa" class="lalabel">Salsa</label><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <input type="radio" id="flamenco" value="FLAMENCO" name="g">
-                                <label for="flamenco">Flamenco</label>
+                                <label for="flamenco" class="lalabel">Flamenco</label>
                             </td>
                             <td>
                                 <input type="radio" id="hiphop" value="HIPHOP" name="g">
-                                <label for="hiphop">Hip-Hop</label><br>
+                                <label for="hiphop" class="lalabel">Hip-Hop</label><br>
                             </td>
                         </tr>
                         <tr>
                             <td>
                                 <input type="radio" id="metal" value="METAL" name="g">
-                                <label for="metal">Metal</label>
+                                <label for="metal" class="lalabel">Metal</label>
                             </td>
                             <td>
                                 <input type="radio" id="funk" value="FUNK" name="g">
-                                <label for="funk">Funk</label><br>
+                                <label for="funk" class="lalabel">Funk</label><br>
                             </td>
                         </tr>
                 </table>
@@ -154,14 +153,12 @@
             <input class="text" type="text" id="ptitle" name="ptitle" required="required"><br>
             <fieldset class="fs">
                 <legend>My songs</legend><br>
-                    <div id="youdonthaveanysong">You don't have any song</div>
+                    <label id="youdonthaveanysong">You don't have any song</label>
                     <div id="selectionSong">
-                        <input type="checkbox" name="song">
-                        <label id="song"></label>
                         <br>
                     </div>
             </fieldset>
-            <input type="submit" value="Submit"><br>
+            <input type="submit" value="Submit" id="addNewPlaylist"><br>
         </form>
     </div>
 </div>

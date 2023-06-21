@@ -81,12 +81,8 @@ public class CheckLogin extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().println(usrn);
-            //response.sendRedirect(path+"/Home");
             response.sendRedirect("http://localhost:8080/TobbiSosFy_js_war_exploded/"+"/Home");
-            System.out.println("SONO ARRIVATA QUI");
-            /*RequestDispatcher dispatcher = request.getRequestDispatcher(path+"Home");
-            dispatcher.forward(request, response);*/
-            System.out.println("SONO ARRIVATA QUA");
+
             return;
         }
     }

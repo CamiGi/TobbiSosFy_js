@@ -56,7 +56,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         }
 
         ServletContext servletContext = getServletContext();
-        imgFP = getServletContext().getInitParameter("imagepath");
+        imgFP = getServletContext().getInitParameter("imgpath");
         audioFP = getServletContext().getInitParameter("trackpath");
     }
 
@@ -104,13 +104,6 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         }
 
         path = path + "/HomePage.html";
-        //request.getSession().setAttribute("user", user);
-        /*req.getSession().setAttribute("playlists", playlists);
-        System.out.println("Settata playlist");
-        req.getSession().setAttribute("user", u);
-        System.out.println("Settato username");
-        req.getSession().setAttribute("songs", songs);
-        System.out.println("Settate songs");*/
 
         gson = new GsonBuilder().create();
         jsonPTracks = gson.toJson(songs);
@@ -123,16 +116,10 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         resp.setCharacterEncoding("UTF-8");
         String st1="{\"Playlists\":";
         String st2="{\"Tracks\":";
-        out.println("{\"Answer\":["+st1+jsonPPlaylists+"},"+st2+jsonPTracks+"}"+"]}");
-        //out.println(jsonPPlaylists);
-        //out.println(jsonPTracks);
+        out.println("{\"Answer\":["+st1+jsonPPlaylists+"},"+st2+jsonPTracks+"},"+"{\"Us_name\":"+"\""+u.getUsername()+"\", \"Us_psw\":"+"\""+u.getPassword()+"\"}"+"]}");
         System.out.println(jsonPTracks);
         System.out.println(jsonPPlaylists);
         System.out.println(jsonUser);
-        //resp.getWriter();
-        /*ctx.setVariable("playlists", playlists);
-        ctx.setVariable("user", u);
-        ctx.setVariable("songs", songs);*/
     }
 
     @Override
@@ -140,7 +127,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
 
         TrackDAO td = new TrackDAO(connection, audioFP, imgFP);
         String ctxPath = req.getContextPath();
-        String error = ctxPath + "/ShowError?error=";
+        PrintWriter out = resp.getWriter();
 
         Part trackTitle;
         Part albumDate;
@@ -167,8 +154,8 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             System.out.println("STO USCENDO DAL TRY");
         } catch (Exception e) {
             e.printStackTrace();
-            error += "Error occurred while reading the form: Add a new track";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println("Error occurred while reading the form: Add a new track");
             return;
         }
 
@@ -179,9 +166,6 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
                 albumDate == null || albumDate.getSize() <= 0 ||
                 albumGenre == null || albumGenre.getSize() <= 0 ||
                 artistName == null || artistName.getSize() <= 0 ||
-                /*albumTitle.isEmpty() || trackTitle.isEmpty() ||
-                albumDate == 0 || albumGenre.isEmpty() ||
-                artistName.isEmpty() ||*/
                 img == null || img.getSize() <= 0 ||
                 taudio == null || taudio.getSize() <= 0)) {
             String aTitle = new String(albumTitle.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
@@ -198,8 +182,10 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             System.out.println("Type " + contentTypeImg);
 
             if (!contentTypeImg.startsWith("image")) {
-                error += "Image file format not permitted! Retry";
-                resp.sendRedirect(error);
+
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.println( "Image file format not permitted! Retry");
+
                 return;
             }
 
@@ -209,8 +195,8 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             System.out.println("Type " + contentTypeAudio);
 
             if (!contentTypeAudio.startsWith("audio")) {
-                error += "Audio file format not permitted! Retry";
-                resp.sendRedirect(error);
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.println("Audio file format not permitted! Retry");
                 return;
             }
 
@@ -243,8 +229,10 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
                 System.out.println("Image saved correctly!");
             } catch (Exception e) {
                 e.printStackTrace();
-                error += "Error occurred while saving the image! Retry";
-                resp.sendRedirect(error);
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.println("Error occurred while saving the image! Retry");
+                //error += "Error occurred while saving the image! Retry";
+                //resp.sendRedirect(error);
                 return;
             }
 
@@ -262,8 +250,8 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
                 System.out.println("Track audio saved correctly!");
             } catch (Exception e) {
                 e.printStackTrace();
-                error += "Error occurred while saving the audio file! Retry";
-                resp.sendRedirect(error);
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.println("Error occurred while saving the audio file! Retry");
                 return;
             }
 
@@ -278,19 +266,22 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
                 System.out.println("Track aggiunta corettamente al server");
             } catch (SQLException e){
                 e.printStackTrace();
-                error += "Error occurred while saving the track in the database (SQL exception)";
-                resp.sendRedirect(error);
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                out.println("Error occurred while saving the track in the database (SQL exception)");
                 return;
             } catch (Exception e) {
-                error += "Error occurred while saving the track in the database";
-                resp.sendRedirect(error);
+
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.println("Error occurred while saving the track in the database");
                 return;
             }
         } else {
-            error += "Missing parameters in the 'Add a new track' form";
-            resp.sendRedirect(error);
+
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println("Missing parameters in the 'Add a new track' form");
             return;
         }
+        resp.setStatus(HttpServletResponse.SC_OK);
         resp.sendRedirect(ctxPath+"/Home");
     }
 

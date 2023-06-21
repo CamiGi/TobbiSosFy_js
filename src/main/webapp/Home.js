@@ -8,19 +8,26 @@
 let tracks; //da rendere pubblico che serve anche a Marco
 let playlists;
 let u_name;
+let u;
+let u_psw;
+let no_song;
+let no_pl;
 
 window.onload = function() {
-    /*if(username.toString().length>0){
-        document.getElementById("username").textContent = username.toString();
-    } else {
-        document.getElementById("username").textContent = "Null";
-    };*/
+
     console.log("Hello world!");
 
     makeCall("GET", 'Home', null, //con le get non si inviano form, quindi al suo posto metti null
         (x) => {
             switch(x.readyState){
                 case XMLHttpRequest.DONE:
+
+                    no_song = false;
+                    no_pl = false;
+
+                    document.getElementById("empty_pl").style.visibility = 'hidden';
+                    document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
+                    document.getElementById("youdonthaveanysong").style.margin = 'none';
 
                     document.getElementById("myplaylists").style.visibility = 'visible';
                     document.getElementById("newPlaylist").style.visibility = 'hidden';
@@ -45,50 +52,91 @@ window.onload = function() {
                     playlists = ans[0];
                     tracks = tracks["Tracks"];
                     playlists = playlists["Playlists"];
-                    console.log(playlists);
-                    console.log(tracks);
                     let t = tracks[0];
-                    console.log(t);
-                    u_name = t["user"];
-                    console.log(u_name);
+                    u = ans[2];
+                    u_name = u["Us_name"];
+                    u_psw = u["Us_psw"];
 
                     //setto lo username, playlists e tracks
                     document.getElementById("username").innerText = u_name;
 
-                    //setto la pagina playlist : FARE IL CASO IN CUI TRACKS O PLAYLISTS è VUOTA
-                    let dl = document.getElementById("ply");
+                    //setto la pagina playlist
+                    let dl = document.getElementById("pllysts");
                     let anchor;
                     let dt;
                     let dd;
 
-                    //if(playlists.length == 0){
-                    //    dl.innerText = "You don't have any palylist yet";
-                    //}
+                    if(playlists.length == 0){
+                        //document.getElementById("empty_pl").style.visibility = 'visible';
+                        no_pl = true;
+                    } else {
 
-                    for(let i=0; i < playlists.length; i++){
-                        anchor = document.createElement("A");
-                        dt = document.createElement("DT");
-                        dd = document.createElement("DD");
-                        anchor.setAttribute("id", "ply");
-                        anchor.setAttribute("class", "ply");
-                        anchor.setAttribute("href", "ShowPlaylist?playlist="+playlists[i].id);
-                        anchor.innerHTML = playlists[i].title;
-                        dt.appendChild(anchor);
-                        dl.appendChild(dt);
-                        dd.setAttribute("id", "pdate");
-                        dd.innerHTML = playlists[i].date;
-                        dl.appendChild(dd);
+                        for (let i = 0; i < playlists.length; i++) {
+                            anchor = document.createElement("A");
+                            dt = document.createElement("DT");
+                            dt.setAttribute("name", "halo");
+                            //console.log("dt creato");
+                            dd = document.createElement("DD");
+                            anchor.setAttribute("id", "ply");
+                            anchor.setAttribute("class", "ply");
+                            anchor.setAttribute("href", "ShowPlaylist?playlist=" + playlists[i].id);
+                            anchor.innerHTML = playlists[i].title;
+                            dt.appendChild(anchor);
+                            dl.appendChild(dt);
+                            dd.setAttribute("id", "pdate");
+                            dd.innerHTML = playlists[i].date;
+                            dl.appendChild(dd);
+                        }
+                    }
+                    if(no_pl){
+                        document.getElementById("empty_pl").style.visibility = 'visible';
                     }
 
                     //preventdefault: fa in modo che la href non vadano alla pagina
 
                     //setto la pagina NewTrack
+                    let select = document.getElementById("dalbum");
+                    for(let i =1900; i<2024; i++){
+                        let h = document.createElement("OPTION");
+                        h.innerText = i;
+                        h.setAttribute("name", "year");
+                        select.appendChild(h);
+                    }
+
 
                     //creare script con il controllo dei dati inseriti e invio form
 
                     //setto la pagina NewPlaylist
+                    let selection = document.getElementById("selectionSong");
+                    let inp;
+                    let lab;
+                    let li;
+
+                    if(tracks.length == 0){
+                        //BOHHHH
+                        no_song = true;
+                    } else {
+
+                        for (let i = 0; i < tracks.length; i++) {
+                            li = document.createElement("BR");
+                            inp = document.createElement("INPUT");
+                            inp.setAttribute("type", "checkbox");
+                            inp.setAttribute("name", "song");
+                            lab = document.createElement("LABEL");
+                            lab.setAttribute("id", "song");
+                            lab.setAttribute("class", "lalabel");
+                            lab.innerText = tracks[i].title + " - " + tracks[i].album.title + " - " + tracks[i].album.genre + " - " + tracks[i].album.artist.artistName;
+
+                            selection.appendChild(inp);
+                            selection.appendChild(lab);
+                            selection.appendChild(li);
+
+                        }
+                    }
 
                     //creare script per inviare nuova playlist e controllo dati inseriti
+
+
                     break;
                 case XMLHttpRequest.UNSENT:
                     window.reportError("Couldn't send the request, try later");
@@ -108,57 +156,95 @@ function showDivs(mp, np, nt){
         document.getElementById("myplaylists").style.visibility = 'visible';
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'hidden';
+        document.getElementById("empty_pl").style.visibility = 'hidden';
+        document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
+        if(no_pl){
+            document.getElementById("empty_pl").style.visibility = 'visible';
+        }
     } else if(np){
         document.getElementById("myplaylists").style.visibility = 'hidden';
         document.getElementById("newPlaylist").style.visibility = 'visible';
         document.getElementById("newTrack").style.visibility = 'hidden';
+        document.getElementById("empty_pl").style.visibility = 'hidden';
+        document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
+        if(no_song){
+            document.getElementById("youdonthaveanysong").style.visibility = 'visible';
+        }
     } else if(nt){
         document.getElementById("myplaylists").style.visibility = 'hidden';
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'visible';
+        document.getElementById("empty_pl").style.visibility = 'hidden';
+        document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
     }
 }
 
-export class Playlist{
-    id;
-    title;
-    date;
-    user;
-}
-
-export class Track{
-    id;
-    title;
-    album;
-    mp3Uri;
-    user;
-}
-
-function showHome(){
-}
 
 (function() { // avoid variables ending up in the global scope
     document.getElementById("addNewTrack").addEventListener('click', (e) => {
+        e.preventDefault();
         let form = e.target.closest("form");
+        let t_title = form.elements[0].value;
+        let t_audio = form.elements[1].value;
+        let t_aname = form.elements[2].value;
+        let t_ayear = form.elements[3].value;
+        let t_aimg = form.elements[4].value;
+        let t_artname = form.elements[6].value;
+
         if (form.checkValidity()) {
+            if(t_title == '' || t_aname == '' || t_artname == '' || t_ayear == '' ){
+                //errore
+                return;
+            }
+            //controllo t_audio
+            //controllo t_img
             makeCall("POST", 'Home', form,
                 function(x) {
                     if (x.readyState === XMLHttpRequest.DONE) {
                         let message = x.responseText;
                         switch (x.status) {
                             case 200:
-                                /*sessionStorage.setItem('username', message);
-                                console.log("Welcome "+sessionStorage.getItem('username'));*/
-                                window.location.href = "/Home";
+                                window.location.href = "HomePage.html";
                                 break;
-                            case 400: // bad request
-                                document.getElementById("errLog").textContent = message;
+                            default:
+                                warn("HomePage", x.status, x.responseText);
                                 break;
-                            case 401: // unauthorized
-                                document.getElementById("errLog").textContent = message;
+                        }
+                    }
+                }
+            );
+        } else {
+            form.reportValidity();
+        }
+    });
+
+})();
+
+(function() { // avoid variables ending up in the global scope
+    document.getElementById("addNewPlaylist").addEventListener('click', (e) => {
+        e.preventDefault();
+        let form = e.target.closest("form");
+        let p_title = form.elements[0].value;
+        let p_songs = form.elements[1].value;
+        let username = document.getElementById("username").innerText;
+
+        if (form.checkValidity()) {
+            if(p_title == '' || p_songs.length == 0){
+                console.log("ERRORE");
+                return;
+            }
+            //controllo t_audio
+            //controllo t_img
+            makeCall("POST", 'PLinsert', form,
+                function(x) {
+                    if (x.readyState === XMLHttpRequest.DONE) {
+                        let message = x.responseText;
+                        switch (x.status) {
+                            case 200:
+                                window.location.href = "HomePage.html";
                                 break;
-                            case 500: // server error
-                                document.getElementById("errLog").textContent = message;
+                            default:
+                                warn("HomePage", x.status, x.responseText);
                                 break;
                         }
                     }
