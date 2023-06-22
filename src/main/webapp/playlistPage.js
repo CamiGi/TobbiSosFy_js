@@ -1,9 +1,8 @@
 {
-    let playlistTracks;
+    let playlistTracks = [];
     let group;
-    let ttracks = tracks;
 
-    (() => {
+    var initPlPage = () => {
         document.getElementById("ply").addEventListener('click',
             (e) => {
                 e.preventDefault();
@@ -19,13 +18,15 @@
                                 let resp = x.responseText;
 
                                 if (x.status === 200) {
-                                    let tracks = JSON.parse(resp);
+                                    let tr = JSON.parse(resp);
                                     group = 0;
-
-                                    for (let i=0; i<tracks.length; i++) {
-                                        playlistTracks.push(new Track(tracks[i][0], tracks[i][1],
-                                            tracks[i][2], tracks[i][3]));
+                                    console.log(tr.length);
+                                    for (let i=0; i<tr.length; i++) {
+                                        playlistTracks.push(new Track(tr[i][0], tr[i][1],
+                                            tr[i][2], tr[i][3]));
                                     }
+                                    show("HomePage", false);
+                                    show("playlistPage", true);
                                     printButtons();
                                     printGroup();
                                     printTracksToAdd();
@@ -42,7 +43,7 @@
                 e.preventDefault();
 
                 if(group > 0) {
-                    group = group-1;
+                    group -= 5;
                 }
                 printButtons();
                 printGroup();
@@ -51,7 +52,7 @@
         document.getElementById("nextButton").addEventListener('click',
             (e) => {
                 e.preventDefault();
-                group = group+1;
+                group += 5;
                 printButtons();
                 printGroup();
             });
@@ -127,9 +128,17 @@
                 document.getElementById("showTab").className = "backgroundTab";
             }
         );
-    })();
+
+        document.getElementById("return").addEventListener('click',
+            (e) => {
+                e.preventDefault();
+                show("errorPage", false);
+                show("HomePage", true);
+            })
+    };
 
     function Track (title, album, uri, user) {
+        console.log(album);
         this.title = title;
         this.album = new Album(album[0], album[1], album[2], album[3], album[4]);
         this.uri = uri;
@@ -154,7 +163,7 @@
             show(prevB, false);
         }
 
-        if (5 * group < playlistTracks.length) {
+        if (group < playlistTracks.length) {
             show(nextB, true);
         } else {
             show(nextB, false);
@@ -170,7 +179,7 @@
         let image;
 
         if (playlistTracks.length > 0) {
-            for (let i = group; i < 5*group+5 && i < playlistTracks.length; i++) {
+            for (let i = group; i < group+5 && i < playlistTracks.length; i++) {
                 data = row.insertCell(i - group);
                 data.className = "shine";
 
@@ -182,6 +191,7 @@
                 image = document.createElement("IMG");
                 image.setAttribute("src", playlistTracks[i].image);
                 data.appendChild(image);
+                console.log(data);
             }
 
             table.appendChild(row);
@@ -198,7 +208,7 @@
         let t;
 
         for (let i = 0; i < playlistTracks.length; i++) {
-            t = userTracks.tracks[i];
+            t = tracks[i];
 
             if (!playlistTracks.includes(t)) {
                 input = document.createElement("INPUT");

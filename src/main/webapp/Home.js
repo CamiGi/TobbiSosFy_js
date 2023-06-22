@@ -4,8 +4,9 @@
 // della classe Track é solo lo username
 
 //Grande Marco!!
+//Grazie Cami!!!
 
-let tracks; //da rendere pubblico che serve anche a Marco
+var tracks; //da rendere pubblico che serve anche a Marco ~ update: ora é nello scope globale
 let playlists;
 let u_name;
 let u;
@@ -50,8 +51,8 @@ window.onload = function() {
                     //setto i dati
                     tracks = ans[1];
                     playlists = ans[0];
-                    tracks = tracks["Tracks"];
-                    playlists = playlists["Playlists"];
+                    tracks = tracks["Tracks"];              //??
+                    playlists = playlists["Playlists"];     //??
                     let t = tracks[0];
                     u = ans[2];
                     u_name = u["Us_name"];
@@ -77,8 +78,9 @@ window.onload = function() {
                             dt.setAttribute("name", "halo");
                             //console.log("dt creato");
                             dd = document.createElement("DD");
-                            anchor.setAttribute("id", "ply");
-                            anchor.setAttribute("class", "ply");
+                            anchor.setAttribute("id", "p" + i);
+                            //anchor.setAttribute("class", "ply");
+                            anchor.className = "ply";
                             anchor.setAttribute("href", "ShowPlaylist?playlist=" + playlists[i].id);
                             anchor.innerHTML = playlists[i].title;
                             dt.appendChild(anchor);
@@ -135,8 +137,7 @@ window.onload = function() {
                     }
 
                     //creare script per inviare nuova playlist e controllo dati inseriti
-
-
+                    initPlPage();
                     break;
                 case XMLHttpRequest.UNSENT:
                     window.reportError("Couldn't send the request, try later");
@@ -242,6 +243,8 @@ function showDivs(mp, np, nt){
                         switch (x.status) {
                             case 200:
                                 window.location.href = "HomePage.html";
+                                //al posto di richiedere la pagina al server basta ricaricare la scheda con
+                                //location.reload();
                                 break;
                             default:
                                 warn("HomePage", x.status, x.responseText);
@@ -261,7 +264,7 @@ function logout(){
     //redirecta a alla pagina di login
 }
 
-function playlistSelected(id){
+function playlistSelected(id){//non serve
     var xmlHttp = new XMLHttpRequest();
     xmlHttp.open( "GET", "/ShowPlaylist?playlist="+id+"&group=0", false ); // false for synchronous request
     xmlHttp.send( null );

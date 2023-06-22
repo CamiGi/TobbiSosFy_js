@@ -5,12 +5,9 @@
     <title>Home</title>
     <link rel="stylesheet" type="text/css" media="all" href="css/homestyle.css"/>
     <link rel="shortcut icon" href="resources/TobbiSosFy logo.png">
-    <meta name=”viewport” content=”width=device-width, initial-scale=1″>
-    <script type='text/javascript' >
-        window.glob = "tracks";
-    </script>
+    <meta name=”viewport” content=”width=device-width, initial-scale=1″> <!--??-->
     <script src="utils.js" charset="UTF-8" defer></script>
-    <script type="module" src="Home.js" charset="UTF-8" defer></script>
+    <script src="Home.js" charset="UTF-8" defer></script>
     <script src="playlistPage.js" charset="UTF-8" defer></script>
     <!--gli script basta metterli solo una volta nell'header-->
 </head>
@@ -31,7 +28,7 @@
             <dl id="pllysts">
                 <dt id="empty_pl">You don't have any playlist yet</dt>
                 <dt>
-                    <a class="ply" id="ply" href="ShowPlaylist?playlist=1"></a>
+                    <a class="ply" id="ply" href="ShowPlaylist?playlist=1">HELO</a>
                 </dt>
                 <dd id="pdate"></dd>
             </dl>
@@ -261,15 +258,13 @@
     </div>
 </div>
 <div class="hidden" id="ErrorPage">
-    <a class="logout">Logout</a>
     <div class="error" id="error">
-        <div>Something went wrong during the elaboration of your request. &nbsp
-        </div>
-        <div>
-            Please click
-            <a>here </a>
-            to return to the Home Page
-        </div>
+        Something went wrong during the elaboration of your request. &nbsp
+    </div>
+    <div>
+        Please click
+        <a id="return" href="/Home">here </a>
+        to return to the Home Page
     </div>
 </div>
 

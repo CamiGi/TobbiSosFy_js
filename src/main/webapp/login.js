@@ -12,6 +12,7 @@ window.onload = () => {
 (() => { // avoid variables ending up in the global scope
     document.getElementById("loginButton").addEventListener('click', (e) => {
         let form = e.target.closest("form");
+        e.preventDefault();
         if (form.checkValidity()) {
             makeCall("POST", 'CheckLogin', form,
                 (x) => {
