@@ -85,8 +85,9 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         try {
             playlists = playlistDAO.getPlaylists(u);
         } catch (SQLException e) {
-            error += "Error occurred while loading playlists";
-            resp.sendRedirect(error);
+
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println( "Error occurred while loading playlists");
             return;
         }
 
@@ -94,12 +95,12 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             songs = trackDAO.getTracksFromUser(u);
         } catch (SQLException e) {
             e.printStackTrace();
-            error += "Error occurred while loading tracks of the user (SQL exception)";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println( "Error occurred while loading tracks of the user (SQL exception)");
             return;
         } catch (Exception e) {
-            error += "Error occurred while loading tracks of the user (SQL exception)";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println("Error occurred while loading tracks of the user");
             return;
         }
 
@@ -117,9 +118,6 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         String st1="{\"Playlists\":";
         String st2="{\"Tracks\":";
         out.println("{\"Answer\":["+st1+jsonPPlaylists+"},"+st2+jsonPTracks+"},"+"{\"Us_name\":"+"\""+u.getUsername()+"\", \"Us_psw\":"+"\""+u.getPassword()+"\"}"+"]}");
-        System.out.println(jsonPTracks);
-        System.out.println(jsonPPlaylists);
-        System.out.println(jsonUser);
     }
 
     @Override

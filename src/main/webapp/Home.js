@@ -125,7 +125,7 @@ window.onload = function() {
                             inp.setAttribute("type", "checkbox");
                             inp.setAttribute("name", "song");
                             lab = document.createElement("LABEL");
-                            lab.setAttribute("id", "song");
+                            //lab.setAttribute("id", "song");
                             lab.setAttribute("class", "lalabel");
                             lab.innerText = tracks[i].title + " - " + tracks[i].album.title + " - " + tracks[i].album.genre + " - " + tracks[i].album.artist.artistName;
 
@@ -226,16 +226,25 @@ function showDivs(mp, np, nt){
         e.preventDefault();
         let form = e.target.closest("form");
         let p_title = form.elements[0].value;
-        let p_songs = form.elements[1].value;
+        let p_songs = document.getElementsByName("song");
+        let ss = [];
+        for(let i = 0; i < p_songs.length; i++){
+            if(p_songs[i].checked){
+                ss.push(p_songs[i]);
+            }
+        }
+
+        //console.log(form.elements[1].value);
         let username = document.getElementById("username").innerText;
 
         if (form.checkValidity()) {
-            if(p_title == '' || p_songs.length == 0){
+            if(p_title == '' || ss.length == 0){
                 console.log("ERRORE");
                 return;
             }
             //controllo t_audio
             //controllo t_img
+
             makeCall("POST", 'PLinsert', form,
                 function(x) {
                     if (x.readyState === XMLHttpRequest.DONE) {

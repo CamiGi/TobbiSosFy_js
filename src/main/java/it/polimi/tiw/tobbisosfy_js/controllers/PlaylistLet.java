@@ -50,30 +50,22 @@ public class PlaylistLet  extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext ctx = getServletContext();
-        UserDAO uDao = new UserDAO(connection);
+        this.setU((User) req.getSession().getAttribute("user"));
         String trackPath = ctx.getInitParameter("trackpath"),
                 imgPath = ctx.getInitParameter("imgpath");
-        //this.setU(new User(StringEscapeUtils.escapeJava(req.getParameter("user")), StringEscapeUtils.escapeJava(req.getParameter("password"))));
-        //this.setU((User) req.getSession().getAttribute("user"));
-        try {
-            User use = uDao.findUser(StringEscapeUtils.escapeJava(req.getParameter("username")));
-            this.setU(use);
-        } catch (SQLException e){
-            e.printStackTrace();
-        } catch (Exception e){
-            e.printStackTrace();
-        }
-        //this.setU(new User(StringEscapeUtils.escapeJava(req.getParameter("u_name")), StringEscapeUtils.escapeJava(req.getParameter("u_psw"))));
+
         PlaylistDAO pd = new PlaylistDAO(connection, trackPath, imgPath);
         TrackDAO td = new TrackDAO(connection, trackPath, imgPath);
         System.out.println(u);
         String ctxPath = req.getContextPath();
         String[] songs = req.getParameterValues("song");
+        String ptitle = StringEscapeUtils.escapeJava(req.getParameter("ptitle"));
         PrintWriter out = resp.getWriter();
+        System.out.println(ptitle);
 
-        if(!(req.getParameter("ptitle").isEmpty() || songs == null )  ) {
+        if(!(ptitle.isEmpty() || songs == null )  ) {
 
-            String playlistTitle = req.getParameter("ptitle");
+            String playlistTitle = ptitle;
             System.out.println("Titolo preso: "+playlistTitle+" "+ trackPath + " " + imgPath);
             ArrayList<Track> sng = new ArrayList<>();
 
