@@ -12,10 +12,11 @@
     <!--gli script basta metterli solo una volta nell'header-->
 </head>
 <body>
-<div class="username" id="username"></div>
-<a class="logout" id="logout" onclick="logout()">Logout</a>
+<a class="logout" id="logout" href="Logout">Logout</a>
 
 <div class="HomePage">
+
+    <div class="username" id="username"></div>
 
     <nav class="nav">
         <a id="navMP" class="nav_el">My Playlists</a>
@@ -34,7 +35,7 @@
 
     <div class="newTrack" id="newTrack">
         <p>Add a new track</p>
-        <form action="Home" method="POST" enctype="multipart/form-data"> <!--enctype="multipart/form-data"-->
+        <form action="Home" method="POST" enctype="multipart/form-data">
             <label for="ttitle">Track Title</label><br>
             <input class="text" type="text" id="ttitle" name="ttitle" required="required"><br>
             <label for="audio" >Select audio file: </label>

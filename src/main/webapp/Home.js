@@ -18,7 +18,7 @@ window.onload = function() {
 
     console.log("Hello world!");
 
-    makeCall("GET", 'Home', null, //con le get non si inviano form, quindi al suo posto metti null
+    makeCall("GET", 'Home', null,
         (x) => {
             switch(x.readyState){
                 case XMLHttpRequest.DONE:
@@ -68,7 +68,6 @@ window.onload = function() {
                     let dd;
 
                     if(playlists.length == 0){
-                        //document.getElementById("empty_pl").style.visibility = 'visible';
                         no_pl = true;
                     } else {
 
@@ -76,10 +75,8 @@ window.onload = function() {
                             anchor = document.createElement("A");
                             dt = document.createElement("DT");
                             dt.setAttribute("name", "halo");
-                            //console.log("dt creato");
                             dd = document.createElement("DD");
                             anchor.setAttribute("id", "p" + i);
-                            //anchor.setAttribute("class", "ply");
                             anchor.className = "ply";
                             anchor.setAttribute("href", "ShowPlaylist?playlist=" + playlists[i].id);
                             anchor.innerHTML = playlists[i].title;
@@ -94,19 +91,15 @@ window.onload = function() {
                         document.getElementById("empty_pl").style.visibility = 'visible';
                     }
 
-                    //preventdefault: fa in modo che la href non vadano alla pagina
-
                     //setto la pagina NewTrack
                     let select = document.getElementById("dalbum");
-                    for(let i =1900; i<2024; i++){
+                    for(let i =2024; i>1899; i--){
                         let h = document.createElement("OPTION");
                         h.innerText = i;
                         h.setAttribute("name", "year");
                         select.appendChild(h);
                     }
 
-
-                    //creare script con il controllo dei dati inseriti e invio form
 
                     //setto la pagina NewPlaylist
                     let selection = document.getElementById("selectionSong");
@@ -115,7 +108,6 @@ window.onload = function() {
                     let li;
 
                     if(tracks.length == 0){
-                        //BOHHHH
                         no_song = true;
                     } else {
 
@@ -126,7 +118,6 @@ window.onload = function() {
                             inp.setAttribute("name", "song");
                             inp.setAttribute("value", tracks[i].id);
                             lab = document.createElement("LABEL");
-                            //lab.setAttribute("id", "song");
                             lab.setAttribute("class", "lalabel");
                             lab.innerText = tracks[i].title + " - " + tracks[i].album.title + " - " + tracks[i].album.genre + " - " + tracks[i].album.artist.artistName;
 
@@ -137,7 +128,6 @@ window.onload = function() {
                         }
                     }
 
-                    //creare script per inviare nuova playlist e controllo dati inseriti
                     initPlPage();
                     break;
                 case XMLHttpRequest.UNSENT:
@@ -195,18 +185,17 @@ function showDivs(mp, np, nt){
 
         if (form.checkValidity()) {
             if(t_title == '' || t_aname == '' || t_artname == '' || t_ayear == '' ){
-                //errore
+                console.log("ERRORE");
                 return;
             }
-            //controllo t_audio
-            //controllo t_img
+
             makeCall("POST", 'Home', form,
                 function(x) {
                     if (x.readyState === XMLHttpRequest.DONE) {
                         let message = x.responseText;
                         switch (x.status) {
                             case 200:
-                                window.location.href = "HomePage.html";
+                                location.reload();
                                 break;
                             default:
                                 warn("HomePage", x.status, x.responseText);
@@ -235,9 +224,6 @@ function showDivs(mp, np, nt){
             }
         }
 
-        console.log(ss);
-
-        //console.log(form.elements[1].value);
         let username = document.getElementById("username").innerText;
 
         if (form.checkValidity()) {
@@ -245,8 +231,6 @@ function showDivs(mp, np, nt){
                 console.log("ERRORE");
                 return;
             }
-            //controllo t_audio
-            //controllo t_img
 
             makeCall("POST", 'PLinsert', form,
                 function(x) {
@@ -254,9 +238,7 @@ function showDivs(mp, np, nt){
                         let message = x.responseText;
                         switch (x.status) {
                             case 200:
-                                window.location.href = "HomePage.html";
-                                //al posto di richiedere la pagina al server basta ricaricare la scheda con
-                                //location.reload();
+                                location.reload();
                                 break;
                             default:
                                 warn("HomePage", x.status, x.responseText);
@@ -271,26 +253,3 @@ function showDivs(mp, np, nt){
     });
 
 })();
-
-function logout(){
-    //redirecta a alla pagina di login
-}
-
-function playlistSelected(id){//non serve
-    var xmlHttp = new XMLHttpRequest();
-    xmlHttp.open( "GET", "/ShowPlaylist?playlist="+id+"&group=0", false ); // false for synchronous request
-    xmlHttp.send( null );
-    return xmlHttp.responseText; //mandare la risposta a chi gestisce la pagina delle playlist
-}
-
-function songSelected(){
-    //apre il palyer della canzone
-}
-
-function redirectHome(){
-    //torna alla home page
-}
-
-function redirectError(){
-    //va alla pagina di errore
-}
