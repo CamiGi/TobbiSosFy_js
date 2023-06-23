@@ -51,8 +51,8 @@ window.onload = function() {
                     //setto i dati
                     tracks = ans[1];
                     playlists = ans[0];
-                    tracks = tracks["Tracks"];              //??
-                    playlists = playlists["Playlists"];     //??
+                    tracks = tracks["Tracks"];
+                    playlists = playlists["Playlists"];
                     let t = tracks[0];
                     u = ans[2];
                     u_name = u["Us_name"];
@@ -124,6 +124,7 @@ window.onload = function() {
                             inp = document.createElement("INPUT");
                             inp.setAttribute("type", "checkbox");
                             inp.setAttribute("name", "song");
+                            inp.setAttribute("value", tracks[i].id);
                             lab = document.createElement("LABEL");
                             //lab.setAttribute("id", "song");
                             lab.setAttribute("class", "lalabel");
@@ -233,6 +234,8 @@ function showDivs(mp, np, nt){
                 ss.push(p_songs[i]);
             }
         }
+
+        console.log(ss);
 
         //console.log(form.elements[1].value);
         let username = document.getElementById("username").innerText;

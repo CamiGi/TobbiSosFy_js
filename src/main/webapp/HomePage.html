@@ -27,7 +27,6 @@
             <dl id="pllysts">
                 <dt id="empty_pl">You don't have any playlist yet</dt>
                 <dt>
-                    <a class="ply" id="ply" href="ShowPlaylist?playlist=1">HELO</a>
                 </dt>
                 <dd id="pdate"></dd>
             </dl>
@@ -144,9 +143,9 @@
 
     <div class="newPlaylist" id="newPlaylist">
         <p>Add a new playlist</p>
-        <form action="PLinsert" method="POST">
+        <form action="PLinsert" method="POST" enctype="multipart/form-data">
             <label for="ptitle">Playlist Title</label><br>
-            <input class="text" type="text" id="ptitle" name="ptitle" required="required"><br>
+            <input class="text" type="text" id="ptitle" name="ptitle"><br>
             <fieldset class="fs">
                 <legend>My songs</legend><br>
                     <label id="youdonthaveanysong">You don't have any song</label>

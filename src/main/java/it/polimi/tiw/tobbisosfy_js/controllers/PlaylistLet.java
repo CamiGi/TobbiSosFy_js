@@ -9,17 +9,22 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
+@MultipartConfig
 @WebServlet("/PLinsert")
 public class PlaylistLet  extends HttpServlet {
     private static final long serialVersionUID = 1L;
@@ -50,28 +55,44 @@ public class PlaylistLet  extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ServletContext ctx = getServletContext();
+        String ctxPath = req.getContextPath();
+        PrintWriter out = resp.getWriter();
+
         this.setU((User) req.getSession().getAttribute("user"));
         String trackPath = ctx.getInitParameter("trackpath"),
                 imgPath = ctx.getInitParameter("imgpath");
 
         PlaylistDAO pd = new PlaylistDAO(connection, trackPath, imgPath);
         TrackDAO td = new TrackDAO(connection, trackPath, imgPath);
-        System.out.println(u);
-        String ctxPath = req.getContextPath();
-        String[] songs = req.getParameterValues("song");
-        String ptitle = StringEscapeUtils.escapeJava(req.getParameter("ptitle"));
-        PrintWriter out = resp.getWriter();
+        ArrayList<Integer> songs = new ArrayList<Integer>();
+
+        Part ptitle;
+        String[] songs_s;
+
+        try{
+            ptitle = req.getPart("ptitle");
+            songs_s = req.getParameterValues("song");
+            for(int i = 0; i < songs_s.length; i++){
+                songs.add(Integer.parseInt(songs_s[i]));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println("Error occurred while reading the form: Add a new playlist");
+            return;
+        }
+
         System.out.println(ptitle);
 
-        if(!(ptitle.isEmpty() || songs == null )  ) {
+        if(!(ptitle == null || songs.size() == 0 )  ) {
 
-            String playlistTitle = ptitle;
+            String playlistTitle = new String(ptitle.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
             System.out.println("Titolo preso: "+playlistTitle+" "+ trackPath + " " + imgPath);
             ArrayList<Track> sng = new ArrayList<>();
 
-            for (String song : songs) {
+            for (int song : songs) {
                 try {
-                    sng.add(td.getTrack(Integer.parseInt(song), u.getUsername()));
+                    sng.add(td.getTrack(song, u.getUsername()));
                 } catch (Exception e) {
                     resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                     out.println( "Something wrong during the add of the playlist in the database");
