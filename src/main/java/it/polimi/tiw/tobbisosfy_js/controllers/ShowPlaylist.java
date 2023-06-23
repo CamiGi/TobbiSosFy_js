@@ -51,7 +51,7 @@ public class ShowPlaylist extends HttpServlet {
         ArrayList<Track> tracks;
         ServletContext ctx = getServletContext();
         PlaylistDAO plFinder = new PlaylistDAO(connection, ctx.getInitParameter("trackpath"),
-                ctx.getInitParameter("imgpath"));
+                ctx.getInitParameter("imagepath"));
         Gson gson;
         String jsonPTracks;
         PrintWriter out = resp.getWriter();

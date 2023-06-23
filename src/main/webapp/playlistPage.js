@@ -3,40 +3,41 @@
     let group;
 
     var initPlPage = () => {
-        document.getElementById("ply").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                makeCall("GET", e.target.getAttribute("href"), null, (x) => {
-                        switch (x.readyState) {
-                            case XMLHttpRequest.UNSENT:
-                                window.reportError("Couldn't send the request, try later");
-                                break;
-                            case XMLHttpRequest.LOADING:
-                                document.getElementById("tab").textContent = "Playlist loading, please wait...";
-                                break;
-                            case XMLHttpRequest.DONE:
-                                let resp = x.responseText;
+        document.querySelectorAll('.ply').forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            makeCall("GET", e.target.getAttribute("href"), null, (x) => {
+                    switch (x.readyState) {
+                        case XMLHttpRequest.UNSENT:
+                            window.reportError("Couldn't send the request, try later");
+                            break;
+                        case XMLHttpRequest.LOADING:
+                            document.getElementById("tab").textContent = "Playlist loading, please wait...";
+                            break;
+                        case XMLHttpRequest.DONE:
+                            let resp = x.responseText;
 
-                                if (x.status === 200) {
-                                    let tr = JSON.parse(resp);
-                                    group = 0;
-                                    console.log(tr.length);
-                                    for (let i=0; i<tr.length; i++) {
-                                        playlistTracks.push(new Track(tr[i][0], tr[i][1],
-                                            tr[i][2], tr[i][3]));
-                                    }
-                                    show("HomePage", false);
-                                    show("playlistPage", true);
-                                    printButtons();
-                                    printGroup();
-                                    printTracksToAdd();
-                                } else {//errorpage
-                                    warn("playlistPage", x.status, x.responseText);
+                            if (x.status === 200) {
+                                let trs = JSON.parse(resp);
+                                let t;
+                                group = 0;
+                                for (let i = 0; i < trs.length; i++) {
+                                    t = trs[i];
+                                    playlistTracks.push(new Track(t["id"], t["title"],
+                                        t["album"], t["mp3Uri"], t["user"]));
                                 }
-                        }
+                                printButtons();
+                                printGroup();
+                                printTracksToAdd();
+                                show("HomePage", false);
+                                show("PlaylistPage", true);
+                            } else {//errorpage
+                                warn("PlaylistPage", x.status, x.responseText);
+                            }
                     }
-                );
-            });
+                });
+            })
+        });
 
         document.getElementById("prevButton").addEventListener('click',
             (e) => {
@@ -61,7 +62,7 @@
             (e) => {
                 e.preventDefault();
                 show("playerPage", false);
-                show("playlistPage", true);
+                show("PlaylistPage", true);
                 /*
                 PrintButtons();
                 printGroup();
@@ -72,7 +73,7 @@
         document.getElementById("backHome").addEventListener('click',
             (e) => {
                 e.preventDefault();
-                show("playlistPage", false);
+                show("PlaylistPage", false);
                 show("HomePage", true);
                 //da fare roba in caso fosse cambiato qualcosa
                 /*
@@ -137,10 +138,10 @@
             })
     };
 
-    function Track (title, album, uri, user) {
-        console.log(album);
+    function Track (id, title, album, uri, user) {
+        this.id = id;
         this.title = title;
-        this.album = new Album(album[0], album[1], album[2], album[3], album[4]);
+        this.album = new Album(album["title"], album["year"], album["genre"], album["artist"], album["imgUri"]);
         this.uri = uri;
         this.user = user;
     }
@@ -149,7 +150,7 @@
         this.title = title;
         this.year = year;
         this.genre = genre;
-        this.artist = artist;
+        this.artist = artist["artistName"];
         this.image = image;
     }
 
@@ -174,22 +175,25 @@
         let tab = document.getElementById("tab");
         let table = document.createElement("TABLE");
         let row = table.insertRow(0);
+        let track;
         let data;
         let anchor;
         let image;
 
         if (playlistTracks.length > 0) {
             for (let i = group; i < group+5 && i < playlistTracks.length; i++) {
+                track = playlistTracks[i];
+                console.log("Track: " + track);
                 data = row.insertCell(i - group);
                 data.className = "shine";
 
                 anchor = document.createElement("A");
-                anchor.setAttribute("href", "/StartPlayer?track=" + playlistTracks[i].id);
-                anchor.innerText = playlistTracks[i].title;
+                anchor.setAttribute("href", "/StartPlayer?track=" + track.id);
+                anchor.innerText = track.title;
                 data.appendChild(anchor);
 
                 image = document.createElement("IMG");
-                image.setAttribute("src", playlistTracks[i].image);
+                image.setAttribute("src", track.album.image);
                 data.appendChild(image);
                 console.log(data);
             }
@@ -214,8 +218,7 @@
                 input = document.createElement("INPUT");
                 input.setAttribute("type", "checkbox");
                 input.setAttribute("name", "tracks");
-                input.id = t.id;
-                //input.setAttribute("id", t.id);
+                input.setAttribute("id", t.id);
                 form.appendChild(input);
 
                 label = document.createElement("LABEL");
