@@ -7,33 +7,36 @@
         link.addEventListener('click', (e) => {
             e.preventDefault();
             makeCall("GET", e.target.getAttribute("href"), null, (x) => {
-                    switch (x.readyState) {
-                        case XMLHttpRequest.UNSENT:
-                            window.reportError("Couldn't send the request, please try later");
-                            break;
-                        case XMLHttpRequest.LOADING:
-                            document.getElementById("tab").textContent = "Playlist loading, please wait...";
-                            break;
-                        case XMLHttpRequest.DONE:
-                            let resp = x.responseText;
+                    document.getElementById("title").lastElementChild.innerText = e.target.innerText;
 
-                            if (x.status === 200) {
-                                let trs = JSON.parse(resp);
-                                let t;
-                                group = 0;
-                                for (let i = 0; i < trs.length; i++) {
-                                    t = trs[i];
-                                    playlistTracks.push(new Track(t["id"], t["title"],
-                                        t["album"], t["mp3Uri"], t["user"]));
-                                }
-                                printButtons();
-                                printGroup();
-                                printTracksToAdd();
-                                show("HomePage", false);
-                                show("PlaylistPage", true);
-                            } else {//errorpage
-                                warn("PlaylistPage", x.status, x.responseText);
+                    switch (x.readyState) {
+                    case XMLHttpRequest.UNSENT:
+                        window.reportError("Couldn't send the request, please try later");
+                        break;
+                    case XMLHttpRequest.LOADING:
+                        document.getElementById("tab").textContent = "Playlist loading, please wait...";
+                        break;
+                    case XMLHttpRequest.DONE:
+                        let resp = x.responseText;
+
+                        if (x.status === 200) {
+                            let trs = JSON.parse(resp);
+                            let t;
+                            group = 0;
+                            for (let i = 0; i < trs.length; i++) {
+                                t = trs[i];
+                                playlistTracks.push(new Track(t["id"], t["title"],
+                                    t["album"], t["mp3Uri"], t["user"]));
                             }
+                            printButtons();
+                            printGroup();
+                            printTracksToAdd();
+                            show("HomePage", false);
+                            show("PlaylistPage", true);
+                        }
+                        else {//errorpage
+                            warn("PlaylistPage", x.status, x.responseText);
+                        }
                     }
                 });
             })
@@ -186,15 +189,15 @@
                 data = row.insertCell(i - group);
                 data.className = "shine";
 
-                anchor = document.createElement("A");
-                anchor.setAttribute("href", "/StartPlayer?track=" + track.id);
-                anchor.innerText = track.title;
-                data.appendChild(anchor);
-
                 image = document.createElement("IMG");
                 image.setAttribute("src", track.album.image);
                 image.innerText = "Album art";
                 data.appendChild(image);
+
+                anchor = document.createElement("A");
+                anchor.setAttribute("href", "/StartPlayer?track=" + track.id);
+                anchor.innerText = track.title;
+                data.appendChild(anchor);
             }
 
             table.appendChild(row);
@@ -204,45 +207,48 @@
         }
 
         if (group >= playlistTracks.length || group < 0) {
-            tab.innerText = "You trespass, Jedi"
+            tab.innerText = "You trespass, jedi."
         }
     }
 
     function printTracksToAdd() {   //prints the tracks a user can add to a playlist in the playlist page
-        let form = document.getElementById("frm").lastElementChild.parentElement;
+        let form = document.querySelector('.frm');
+        let el;
         let input;
         let label;
         let t;
 
-        for (let i = 0; i < playlistTracks.length; i++) {
+        for (let i = 0; i < tracks.length; i++) {
             t = tracks[i];
 
             if (!playlistTracks.includes(t)) {
+                el = document.createElement("DIV");
+
                 input = document.createElement("INPUT");
                 input.setAttribute("type", "checkbox");
                 input.setAttribute("name", "tracks");
-                input.setAttribute("id", t.id);
-                form.appendChild(input);
+                input.setAttribute("id", "tta" + t.id);
+                el.appendChild(input);
 
                 label = document.createElement("LABEL");
-                label.setAttribute("for", t.id);
-                label.innerText = t.title + " - " + t.album.title + " - " + t.album.genre +
-                    +" - " + t.album.artist;
-                form.appendChild(label);
+                label.setAttribute("for", "tta" + t.id);
+                label.innerText = t.title + " - " + t.album.title + " - " + t.album.genre + " - "
+                    + t.album.artist.artistName;
+                el.appendChild(label);
+
+                form.appendChild(el)
             }
         }
 
-        if (input !== null) {
-            form.innerText = "";
+        if (input !== undefined) {
             input = document.createElement("input");
             input.setAttribute("type", "submit");
-            //input.setAttribute("id", "addTracksToPlaylist");
+            input.setAttribute("id", "addTracksToPlaylist");
             input.setAttribute("value", "Submit");
-            input.id = "addTracksToPlaylist";
             input.className = "center";
-            form.appendChild(input);
+            form.parentNode.appendChild(input);
         } else {
-            form.innerText = "There are no tracks to add to this playlist";
+            form.innerText = "This playlist already contains all your tracks";
         }
     }
 }

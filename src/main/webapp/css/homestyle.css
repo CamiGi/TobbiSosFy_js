@@ -278,7 +278,7 @@ h1 {
 
 .title {
     position: absolute;
-    top: 5%;
+    top: 4%;
     margin-left: 50%;
     transform: translate(-50%, 0);
 
@@ -331,13 +331,29 @@ h1 {
 
     border: 2px dashed ivory;
     border-radius: 32px;
-    padding: 10px;
+    padding: 10px 30px;
 
-    overflow: hidden;
+    overflow-y: scroll;
     text-overflow: ellipsis;
 
     max-width: 800px;
     min-width: 800px;
+    max-height: 400px;
+}
+
+.frm::-webkit-scrollbar {
+    width: 1em;
+}
+
+.frm::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+.frm::-webkit-scrollbar-thumb {
+    background-color: darkgrey;
+    outline: 1px solid slategrey;
+    border-radius: 10px;
 }
 
 .center {
@@ -516,7 +532,7 @@ td.data {
     align-items: center;
 }
 
-img {
+.albumArt {
     max-width: 300px;
     height: auto;
     border: 4px solid rgb(100, 100, 100);

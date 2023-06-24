@@ -108,7 +108,7 @@ window.onload = function() {
                     let lab;
                     let li;
 
-                    if(tracks.length == 0){
+                    if(tracks.length === 0){
                         no_song = true;
                     } else {
 
