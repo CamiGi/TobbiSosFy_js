@@ -161,17 +161,6 @@ input[type="checkbox"]:checked{
     background-color: cadetblue;
 }
 
-/*button{
-    background-color: black;
-    font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Kaku Gothic Pro, Meiryo, MS Gothic;
-    font-size: 15px;
-    cursor: pointer;
-    color: cadetblue;
-    font-weight: 700;
-    border-radius: 10px;
-    margin-top: 15px;
-}*/
-
 input[type="submit"]{
     background-color: rgb(13, 16, 23);
     font-family: "helvetica";
@@ -216,11 +205,17 @@ input[type="checkbox"]:hover{
     display: flex;
     justify-content: center;
     align-items: center;
+
     border: solid 2px ivory;
     border-radius: 50%;
     height: 50px;
     width: 50px;
+
     color: ivory;
+}
+
+#prevButton, #nextButton {
+    margin-top: 10%;
 }
 
 a.button:link, .button:link{
@@ -293,7 +288,8 @@ h1 {
 
     border: 2px solid ivory;
     border-radius: 32px;
-    padding: 10px 50px;
+    padding-left: 30px;
+    padding-right: 30px;
 
     max-width: 400px;
 }
@@ -301,7 +297,7 @@ h1 {
 #tab {
     margin-left: 5%;
     margin-right: 5%;
-    margin-top: 5px;
+    margin-top: 10%;
 }
 
 .page {
@@ -405,6 +401,7 @@ input {
     border-radius: 4px;
 }
 
+/*
 input[type="submit"] {
     background-color: rgb(40, 50, 100);
     width: 308px;
@@ -416,6 +413,7 @@ input[type="submit"] {
 input[type="submit"]:hover{
     background-color: rgb(60, 60, 100);
 }
+ */
 
 .box2 {
     margin-left: 50%;
@@ -431,21 +429,6 @@ input[type="submit"]:hover{
     width: 323px;
 }
 
-a:link {
-    color: darkslateblue;
-    font-size: 18px;
-    text-decoration: none;
-}
-
-a:visited {
-    color: darkblue;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-}
-
 #err {
     display: flex;
     justify-content: center;
@@ -457,19 +440,6 @@ a:hover {
     color: red;
     font-size: 20px;
     font-family: "Arial", sans-serif;
-}
-.logout {
-    position: absolute;
-    top: 5%;
-    left: 5%;
-
-    text-align: center;
-
-    background-color: rgba(0, 0, 0, 0.5);
-    padding: 15px 25px;
-
-    border: 1px solid rgb(100, 100, 100);
-    border-radius: 30px;
 }
 
 .back {
@@ -553,17 +523,8 @@ img {
     border-radius: 32px;
 }
 
-a:link {
-    color: ivory;
-    text-decoration: none;
-}
-
 a:hover {
     cursor: pointer;
-}
-
-a:visited {
-    color: ivory;
 }
 
 .visible {

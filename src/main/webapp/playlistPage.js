@@ -9,7 +9,7 @@
             makeCall("GET", e.target.getAttribute("href"), null, (x) => {
                     switch (x.readyState) {
                         case XMLHttpRequest.UNSENT:
-                            window.reportError("Couldn't send the request, try later");
+                            window.reportError("Couldn't send the request, please try later");
                             break;
                         case XMLHttpRequest.LOADING:
                             document.getElementById("tab").textContent = "Playlist loading, please wait...";
@@ -164,7 +164,7 @@
             show(prevB, false);
         }
 
-        if (group < playlistTracks.length) {
+        if (group+5 < playlistTracks.length) {
             show(nextB, true);
         } else {
             show(nextB, false);
@@ -183,7 +183,6 @@
         if (playlistTracks.length > 0) {
             for (let i = group; i < group+5 && i < playlistTracks.length; i++) {
                 track = playlistTracks[i];
-                console.log("Track: " + track);
                 data = row.insertCell(i - group);
                 data.className = "shine";
 
@@ -194,14 +193,18 @@
 
                 image = document.createElement("IMG");
                 image.setAttribute("src", track.album.image);
+                image.innerText = "Album art";
                 data.appendChild(image);
-                console.log(data);
             }
 
             table.appendChild(row);
-            tab.appendChild(table);
+            tab.replaceChildren(table);
         } else {
             tab.innerText = "This playlist does not contain any tracks yet";
+        }
+
+        if (group >= playlistTracks.length || group < 0) {
+            tab.innerText = "You trespass, Jedi"
         }
     }
 

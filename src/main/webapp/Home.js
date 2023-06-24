@@ -36,9 +36,10 @@ window.onload = function() {
 
                     showDivs(true, false, false);
 
-                    document.getElementById("PlaylistPage").style.visibility = 'hidden';
+                    /*document.getElementById("PlaylistPage").style.visibility = 'hidden';
                     document.getElementById("PlayerPage").style.visibility = 'hidden';
-                    document.getElementById("ErrorPage").style.visibility = 'hidden';
+                    document.getElementById("ErrorPage").style.visibility = 'hidden';*/
+                    //Per nascondere un div uso la classe hidden, non c'é bisogno di fare stile.visibility
 
                     document.getElementById("navMP").onclick = function(){showDivs(true, false, false)};
                     document.getElementById("navNP").onclick = function(){showDivs(false,true,false)};
