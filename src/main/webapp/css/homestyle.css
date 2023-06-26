@@ -191,12 +191,12 @@ input[type="submit"]:active{
 input[type="text"]:active{
     border-color: ivory;
 }
-
+/*
 input[type="checkbox"]{
     flex: auto;
     position: relative;
 }
-
+ */
 input[type="checkbox"]:hover{
     left:.1em;
 }
@@ -231,6 +231,11 @@ a.button:visited, .button:visited {
     color: ivory;
 }
 
+.il:hover, a.il:hover {
+    color: deepskyblue;
+    cursor: pointer;
+}
+
 .shine {
     display: inline-grid;
     align-items: center;
@@ -253,19 +258,12 @@ a.button:visited, .button:visited {
     margin-right: 2px;
 }
 
+.button:hover, a.button:hover, .shine:hover {
+    border-color: deepskyblue;
+    color: deepskyblue;
+}
+
 .button:hover, a.button:hover {
-    border-color: deepskyblue;
-    color: deepskyblue;
-    cursor: pointer;
-}
-
-.shine:hover {
-    border-color: deepskyblue;
-    color: deepskyblue;
-}
-
-.il:hover {
-    color: deepskyblue;
     cursor: pointer;
 }
 
@@ -321,7 +319,6 @@ h1 {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
 }
 
 .frm {
@@ -346,7 +343,7 @@ h1 {
 }
 
 .frm::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+    /*-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);*/
     border-radius: 10px;
 }
 
@@ -360,11 +357,12 @@ h1 {
     margin-left: 50%;
     transform: translate(-50%, 0);
 }
-
+/*
 .error {
     margin-top: 20%;
     margin-left: 5%;
 }
+ */
 
 img {
     max-width: 190px;
@@ -398,20 +396,6 @@ input {
     border: 1px solid rgb(26, 31, 37);
     border-radius: 4px;
 }
-
-/*
-input[type="submit"] {
-    background-color: rgb(40, 50, 100);
-    width: 308px;
-    height: 30px;
-
-    border-radius: 4px;
-}
-
-input[type="submit"]:hover{
-    background-color: rgb(60, 60, 100);
-}
- */
 
 .back {
     position: absolute;

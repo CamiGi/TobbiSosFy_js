@@ -19,20 +19,20 @@ window.onload = () => {
                     if (x.readyState === XMLHttpRequest.DONE) {
                         let message = x.responseText;
                         switch (x.status) {
-                            case 200:
-                                sessionStorage.setItem('username', message);
-                                console.log("Welcome "+sessionStorage.getItem('username'));
-                                window.location.href = 'HomePage.html';
-                                break;
-                            case 400: // bad request
-                                document.getElementById("errLog").textContent = message;
-                                break;
-                            case 401: // unauthorized
-                                document.getElementById("errLog").textContent = message;
-                                break;
-                            case 500: // server error
-                                document.getElementById("errLog").textContent = message;
-                                break;
+                        case 200:
+                            sessionStorage.setItem('username', message);
+                            console.log("Welcome "+sessionStorage.getItem('username'));
+                            window.location.href = 'HomePage.html';
+                            break;
+                        case 400: // bad request
+                            document.getElementById("errLog").textContent = message;
+                            break;
+                        case 401: // unauthorized
+                            document.getElementById("errLog").textContent = message;
+                            break;
+                        case 500: // server error
+                            document.getElementById("errLog").textContent = message;
+                            break;
                         }
                     }
                 }

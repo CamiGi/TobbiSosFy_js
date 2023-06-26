@@ -10,6 +10,7 @@ import it.polimi.tiw.tobbisosfy_js.beans.User;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 @WebServlet("/ShowPlaylist")
+@MultipartConfig
 public class ShowPlaylist extends HttpServlet {
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
@@ -45,7 +47,6 @@ public class ShowPlaylist extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         int plID;
-        //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         User user = (User) req.getSession().getAttribute("user");
         Playlist playlist;
         ArrayList<Track> tracks;
@@ -91,52 +92,48 @@ public class ShowPlaylist extends HttpServlet {
         PlaylistDAO plfinder = new PlaylistDAO(connection, ctx.getInitParameter("trackpath"),
                 ctx.getInitParameter("imgpath"));
         Playlist playlist;
-        String path = getServletContext().getContextPath();
-        String error = path + "/ShowError?error=";
+        PrintWriter out = resp.getWriter();
 
         try {
             playlist = plfinder.getPlaylistFromId(Integer.parseInt(req.getParameter("playlist")),
                     (User) req.getSession().getAttribute("user"));
         } catch (NumberFormatException e) {
-            error += "Invalid playlist ID";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println("Invalid playlist ID");
             return;
         } catch (SQLException e) {
-            error += "Playlist cannot be found or you haven't got the rights to see it";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            out.println("Playlist cannot be found or you haven't got the rights to see it");
             return;
         } catch (Exception e) {
-            error += e.getMessage();
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println(e.getMessage());
             return;
         }
 
         if (tracks == null) {
-            error += "Add at least one song to the playlist";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_LENGTH_REQUIRED);
+            out.println("Add at least one song to the playlist");
             return;
         }
         trIDs = new ArrayList<>();
-        System.out.println("SONO QUA");
 
         try {
             for (String track : tracks) {
-                trIDs.add(Integer.parseInt(track));  //eccezione qua
+                trIDs.add(Integer.parseInt(track));
             }
             plfinder.addSongsToPlaylist(playlist, trIDs);
         } catch (NumberFormatException e) {
-            error += "The song you're trying to add does not exist or you haven't the authorization to see it";
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println("The song you're trying to add does not exist or you haven't the authorization to see it");
             return;
         } catch (Exception e) {
-            error += e.getMessage();
-            resp.sendRedirect(error);
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println(e.getMessage());
             return;
         }
 
-        System.out.println("SONO QUIII");
-
-        resp.sendRedirect("ShowPlaylist?playlist="+playlist.getId()+"&group=0");
+        doGet(req, resp);
     }
 
     @Override

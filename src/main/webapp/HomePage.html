@@ -18,22 +18,17 @@
     <div class="username" id="username"></div>
     <div class="HomePage">
 
-        <nav class="nav">
+        <nav class="nav" style="visibility: visible;">
             <a id="navMP" class="nav_el">My Playlists</a>
             <a id="navNP" class="nav_el">New Playlist</a>
             <a id="navNT" class="nav_el">New Track</a>
         </nav>
         <div class="one" id="myplaylists">
             <p class="myplaylists">My playlists</p>
-                <dl id="pllysts">
-                    <dt id="empty_pl">You don't have any playlist yet</dt>
-                    <dt>
-                    </dt>
-                    <dd id="pdate"></dd>
-                </dl>
+                <dl id="pllysts"></dl>
         </div>
 
-        <div class="newTrack" id="newTrack">
+        <div class="newTrack" id="newTrack" style="visibility: hidden;">
             <p>Add a new track</p>
             <form action="Home" method="POST" enctype="multipart/form-data"> <!--enctype="multipart/form-data"-->
                 <label for="ttitle">Track Title</label><br>
@@ -141,7 +136,7 @@
             </form>
         </div>
 
-        <div class="newPlaylist" id="newPlaylist">
+        <div class="newPlaylist" id="newPlaylist" style="visibility: hidden;">
             <p>Add a new playlist</p>
             <form action="PLinsert" method="POST" enctype="multipart/form-data">
                 <label for="ptitle">Playlist Title</label><br>
@@ -183,7 +178,7 @@
             </div>
         </div>
         <div class="hidden" id="frm">
-            <form method="POST">
+            <form>
                 <fieldset class="frm">
                     <legend>Add songs to the playlist</legend>
                 </fieldset>
@@ -255,15 +250,16 @@
         </div>
     </div>
 </div>
+<!--
 <div class="hidden" id="ErrorPage">
     <div class="error" id="error">
-        Something went wrong during the elaboration of your request. &nbsp
-    </div>
-    <div>
-        Please click
-        <a id="return" href="/Home">here </a>
-        to return to the Home Page
+        <p>
+            Please click
+            <a id="return" href="/Home">here </a>
+            to return to the Home Page
+        </p>
     </div>
 </div>
+-->
 
 </body>

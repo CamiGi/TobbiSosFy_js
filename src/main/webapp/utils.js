@@ -25,8 +25,8 @@ function show(elementId, visibility) { //to show/hide an element
 }
 
 function warn(currentPage, status, message) { //to show the error page
-    let error = document.getElementById("error");
-    error.innerHTML = "Error: " + status + "<br />" + message;
+    let text = "Error: " + status + "\n" + message;
+    alert(text);
     show(currentPage, false);
-    show("errorPage", true);
+    show("HomePage", true);
 }

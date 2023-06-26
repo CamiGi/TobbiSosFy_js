@@ -1,13 +1,20 @@
 {
     let playlistTracks = [];
     let group;
+    let playlist;
 
     var initPlPage = () => {
         document.querySelectorAll('.ply').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
+
             makeCall("GET", e.target.getAttribute("href"), null, (x) => {
+                    const url = e.target.getAttribute("href");
+                    const qs = url.substring(url.indexOf('?') + 1);
+                    const urlParams = new URLSearchParams(qs);
+                    playlist = urlParams.get('playlist');
                     document.getElementById("title").lastElementChild.innerText = e.target.innerText;
+                    show("HomePage", false);
 
                     switch (x.readyState) {
                     case XMLHttpRequest.UNSENT:
@@ -20,18 +27,10 @@
                         let resp = x.responseText;
 
                         if (x.status === 200) {
-                            let trs = JSON.parse(resp);
-                            let t;
-                            group = 0;
-                            for (let i = 0; i < trs.length; i++) {
-                                t = trs[i];
-                                playlistTracks.push(new Track(t["id"], t["title"],
-                                    t["album"], t["mp3Uri"], t["user"]));
-                            }
+                            parseJSON(resp);
                             printButtons();
                             printGroup();
                             printTracksToAdd();
-                            show("HomePage", false);
                             show("PlaylistPage", true);
                         }
                         else {//errorpage
@@ -132,13 +131,14 @@
                 document.getElementById("showTab").className = "backgroundTab";
             }
         );
-
+        /*
         document.getElementById("return").addEventListener('click',
             (e) => {
                 e.preventDefault();
                 show("errorPage", false);
                 show("HomePage", true);
             })
+         */
     };
 
     function Track (id, title, album, uri, user) {
@@ -155,6 +155,22 @@
         this.genre = genre;
         this.artist = artist["artistName"];
         this.image = image;
+    }
+
+    function parseJSON (resp) {
+        let trs = JSON.parse(resp);
+        let t;
+        group = 0;
+
+        while(playlistTracks.length > 0) {
+            playlistTracks.pop();
+        }
+
+        for (let i = 0; i < trs.length; i++) {
+            t = trs[i];
+            playlistTracks.push(new Track(t["id"], t["title"],
+                t["album"], t["mp3Uri"], t["user"]));
+        }
     }
 
     function printButtons() {     //shows/hides prev/next button in the playlist page
@@ -197,6 +213,7 @@
                 anchor = document.createElement("A");
                 anchor.setAttribute("href", "/StartPlayer?track=" + track.id);
                 anchor.innerText = track.title;
+                anchor.className = "il";
                 data.appendChild(anchor);
             }
 
@@ -217,17 +234,27 @@
         let input;
         let label;
         let t;
+        let check;
+        form.replaceChildren();
 
         for (let i = 0; i < tracks.length; i++) {
             t = tracks[i];
+            check = true;
 
-            if (!playlistTracks.includes(t)) {
+            for (let i=0; i<playlistTracks.length && check; i++) {
+                if (t.id === playlistTracks[i].id) {
+                    check = false;
+                }
+            }
+
+            if (check) {
                 el = document.createElement("DIV");
 
                 input = document.createElement("INPUT");
                 input.setAttribute("type", "checkbox");
                 input.setAttribute("name", "tracks");
                 input.setAttribute("id", "tta" + t.id);
+                input.setAttribute("value", t.id);
                 el.appendChild(input);
 
                 label = document.createElement("LABEL");
@@ -241,12 +268,44 @@
         }
 
         if (input !== undefined) {
-            input = document.createElement("input");
-            input.setAttribute("type", "submit");
-            input.setAttribute("id", "addTracksToPlaylist");
-            input.setAttribute("value", "Submit");
-            input.className = "center";
-            form.parentNode.appendChild(input);
+            if (document.getElementById("addTracksToPlaylist") === null) {
+                input = document.createElement("input");
+                input.setAttribute("type", "submit");
+                input.setAttribute("id", "addTracksToPlaylist");
+                input.setAttribute("value", "Submit");
+                input.className = "center";
+                form.parentNode.appendChild(input);
+            }
+            form.parentElement.setAttribute("action", "ShowPlaylist?playlist=" + playlist);
+
+            document.getElementById("addTracksToPlaylist").addEventListener('click',
+                (e) => {
+                    e.preventDefault();
+                    let tracks = document.getElementsByName("tracks");
+
+                    if (tracks.length > 0) {
+                        makeCall("POST", form.parentElement.getAttribute("action"),
+                            form.parentNode, (x) => {
+                                if (x.readyState === XMLHttpRequest.DONE) {
+                                    let message = x.responseText;
+                                    if (x.status === 200) {
+                                        parseJSON(message);
+                                        printButtons();
+                                        printGroup();
+                                        printTracksToAdd();
+                                        //show("HomePage", false);
+                                        //show("PlaylistPage", true);
+                                    }
+                                    else {
+                                        warn("PlaylistPage", x.status, x.responseText);
+                                    }
+                                }
+                            }
+                        );
+                    } else {
+                        alert("Check at least one track");
+                    }
+                });
         } else {
             form.innerText = "This playlist already contains all your tracks";
         }

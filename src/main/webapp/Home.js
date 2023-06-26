@@ -26,7 +26,7 @@ window.onload = function() {
                     no_song = false;
                     no_pl = false;
 
-                    document.getElementById("empty_pl").style.visibility = 'hidden';
+                    //document.getElementById("empty_pl").style.visibility = 'hidden';
                     document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
                     document.getElementById("youdonthaveanysong").style.margin = 'none';
 
@@ -68,9 +68,10 @@ window.onload = function() {
                     let dt;
                     let dd;
 
-                    if(playlists.length == 0){
+                    if(playlists.length === 0){
                         no_pl = true;
                     } else {
+                        dl.replaceChildren();
 
                         for (let i = 0; i < playlists.length; i++) {
                             anchor = document.createElement("A");
@@ -83,13 +84,15 @@ window.onload = function() {
                             anchor.innerHTML = playlists[i].title;
                             dt.appendChild(anchor);
                             dl.appendChild(dt);
-                            dd.setAttribute("id", "pdate");
+                            dd.setAttribute("id", "pdate" + i);
                             dd.innerHTML = playlists[i].date;
                             dl.appendChild(dd);
                         }
                     }
                     if(no_pl){
-                        document.getElementById("empty_pl").style.visibility = 'visible';
+                        dt = document.createElement("DT");
+                        dt.innerText = "You don't have any playlist yet";
+                        dl.replaceChildren(dt)
                     }
 
                     //setto la pagina NewTrack
@@ -135,7 +138,7 @@ window.onload = function() {
                     window.reportError("Couldn't send the request, try later");
                     break;
                 case XMLHttpRequest.LOADING:
-                    document.getElementById("tab").textContent = "Home page is loading, please wait...";
+                    document.getElementById("pllysts").innerText = "Home page is loading, please wait...";
                     break;
             }
         }
@@ -149,7 +152,7 @@ function showDivs(mp, np, nt){
         document.getElementById("myplaylists").style.visibility = 'visible';
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'hidden';
-        document.getElementById("empty_pl").style.visibility = 'hidden';
+        //document.getElementById("empty_pl").style.visibility = 'hidden';
         document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
         if(no_pl){
             document.getElementById("empty_pl").style.visibility = 'visible';
@@ -167,7 +170,7 @@ function showDivs(mp, np, nt){
         document.getElementById("myplaylists").style.visibility = 'hidden';
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'visible';
-        document.getElementById("empty_pl").style.visibility = 'hidden';
+        //document.getElementById("empty_pl").style.visibility = 'hidden';
         document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
     }
 }
