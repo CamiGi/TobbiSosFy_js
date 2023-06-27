@@ -320,4 +320,25 @@ public class PlaylistDAO {
         return plst;
     }
 
+    public void resetContains(ArrayList<Integer> trIDs, int plID) throws SQLException, Exception{
+
+        String query = "UPDATE contains SET position=? WHERE playlistID=? AND trackID=?";
+        int code;
+
+        ps = con.prepareStatement(query);
+        ps.setInt(2, plID);
+
+        for (int i = 0; i < trIDs.size(); i++) {
+            ps.setInt(1, i);
+            ps.setInt(3, trIDs.get(i));
+            code = ps.executeUpdate();
+
+            if (code != 1) {
+                con.rollback();
+                throw new Exception("ATTENZIONE qualcosa è andato storto: reset contains");
+            }
+        }
+
+    }
+
 }

@@ -32,7 +32,7 @@
                             printGroup();
                             printTracksToAdd();
                             show("PlaylistPage", true);
-                            go();
+                            go(playlist);
                         }
                         else {//errorpage
                             warn("PlaylistPage", x.status, x.responseText);

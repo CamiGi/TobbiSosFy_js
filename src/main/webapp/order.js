@@ -1,12 +1,14 @@
 
 
 
-function go() {
+function go(pid) {
     const list = document.getElementById("sortable-list");
+    const form = document.querySelector(".ff");
     let item;
     let div;
     let img;
     let span;
+    let submit;
 
     document.getElementById("updatePlaylist").style.visibility='hidden';
 
@@ -14,6 +16,9 @@ function go() {
         div = document.createElement("DIV");
         div.innerText = "Non ci sono canzoni in questa playlist";
     } else {
+
+        submit = document.createElement("INPUT");
+
         for (let i = 0; i < playlistTracks.length; i++) {
 
             div = document.createElement("DIV");
@@ -23,7 +28,11 @@ function go() {
 
             item.setAttribute("class", "item");
             item.setAttribute("draggable", "true");
+            item.setAttribute("name", "sng");
+            item.setAttribute("value",playlistTracks[i].id);
             div.setAttribute("class", "details");
+            form.setAttribute("id", "ffoorrmm");
+            form.setAttribute("value", pid);
             span.innerText = playlistTracks[i].title + " - " + playlistTracks[i].album.title + " - " + playlistTracks[i].album.genre + " - " + playlistTracks[i].album.artist.artistName;
             img.setAttribute("src", playlistTracks[i].album.image);
 
