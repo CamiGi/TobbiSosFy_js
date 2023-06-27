@@ -4,7 +4,6 @@ import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
 import it.polimi.tiw.tobbisosfy_js.beans.Track;
 import it.polimi.tiw.tobbisosfy_js.beans.User;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.annotation.WebServlet;
@@ -12,11 +11,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.Serial;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet ("/StartPlayer")
 public class StartPlayer extends HttpServlet {
+    @Serial
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
 
@@ -35,37 +37,33 @@ public class StartPlayer extends HttpServlet {
             e.printStackTrace();
             throw new UnavailableException("Couldn't get db connection");
         }
-        ServletContext servletContext = getServletContext();
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         Track track;
-        TrackDAO trFinder = new TrackDAO(connection, getServletContext().getInitParameter("trackpath"),
-                getServletContext().getInitParameter("imgpath"));
-        String path = request.getContextPath();
+        TrackDAO trFinder = new TrackDAO(connection);
         int trID;
+        PrintWriter out = response.getWriter();
 
         try {
             trID = Integer.parseInt(request.getParameter("track"));
             track = trFinder.getTrack(trID, ((User)request.getSession().getAttribute("user")).getUsername());
         } catch (NumberFormatException e) {
-            response.sendRedirect(path+"/ShowError");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+            out.println("Invalid track ID");
             return;
         } catch (SQLException e) {
-            response.sendRedirect(path+"/ShowError");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            out.println("The track you're searching for doesn't exist or you haven't the authorization to access it");
             return;
         } catch (Exception e){
-            e.printStackTrace();
-            response.sendRedirect(path+"/ShowError");
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println(e.getMessage());
             return;
         }
 
-        /*ctx.setVariable("track", track);
-        ctx.setVariable("playlist", request.getParameter("playlist"));
-        ctx.setVariable("group", request.getParameter("group"));
-        //o le mandi nella request o provi a beccarle da ctx
-        templateEngine.process("/PlayerPage.html", ctx, response.getWriter());*/
+        response.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override

@@ -9,13 +9,11 @@ public class Playlist {
     private final String title;
     private final Date date;
     private final String user;
-    private final Boolean def;
 
-    public Playlist(String title, Date date, User user, Boolean def) {
+    public Playlist(String title, Date date, User user) {
         this.title =title.toLowerCase();
         this.date=date;
         this.user = user.getUsername();
-        this.def = def;
     }
 
     public void setId(int id){
@@ -45,9 +43,5 @@ public class Playlist {
 
     public String getDateString(){
         return this.date.toString();
-    }
-
-    public Boolean getDef() {
-        return def;
     }
 }

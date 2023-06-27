@@ -2,9 +2,7 @@ package it.polimi.tiw.tobbisosfy_js.controllers;
 
 import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
 import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
-import it.polimi.tiw.tobbisosfy_js.DAOs.UserDAO;
 import it.polimi.tiw.tobbisosfy_js.beans.*;
-import org.apache.commons.lang3.StringEscapeUtils;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -17,16 +15,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.nio.charset.StandardCharsets;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 @MultipartConfig
 @WebServlet("/PLinsert")
 public class PlaylistLet  extends HttpServlet {
+    @Serial
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
     private User u;
@@ -59,12 +58,12 @@ public class PlaylistLet  extends HttpServlet {
         PrintWriter out = resp.getWriter();
 
         this.setU((User) req.getSession().getAttribute("user"));
-        String trackPath = ctx.getInitParameter("trackpath"),
-                imgPath = ctx.getInitParameter("imgpath");
+        String trackPath = ctx.getInitParameter("trackpath").substring(25),
+                imgPath = ctx.getInitParameter("imagepath").substring(25);
 
-        PlaylistDAO pd = new PlaylistDAO(connection, trackPath, imgPath);
-        TrackDAO td = new TrackDAO(connection, trackPath, imgPath);
-        ArrayList<Integer> songs = new ArrayList<Integer>();
+        PlaylistDAO pd = new PlaylistDAO(connection);
+        TrackDAO td = new TrackDAO(connection);
+        ArrayList<Integer> songs = new ArrayList<>();
 
         Part ptitle;
         String[] songs_s;
@@ -73,8 +72,8 @@ public class PlaylistLet  extends HttpServlet {
         try{
             ptitle = req.getPart("ptitle");
             songs_s = req.getParameterValues("song");
-            for(int i = 0; i < songs_s.length; i++){
-                songs.add(Integer.parseInt(songs_s[i]));
+            for (String s : songs_s) {
+                songs.add(Integer.parseInt(s));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -104,9 +103,7 @@ public class PlaylistLet  extends HttpServlet {
             System.out.println("Canzoni prese");
 
             Date d = new Date(System.currentTimeMillis());
-            Playlist playlist = new Playlist(playlistTitle, d, u, true);
-
-            int i = -1;
+            Playlist playlist = new Playlist(playlistTitle, d, u);
 
             try {
                 System.out.println("Invio nuova playlist");

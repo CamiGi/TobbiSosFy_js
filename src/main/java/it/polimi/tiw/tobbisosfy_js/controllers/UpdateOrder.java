@@ -49,7 +49,7 @@ public class UpdateOrder extends HttpServlet {
         ServletContext ctx = getServletContext();
         String trackPath = ctx.getInitParameter("trackpath"),
                 imgPath = ctx.getInitParameter("imgpath");
-        PlaylistDAO playlistDAO = new PlaylistDAO(connection, trackPath, imgPath);
+        PlaylistDAO playlistDAO = new PlaylistDAO(connection);
 
         ArrayList<Integer> trIDs = new ArrayList<>();
         User user = (User) req.getSession().getAttribute("user");

@@ -5,11 +5,11 @@
     <title>Home</title>
     <link rel="stylesheet" type="text/css" media="all" href="css/homestyle.css"/>
     <link rel="shortcut icon" href="resources/TobbiSosFy logo.png">
-    <meta name=”viewport” content=”width=device-width, initial-scale=1″>
     <script src="utils.js" charset="UTF-8" defer></script>
     <script src="Home.js" charset="UTF-8" defer></script>
     <script src="playlistPage.js" charset="UTF-8" defer></script>
     <script src="order.js" charset="UTF-8" defer></script>
+    <script src="playerPage.js" charset="UTF-8" defer></script>
     <!--gli script basta metterli solo una volta nell'header-->
 </head>
 <body>
@@ -170,7 +170,7 @@
     <div class="title" id="title">
         <h1>playlist</h1>
     </div>
-    <a class="back" id="backHome" href="Home">Home</a>
+    <a class="back" id="backHome" href="#">Home</a>
     <a class="update" id="updatePlaylist" href="UpdateOrder">Update</a>
     <div id="showTab" class="activeTab">Playlist Tracks</div>
     <div id="showForm" class="backgroundTab">Add Tracks</div>
@@ -210,7 +210,7 @@
         <table>
             <tr>
                 <td>
-                    <a href="Home" id="goHome">Home</a>
+                    <a href="#" id="goHome">Home</a>
                 </td>
                 <td>
                     <a href="#" id="backPlaylist">Playlist</a>
@@ -219,47 +219,8 @@
         </table>
     </div>
     <div class="box">
-        <div class="info">
-            <table>
-                <tr>
-                    <td class="entry">
-                        <img class="albumArt"
-                                alt="No Album Cover"> !!!!!!
-                    </td>
-                    <td class="entry">
-                        <table>
-                            <tr>
-                                <td class="data">Title:</td>
-                                <td class="data">unknown</td>
-                            </tr>
-                            <tr>
-                                <td class="data">Album:</td>
-                                <td class="data">unknown</td>
-                            </tr>
-                            <tr>
-                                <td class="data">Artist:</td>
-                                <td class="data">unknown</td>
-                            </tr>
-                            <tr>
-                                <td class="data">Year:</td>
-                                <td class="data">unknown</td>
-                            </tr>
-                            <tr>
-                                <td class="data">Genre:</td>
-                                <td class="data">unknown</td>
-                            </tr>
-                        </table>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <div class="player">
-            <audio controls>
-                <source
-                        type="audio/mpeg"> !!!!!!
-                Your browser does not support this audio extension
-            </audio>
-        </div>
+        <div class="info" id="info"></div>
+        <div class="player" id="player"></div>
     </div>
 </div>
 <!--

@@ -1,19 +1,19 @@
 html {
     height: 100%;
 
-    background-color: rgb(13, 16, 23);
-
     font-family: CircularSp, CircularSp-Arab, CircularSp-Hebr, CircularSp-Cyrl, CircularSp-Grek, CircularSp-Deva, Helvetica Neue, helvetica, arial, Hiragino Kaku Gothic Pro, Meiryo, MS Gothic;
     color: ivory;
 
     /*height: 100%;*/
 }
-.body{
-    background: black;
+
+body{
+    background: rgb(13, 16, 23);
     color: ivory;
     min-height: 100vh;
     min-width: 100vh;
 }
+
 .username{
     font-size: 25px;
     font-weight: 700;
@@ -25,7 +25,7 @@ html {
 
     text-align: center;
 
-    background-color: rgb(13, 16, 23);
+    /*background-color: rgb(13, 16, 23);*/
     padding: 15px 25px;
 }
 
@@ -50,10 +50,10 @@ select {
     min-width: 100px;
 }
 
-.logout, .back, .update{
+.logout, .back{
     font-size: 13px;
     font-weight: 700;
-    color: black !important;
+    color: black;
     line-height: 14px;
 
     position: absolute;
@@ -70,12 +70,6 @@ select {
 
 .logout {
     left: 5%;
-}
-
-.update{
-    right: 5%;
-    margin-top: 20%;
-    z-index: 1;
 }
 
 .back {
@@ -403,21 +397,14 @@ input {
     border-radius: 4px;
 }
 
-.back {
-    position: absolute;
-    top: 5%;
-    right: 5%;
-
-    /*background-color: rgba(0, 0, 0, 0.5);*/
-    padding: 15px 25px;
-
-    border: 1px solid rgb(100, 100, 100);
-    border-radius: 30px;
+.nav_el {
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .nav_el:hover{
     font-size: 18px;
-    text-underline: none !important;
+    transform: translate(0, -10%);
 }
 
 .nav {
@@ -425,16 +412,8 @@ input {
     border-color: ivory;
 }
 
-nav:hover{
-    text-underline: none;
-}
-
-.nav:hover{
-    text-underline: none !important;
-}
-
 .back td + td {
-    border-left:2px solid rgb(100, 100, 100);
+    border-left: 2px solid black;
 }
 
 td.entry {
@@ -457,6 +436,7 @@ td.data {
     transform: translate(-50%, -50%);
 
     background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(2px);
 
     border: 1px solid rgb(100, 100, 100);
     border-radius: 32px;
@@ -524,53 +504,4 @@ a:hover {
 
 #showTab:hover, #showForm:hover, #showMod {
     cursor: pointer;
-}
-
-#order{
-    margin-left: 50%;
-    transform: translate(-50%, 0);
-
-}
-
-.sortable-list{
-    width: 445px;
-    padding: 30px 25px 20px;
-    border-radius: 6px;
-    border-color: ivory;
-    border: solid;
-    margin-top: 0;
-}
-
-.item .details img{
-    width: 43px;
-    height: 43px;
-    object-fit: cover;
-    border-radius: 50%;
-    margin-right: 12px;
-}
-
-.item .details{
-    display: flex;
-    align-items: center;
-    color: ivory;
-}
-
-.item .details span{
-    font-size: 1.13rem;
-    color: ivory;
-}
-
-.sortable-list .item{
-    border: 1px solid ivory;
-    margin-bottom: 11px;
-    list-style: none;
-    display: flex;
-    align-items: center;
-    padding: 10px 13px;
-    border-radius: 5px;
-    justify-content: space-between;
-}
-
-.item.dragging :where(.details){
-    opacity: 0;
 }

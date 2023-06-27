@@ -202,7 +202,7 @@ function showDivs(mp, np, nt){
                                 location.reload();
                                 break;
                             default:
-                                warn("HomePage", x.status, x.responseText);
+                                warn(x.status, x.responseText);
                                 break;
                         }
                     }
@@ -231,7 +231,7 @@ function showDivs(mp, np, nt){
         let username = document.getElementById("username").innerText;
 
         if (form.checkValidity()) {
-            if(p_title == '' || ss.length == 0){
+            if(p_title === '' || ss.length === 0){
                 console.log("ERRORE");
                 return;
             }
@@ -245,7 +245,7 @@ function showDivs(mp, np, nt){
                                 location.reload();
                                 break;
                             default:
-                                warn("HomePage", x.status, x.responseText);
+                                warn(x.status, x.responseText);
                                 break;
                         }
                     }

@@ -2,23 +2,29 @@
     var playlistTracks = [];
     let group;
     let playlist;
+    let ctx;
 
     var initPlPage = () => {
         document.querySelectorAll('.ply').forEach(link => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
 
-            makeCall("GET", e.target.getAttribute("href"), null, (x) => {
+            makeCall("GET", e.target.getAttribute("href"), null,
+                (x) => {
                     const url = e.target.getAttribute("href");
                     const qs = url.substring(url.indexOf('?') + 1);
                     const urlParams = new URLSearchParams(qs);
+
+                    ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 1));
+                    console.log(ctx);
                     playlist = urlParams.get('playlist');
                     document.getElementById("title").lastElementChild.innerText = e.target.innerText;
                     show("HomePage", false);
 
                     switch (x.readyState) {
                     case XMLHttpRequest.UNSENT:
-                        window.reportError("Couldn't send the request, please try later");
+                        alert("Couldn't send the request, please try later");
+                        show("HomePage", true);
                         break;
                     case XMLHttpRequest.LOADING:
                         document.getElementById("tab").textContent = "Playlist loading, please wait...";
@@ -33,9 +39,11 @@
                             printTracksToAdd();
                             show("PlaylistPage", true);
                             go(playlist);
+                            initPlayer();
                         }
                         else {//errorpage
-                            warn("PlaylistPage", x.status, x.responseText);
+                            warn(x.status, x.responseText);
+                            show("HomePage", true);
                         }
                     }
                 });
@@ -146,7 +154,7 @@
         this.id = id;
         this.title = title;
         this.album = new Album(album["title"], album["year"], album["genre"], album["artist"], album["imgUri"]);
-        this.uri = uri;
+        this.uri = ctx + "/resources/tracks/" + uri;
         this.user = user;
     }
 
@@ -155,7 +163,7 @@
         this.year = year;
         this.genre = genre;
         this.artist = artist["artistName"];
-        this.image = image;
+        this.image = ctx + "/resources/images/" + image;
     }
 
     function parseJSON (resp) {
@@ -208,11 +216,11 @@
 
                 image = document.createElement("IMG");
                 image.setAttribute("src", track.album.image);
-                image.innerText = "Album art";
+                image.setAttribute("alt", "Album art");
                 data.appendChild(image);
 
                 anchor = document.createElement("A");
-                anchor.setAttribute("href", "/StartPlayer?track=" + track.id);
+                anchor.setAttribute("href", "StartPlayer?track=" + track.id);
                 anchor.innerText = track.title;
                 anchor.className = "il";
                 data.appendChild(anchor);

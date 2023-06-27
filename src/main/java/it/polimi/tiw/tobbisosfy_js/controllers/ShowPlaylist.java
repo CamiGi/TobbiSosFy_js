@@ -7,7 +7,6 @@ import it.polimi.tiw.tobbisosfy_js.beans.Playlist;
 import it.polimi.tiw.tobbisosfy_js.beans.Track;
 import it.polimi.tiw.tobbisosfy_js.beans.User;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.annotation.MultipartConfig;
@@ -17,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import java.util.ArrayList;
 @WebServlet("/ShowPlaylist")
 @MultipartConfig
 public class ShowPlaylist extends HttpServlet {
+    @Serial
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
 
@@ -50,14 +51,12 @@ public class ShowPlaylist extends HttpServlet {
         User user = (User) req.getSession().getAttribute("user");
         Playlist playlist;
         ArrayList<Track> tracks;
-        ServletContext ctx = getServletContext();
-        PlaylistDAO plFinder = new PlaylistDAO(connection, ctx.getInitParameter("trackpath"),
-                ctx.getInitParameter("imagepath"));
+        PlaylistDAO plFinder = new PlaylistDAO(connection);
         Gson gson;
         String jsonPTracks;
         PrintWriter out = resp.getWriter();
 
-        System.out.println("Start searching for playlist: "+ Integer.parseInt(req.getParameter("playlist")) + ", "+ user);
+        System.out.println("Start searching for playlist");
         try {
             plID = Integer.parseInt(req.getParameter("playlist"));
             playlist = plFinder.getPlaylistFromId(plID, user);
@@ -88,9 +87,7 @@ public class ShowPlaylist extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String[] tracks = req.getParameterValues("tracks");
         ArrayList<Integer> trIDs;
-        ServletContext ctx = getServletContext();
-        PlaylistDAO plfinder = new PlaylistDAO(connection, ctx.getInitParameter("trackpath"),
-                ctx.getInitParameter("imgpath"));
+        PlaylistDAO plfinder = new PlaylistDAO(connection);
         Playlist playlist;
         PrintWriter out = resp.getWriter();
 

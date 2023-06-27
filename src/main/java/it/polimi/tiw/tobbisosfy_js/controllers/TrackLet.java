@@ -6,7 +6,6 @@ import it.polimi.tiw.tobbisosfy_js.DAOs.PlaylistDAO;
 import it.polimi.tiw.tobbisosfy_js.DAOs.TrackDAO;
 import it.polimi.tiw.tobbisosfy_js.beans.*;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.annotation.MultipartConfig;
@@ -15,10 +14,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintWriter;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
@@ -31,6 +27,7 @@ import java.util.ArrayList;
 @WebServlet("/Home")
 public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN ALTRA SOLO PER L?ALTRA COSA playlist - track
 
+    @Serial
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
     private User u;
@@ -55,8 +52,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             e.printStackTrace();
         }
 
-        ServletContext servletContext = getServletContext();
-        imgFP = getServletContext().getInitParameter("imgpath");
+        imgFP = getServletContext().getInitParameter("imagepath");
         audioFP = getServletContext().getInitParameter("trackpath");
     }
 
@@ -66,18 +62,15 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        PlaylistDAO playlistDAO = new PlaylistDAO(connection, audioFP, imgFP);
-        TrackDAO trackDAO = new TrackDAO(connection, audioFP, imgFP);
+        PlaylistDAO playlistDAO = new PlaylistDAO(connection);
+        TrackDAO trackDAO = new TrackDAO(connection);
         //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         this.setU((User) req.getSession().getAttribute("user"));  //setto lo user che mi serve per tutta la classe
         ArrayList<Playlist> playlists;
-        String path = req.getContextPath();
-        String error = req.getContextPath() + "/ShowError?error=";
         ArrayList<Track> songs;
 
         String jsonPTracks;
         String jsonPPlaylists;
-        String jsonUser;
 
         Gson gson;
         PrintWriter out = resp.getWriter();
@@ -104,12 +97,10 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             return;
         }
 
-        path = path + "/HomePage.html";
 
         gson = new GsonBuilder().create();
         jsonPTracks = gson.toJson(songs);
         jsonPPlaylists = gson.toJson(playlists);
-        jsonUser = gson.toJson(u);
 
 
         resp.setStatus(HttpServletResponse.SC_OK);
@@ -123,7 +114,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        TrackDAO td = new TrackDAO(connection, audioFP, imgFP);
+        TrackDAO td = new TrackDAO(connection);
         String ctxPath = req.getContextPath();
         PrintWriter out = resp.getWriter();
 
@@ -198,10 +189,10 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
                 return;
             }
 
-            String imgName = Paths.get(img.getSubmittedFileName()).getFileName().toString();
+            String imgName = Paths.get(img.getSubmittedFileName()).getFileName().toString().replaceAll("\\s","");
             System.out.println("Filename: " + imgName);
 
-            String audioName = Paths.get(taudio.getSubmittedFileName()).getFileName().toString();
+            String audioName = Paths.get(taudio.getSubmittedFileName()).getFileName().toString().replaceAll("\\s","");
             System.out.println("Filename: " + audioName);
 
             String imgOutputPath = imgFP + imgName; //folderPath inizialized in init
