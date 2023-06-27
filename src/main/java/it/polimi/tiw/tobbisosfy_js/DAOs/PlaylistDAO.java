@@ -76,12 +76,13 @@ public class PlaylistDAO {
         if(!result.isBeforeFirst()){  //se non ho già la tupla
 
             for (Track t : tracks){
-                String queryNewContains = "INSERT INTO contains VALUES(?, ?)";
+                String queryNewContains = "INSERT INTO contains VALUES(?, ?, ?)";
                 ps = con.prepareStatement(queryNewContains);
                 //ps.setString(1,null);
                 ps.setInt(1,h);
                 try {
                     ps.setInt(2, t.getId());
+                    ps.setInt(3, 0);
                 } catch (SQLException e){
                     System.out.println("ATTENZIONE qualcosa non funziona: 502");
                 }
@@ -115,7 +116,7 @@ public class PlaylistDAO {
             result.next();
 
             while (!result.isAfterLast()){
-                pl= new Playlist(result.getString("title"), (java.sql.Date) result.getObject("creationDate"), user);
+                pl= new Playlist(result.getString("title"), (java.sql.Date) result.getObject("creationDate"), user, result.getBoolean("def"));
                 pl.setId(result.getInt("ID"));
                 r.add(pl);
                 result.next();
@@ -153,18 +154,41 @@ public class PlaylistDAO {
         ArrayList<Track> rs = new ArrayList<>();
         ResultSet resultTrack;
         int tid;
+        String qquueerrryy = "SELECT def FROM playlist WHERE ID=?";
+        String queryTracks;
+        int pid = result.getInt("ID");
 
+        ps = con.prepareStatement(qquueerrryy);
+        ps.setInt(1, playlist.getId());
+        result = ps.executeQuery();
+        result.next();
 
-        String queryTracks =
-                "SELECT tr.ID, year " +
-                "FROM playlist as pl INNER JOIN contains as ct ON ct.playlistID=pl.id " +
-                        "INNER JOIN track as tr on ct.trackID=tr.ID " +
-                        "INNER JOIN album as al on tr.albumID=al.ID " +
-                "WHERE pl.ID=? ORDER BY year DESC";  //creo query che seleziona le canzoni (tentativo di JOIN)
+        boolean t = result.getBoolean("def");
+        System.out.println(result.getBoolean("def"));
+
+        if(t){
+            queryTracks =
+                    "SELECT tr.ID, year " +
+                            "FROM playlist as pl INNER JOIN contains as ct ON ct.playlistID=pl.id " +
+                            "INNER JOIN track as tr on ct.trackID=tr.ID " +
+                            "INNER JOIN album as al on tr.albumID=al.ID " +
+                            "WHERE pl.ID=? ORDER BY year DESC";  //creo query che seleziona le canzoni (tentativo di JOIN)
+        } else {
+            queryTracks =
+                    "SELECT tr.ID, year " +
+                            "FROM playlist as pl INNER JOIN contains as ct ON ct.playlistID=pl.id " +
+                            "INNER JOIN track as tr on ct.trackID=tr.ID " +
+                            "INNER JOIN album as al on tr.albumID=al.ID " +
+                            "WHERE pl.ID=? ORDER BY position";  //creo query che seleziona le canzoni (tentativo di JOIN)
+        }
+
+        System.out.println(queryTracks);
 
         ps = con.prepareStatement(queryTracks);  //settaggio altro statement
-        ps.setInt(1,result.getInt("ID"));
+        ps.setInt(1,pid);
         resultTrack = ps.executeQuery();  //mando la query definitiva che mi da tutte le canzoni
+
+        System.out.println("SONO QUIIIII");
 
         if (resultTrack.isBeforeFirst()) {
             resultTrack.next();
@@ -205,6 +229,29 @@ public class PlaylistDAO {
         return id;
     }
 
+    public void setDefFalse(Playlist playlist) throws Exception{
+        int code;
+        int idp;
+
+        idp = this.getIdOfPlaylist(playlist);
+
+        String query = "UPDATE playlist SET def=true WHERE ID=?";
+
+        try{
+            ps = con.prepareStatement(query);
+            ps.setInt(1, idp);
+            code = ps.executeUpdate();
+
+            if (code != 1) {
+                con.rollback();
+                throw new Exception("ATTENZIONE qualcosa è andato storto: update playlist");
+            }
+        } catch (SQLException e) {
+            con.rollback();
+            throw new Exception("Non è stato possibile modificare il valore della playlist");
+        }
+    }
+
     /**
      * Inserisce una canzone nella playlist
      * @param playlist
@@ -219,7 +266,7 @@ public class PlaylistDAO {
         idp = this.getIdOfPlaylist(playlist);
 
         String query1 = "SELECT * FROM contains WHERE playlistID=? AND trackID=?";
-        String query2 = "INSERT INTO contains VALUES(?, ?)";
+        String query2 = "INSERT INTO contains VALUES(?, ?, ?)";
 
         try {
             for (Integer i : tracks) {
@@ -233,6 +280,7 @@ public class PlaylistDAO {
                     ps = con.prepareStatement(query2);
                     ps.setInt(1, idp);
                     ps.setInt(2, i);
+                    ps.setInt(3, 0);
                     code = ps.executeUpdate();
                 } else {
                     throw new Exception("ATTENZIONE la canzone è già nella playlist: " + playlist.getTitle());
@@ -263,7 +311,7 @@ public class PlaylistDAO {
         result.next();
 
         if (user.getUsername().equals(result.getString("userID"))) {
-            plst = new Playlist(result.getString("title"), result.getDate("creationDate"), user);
+            plst = new Playlist(result.getString("title"), result.getDate("creationDate"), user, result.getBoolean("def"));
         } else {
             throw new Exception("ATTENZIONE la playlist selezionata non appartiene all'utente: 700");
         }

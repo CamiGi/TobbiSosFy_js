@@ -103,7 +103,7 @@ public class PlaylistLet  extends HttpServlet {
             System.out.println("Canzoni prese");
 
             Date d = new Date(System.currentTimeMillis());
-            Playlist playlist = new Playlist(playlistTitle, d, u);
+            Playlist playlist = new Playlist(playlistTitle, d, u, true);
 
             int i = -1;
 

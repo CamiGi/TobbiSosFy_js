@@ -1,5 +1,5 @@
 {
-    let playlistTracks = [];
+    var playlistTracks = [];
     let group;
     let playlist;
 
@@ -32,6 +32,7 @@
                             printGroup();
                             printTracksToAdd();
                             show("PlaylistPage", true);
+                            go();
                         }
                         else {//errorpage
                             warn("PlaylistPage", x.status, x.responseText);
