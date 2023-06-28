@@ -34,7 +34,7 @@
             <form action="Home" method="POST" enctype="multipart/form-data">
                 <div id="step1">
                     <label for="ttitle">Track Title</label><br>
-                    <input class="text" type="text" id="ttitle" name="ttitle" required="required"><br>
+                    <input class="text" type="text" id="ttitle" name="ttitle" placeholder="Title of the song" required="required"><br>
                     <label for="audio" >Select audio file: </label>
                     <input class="tfile" type="file" name="audio" id="audio" required="required"><br><br>
                     <p id="error1"></p>
@@ -44,9 +44,9 @@
                 </div>
                 <div class="hidden" id="step2">
                     <label for="aname">Artist name</label><br>
-                    <input class="text" type="text" id="aname" name="aname" required="required"><br>
+                    <input class="text" type="text" id="aname" name="aname" placeholder="Song artist" required="required"><br>
                     <label for="talbum">Album</label><br>
-                    <input class="text" type="text" id="talbum" name="talbum" required="required"><br>
+                    <input class="text" type="text" id="talbum" name="talbum" placeholder="Song album" required="required"><br>
                     <label for="dalbum">Year of release: </label>
                     <select class="text" name="dalbum" id="dalbum" required="required">
                     </select>
@@ -169,13 +169,10 @@
             <p>Add a new playlist</p>
             <form action="PLinsert" method="POST" enctype="multipart/form-data">
                 <label for="ptitle">Playlist Title</label><br>
-                <input class="text" type="text" id="ptitle" name="ptitle" required="required"><br>
+                <input class="text" type="text" id="ptitle" name="ptitle" placeholder="Choose a title" required="required"><br>
                 <fieldset class="fs">
                     <legend>My songs</legend><br>
-                        <label id="youdonthaveanysong">You don't have any song</label>
-                        <div id="selectionSong">
-                            <br>
-                        </div>
+                        <div id="selectionSong"></div>
                 </fieldset>
                 <br><br>
                 <input type="submit" value="Submit" id="addNewPlaylist"><br>

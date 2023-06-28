@@ -3,7 +3,6 @@ package it.polimi.tiw.tobbisosfy_js.controllers;
 import it.polimi.tiw.tobbisosfy_js.DAOs.UserDAO;
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.annotation.MultipartConfig;
@@ -13,19 +12,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serial;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 @WebServlet("/Register")
 @MultipartConfig
 public class Register extends HttpServlet {
+    @Serial
     private static final long serialVersionUID = 1L;
     private Connection connection = null;
 
     public Register() {
         super();
     }
-    /*@Override
+
+    @Override
     public void init() throws ServletException {
         try {
             connection = DBServletInitializer.init(getServletContext());
@@ -34,7 +36,6 @@ public class Register extends HttpServlet {
         } catch (SQLException e) {
             throw new UnavailableException("Couldn't get db connection");
         }
-        ServletContext servletContext = getServletContext();
     }
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -124,10 +125,8 @@ public class Register extends HttpServlet {
             else{
                 response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 out.println(e.getMessage());
-                return;
             }
         }
-        //response.sendRedirect(path + "/UserRegisteredPage.html");
     }
 
     public void destroy() {
@@ -138,6 +137,6 @@ public class Register extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }*/
+    }
 
 }

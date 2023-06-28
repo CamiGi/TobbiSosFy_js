@@ -74,11 +74,6 @@
                 e.preventDefault();
                 show("playerPage", false);
                 show("PlaylistPage", true);
-                /*
-                PrintButtons();
-                printGroup();
-                printTracksToAdd();
-                */
             });
 
         document.getElementById("backHome").addEventListener('click',
@@ -86,12 +81,6 @@
                 e.preventDefault();
                 show("PlaylistPage", false);
                 show("HomePage", true);
-                //da fare roba in caso fosse cambiato qualcosa
-                /*
-                PrintButtons();
-                printGroup();
-                printTracksToAdd();
-                */
             });
 
         document.getElementById("goHome").addEventListener('click',
@@ -99,12 +88,6 @@
                 e.preventDefault();
                 show("playerPage", false);
                 show("HomePage", true);
-                //da fare roba in caso fosse cambiato qualcosa
-                /*
-                PrintButtons();
-                printGroup();
-                printTracksToAdd();
-                */
             });
 
         document.getElementById("showForm").addEventListener('click',
@@ -138,16 +121,7 @@
                 show("order", true);
                 document.getElementById("showForm").className = "backgroundTab";
                 document.getElementById("showTab").className = "backgroundTab";
-            }
-        );
-        /*
-        document.getElementById("return").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                show("errorPage", false);
-                show("HomePage", true);
-            })
-         */
+            });
     };
 
     function Track (id, title, album, uri, user) {
@@ -166,7 +140,7 @@
         this.image = ctx + "/resources/images/" + image;
     }
 
-    function parseJSON (resp) {
+    let parseJSON = (resp) => {
         let trs = JSON.parse(resp);
         let t;
         group = 0;
@@ -182,7 +156,7 @@
         }
     }
 
-    function printButtons() {     //shows/hides prev/next button in the playlist page
+    let printButtons = () => {     //shows/hides prev/next button in the playlist page
         let prevB = "prevButton";
         let nextB = "nextButton";
 
@@ -199,7 +173,7 @@
         }
     }
 
-    function printGroup() {     //prints a group of 1~5 tracks in the playlist page
+    let printGroup = () => {     //prints a group of 1~5 tracks in the playlist page
         let tab = document.getElementById("tab");
         let table = document.createElement("TABLE");
         let row = table.insertRow(0);
@@ -237,7 +211,7 @@
         }
     }
 
-    function printTracksToAdd() {   //prints the tracks a user can add to a playlist in the playlist page
+    let printTracksToAdd = () => {   //prints the tracks a user can add to a playlist in the playlist page
         let form = document.querySelector('.frm');
         let el;
         let input;
@@ -303,8 +277,7 @@
                                         printButtons();
                                         printGroup();
                                         printTracksToAdd();
-                                        //show("HomePage", false);
-                                        //show("PlaylistPage", true);
+                                        alert("Song added to playlist")
                                     }
                                     else {
                                         warn("PlaylistPage", x.status, x.responseText);
