@@ -84,7 +84,7 @@ public class UpdateOrder extends HttpServlet {
             out.println("Error occurred while finding the playlist in the database");
             return;
         }
-
+/*
         try {
             playlistDAO.setDefFalse(playlist);
         } catch (SQLException e){
@@ -97,6 +97,6 @@ public class UpdateOrder extends HttpServlet {
             out.println("Error occurred while finding the playlist in the database");
             return;
         }
-
+*/
     }
 }

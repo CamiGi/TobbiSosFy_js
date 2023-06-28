@@ -270,6 +270,7 @@
                 label.setAttribute("for", "tta" + t.id);
                 label.innerText = t.title + " - " + t.album.title + " - " + t.album.genre + " - "
                     + t.album.artist.artistName;
+                label.className = "lalabel";
                 el.appendChild(label);
 
                 form.appendChild(el)

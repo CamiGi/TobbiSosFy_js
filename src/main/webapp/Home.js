@@ -175,46 +175,6 @@ function showDivs(mp, np, nt){
     }
 }
 
-
-(function() { // avoid variables ending up in the global scope
-    document.getElementById("addNewTrack").addEventListener('click', (e) => {
-        e.preventDefault();
-        let form = e.target.closest("form");
-        let t_title = form.elements[0].value;
-        let t_audio = form.elements[1].value;
-        let t_aname = form.elements[2].value;
-        let t_ayear = form.elements[3].value;
-        let t_aimg = form.elements[4].value;
-        let t_artname = form.elements[6].value;
-
-        if (form.checkValidity()) {
-            if(t_title == '' || t_aname == '' || t_artname == '' || t_ayear == '' ){
-                console.log("ERRORE");
-                return;
-            }
-
-            makeCall("POST", 'Home', form,
-                function(x) {
-                    if (x.readyState === XMLHttpRequest.DONE) {
-                        let message = x.responseText;
-                        switch (x.status) {
-                            case 200:
-                                location.reload();
-                                break;
-                            default:
-                                warn(x.status, x.responseText);
-                                break;
-                        }
-                    }
-                }
-            );
-        } else {
-            form.reportValidity();
-        }
-    });
-
-})();
-
 (function() { // avoid variables ending up in the global scope
     document.getElementById("addNewPlaylist").addEventListener('click', (e) => {
         e.preventDefault();
@@ -256,4 +216,72 @@ function showDivs(mp, np, nt){
         }
     });
 
+})();
+
+(() => {
+    document.getElementById("2Step2").addEventListener('click', (e) => {
+        let form = e.target.closest("form");
+        let t_title = form.elements[0].value;
+        let t_file = form.elements[1].files.length;
+
+        e.preventDefault();
+        if (t_title !== "" && t_file > 0) {
+            document.getElementById("error1").innerText = "";
+            show("step1", false);
+            show("step2", true);
+        } else {
+            document.getElementById("error1").innerText = "Compile all the fields and upload all the required files to go on";
+        }
+    });
+
+    document.getElementById("2Step3").addEventListener('click', (e) => {
+        let form = e.target.closest("form");
+        for (let i=0; i<form.elements.length; i++) {
+            console.log(form.elements[i]);
+        }
+        let t_artname = form.elements[3].value;
+        let t_aname = form.elements[4].value;
+        let t_ayear = form.elements[5].value;
+        let t_albumArt = form.elements[6].files.length;
+
+        e.preventDefault();
+        if(t_artname !== "" && t_aname !== "" && t_ayear !== "" && t_albumArt > 0) {
+            document.getElementById("error2").innerText = "";
+            show("step2", false);
+            show("step1", true);
+        } else {
+            document.getElementById("error2").innerText = "Compile all the fields and upload all the required files to go on";
+        }
+    });
+
+    document.getElementById("backStep1").addEventListener('click', (e) => {
+        e.preventDefault();
+        show("step2", false);
+        show("step1", true);
+    });
+
+    document.getElementById("backStep2").addEventListener('click', (e) => {
+        e.preventDefault();;
+        show("step3", false);
+        show("step2", true);
+    });
+
+    document.getElementById("addNewTrack").addEventListener('click', (e) => {
+        e.preventDefault();
+        makeCall("POST", 'Home', form,
+            function(x) {
+                if (x.readyState === XMLHttpRequest.DONE) {
+                    let message = x.responseText;
+                    switch (x.status) {
+                        case 200:
+                            location.reload();
+                            break;
+                        default:
+                            warn(x.status, x.responseText);
+                            break;
+                    }
+                }
+            }
+        );
+    });
 })();
