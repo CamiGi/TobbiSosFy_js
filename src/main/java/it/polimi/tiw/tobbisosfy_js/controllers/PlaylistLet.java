@@ -59,7 +59,7 @@ public class PlaylistLet  extends HttpServlet {
 
         this.setU((User) req.getSession().getAttribute("user"));
         String trackPath = ctx.getInitParameter("trackpath").substring(25),
-                imgPath = ctx.getInitParameter("imagepath").substring(25);
+                imgPath = ctx.getInitParameter("imgpath").substring(25);
 
         PlaylistDAO pd = new PlaylistDAO(connection);
         TrackDAO td = new TrackDAO(connection);
@@ -103,7 +103,7 @@ public class PlaylistLet  extends HttpServlet {
             System.out.println("Canzoni prese");
 
             Date d = new Date(System.currentTimeMillis());
-            Playlist playlist = new Playlist(playlistTitle, d, u);
+            Playlist playlist = new Playlist(playlistTitle, d, u, true);
 
             try {
                 System.out.println("Invio nuova playlist");

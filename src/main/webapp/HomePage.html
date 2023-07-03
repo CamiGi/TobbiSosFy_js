@@ -171,7 +171,6 @@
         <h1>playlist</h1>
     </div>
     <a class="back" id="backHome" href="#">Home</a>
-    <a class="update" id="updatePlaylist" href="UpdateOrder">Update</a>
     <div id="showTab" class="activeTab">Playlist Tracks</div>
     <div id="showForm" class="backgroundTab">Add Tracks</div>
     <div id="showMod" class="backgroundTab">Change Order</div>
@@ -197,9 +196,10 @@
             </form>
         </div>
         <div class="hidden" id="order">
-            <form id="ff" action="UpdateOrder" method="POST">
-                <ul id="sortable-list" class="sortable-list">
-                </ul>
+            <form id="ffoorrmm" method="POST" enctype="multipart/form-data">
+                <fieldset id="sortable-list" class="sortable-list">
+                </fieldset>
+                <input type="submit" value="Submit" id="updatePlaylist"><br>
             </form>
         </div>
     </div>
