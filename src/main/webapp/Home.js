@@ -244,7 +244,7 @@ function showDivs(mp, np, nt){
     });
 
     document.getElementById("backStep2").addEventListener('click', (e) => {
-        e.preventDefault();;
+        e.preventDefault();
         show("step3", false);
         show("step2", true);
     });
