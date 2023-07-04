@@ -1,12 +1,4 @@
-//SECURYTY UPDATE:
-// mandando una o piu' tracce come stringa JSON si vedono tutti gli attributi, tra cui lo user, quindi
-// é possibile vedere la password di uno user dalle sue tracce! Per risolvere ho fatto che l'attributo user
-// della classe Track é solo lo username
-
-//Grande Marco!!
-//Grazie Cami!!!
-
-var tracks; //da rendere pubblico che serve anche a Marco ~ update: ora é nello scope globale
+var tracks;
 let playlists;
 let u_name;
 let u;

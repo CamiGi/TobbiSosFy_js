@@ -611,6 +611,11 @@ a:hover {
     color: black;
 }
 
+#goHome {
+    border-right: 1px solid black;
+    padding-right: 5px;
+}
+
 .sub{
     margin-left: 47%;
     margin-top: 15px;

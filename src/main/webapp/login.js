@@ -9,6 +9,15 @@ window.onload = () => {
     });
 };
 
+let back = document.getElementById("backLogin");
+//register.onclick = show("registration", true);
+register.addEventListener('click',
+    (e) => {
+        e.preventDefault();
+        show("registration", false);
+        show("login", true);
+    });
+
 (() => { // avoid variables ending up in the global scope
     document.getElementById("loginButton").addEventListener('click', (e) => {
         let form = e.target.closest("form");

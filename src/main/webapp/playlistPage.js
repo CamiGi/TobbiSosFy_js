@@ -39,7 +39,6 @@
                             printTracksToAdd();
                             show("PlaylistPage", true);
                             go(playlist);
-                            initPlayer();
                         }
                         else {//errorpage
                             warn(x.status, x.responseText);
@@ -211,6 +210,8 @@
         if (group >= playlistTracks.length || group < 0) {
             tab.innerText = "You trespass, jedi."
         }
+
+        initPlayer();
     }
 
     var printTracksToAdd = () => {   //prints the tracks a user can add to a playlist in the playlist page
@@ -279,7 +280,7 @@
                                         printButtons();
                                         printGroup();
                                         printTracksToAdd();
-                                        alert("Song added to playlist")
+                                        alert("Song added to playlist");
                                     }
                                     else {
                                         warn("PlaylistPage", x.status, x.responseText);

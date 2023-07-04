@@ -77,13 +77,13 @@ input[type="submit"]:hover{
 }
 
 a:link {
-    color: darkslateblue;
+    color: deepskyblue;
     font-size: 18px;
     text-decoration: none;
 }
 
 a:visited {
-    color: darkblue;
+    color: grey;
     text-decoration: none;
 }
 
@@ -122,4 +122,9 @@ img {
     justify-content: center;
 
     margin-top: 40px;
+}
+
+.divider {
+    border-top: 2px solid rgb(26, 31, 37);
+    border-radius: 2px;
 }
