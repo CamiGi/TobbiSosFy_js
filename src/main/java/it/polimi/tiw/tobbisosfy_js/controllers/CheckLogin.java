@@ -1,13 +1,10 @@
 package it.polimi.tiw.tobbisosfy_js.controllers;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import it.polimi.tiw.tobbisosfy_js.DAOs.*;
 import it.polimi.tiw.tobbisosfy_js.beans.User;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
 import javax.servlet.annotation.MultipartConfig;
@@ -28,7 +25,6 @@ public class CheckLogin extends HttpServlet {
 
     public CheckLogin() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     public void init() throws ServletException {
@@ -43,7 +39,6 @@ public class CheckLogin extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // TODO Auto-generated method stub
         response.getWriter().append("Served at: ").append(request.getContextPath());
     }
 
@@ -81,8 +76,6 @@ public class CheckLogin extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().println(usrn);
-            //response.sendRedirect("Home");
-
             return;
         }
     }

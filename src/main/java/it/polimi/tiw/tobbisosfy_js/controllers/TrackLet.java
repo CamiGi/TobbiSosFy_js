@@ -64,7 +64,6 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PlaylistDAO playlistDAO = new PlaylistDAO(connection);
         TrackDAO trackDAO = new TrackDAO(connection);
-        //final WebContext ctx = DBServletInitializer.createContext(req, resp, getServletContext());
         this.setU((User) req.getSession().getAttribute("user"));  //setto lo user che mi serve per tutta la classe
         ArrayList<Playlist> playlists;
         ArrayList<Track> songs;
@@ -127,28 +126,19 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
         Part img;
 
         try {
-            System.out.println("DENTRO AL TRY");
             trackTitle = req.getPart("ttitle");
-            System.out.println("ttitle preso "+ new String(trackTitle.getInputStream().readAllBytes(), StandardCharsets.UTF_8));
             albumDate = req.getPart("dalbum");
-            System.out.println("dalbum preso");
             albumTitle = req.getPart("talbum");
-            System.out.println("talbum preso");
             albumGenre = req.getPart("g");
-            System.out.println("g preso");
             artistName = req.getPart("aname");
-            System.out.println("aname preso");
             taudio = req.getPart("audio");
             img = req.getPart("img");
-            System.out.println("STO USCENDO DAL TRY");
         } catch (Exception e) {
             e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.println("Error occurred while reading the form: Add a new track");
             return;
         }
-
-        System.out.println("JJJJJJ");
 
         if(!(albumTitle == null || albumTitle.getSize() <= 0 ||
                 trackTitle == null || trackTitle.getSize() <= 0 ||
@@ -164,11 +154,9 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             int aDate = Integer.parseInt(adate);
             String agenre = new String(albumGenre.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
             Genre aGenre = Genre.valueOf(agenre.toUpperCase());
-            System.out.println("g preso");
 
             // We then check the parameter is valid (in this case right format)
             String contentTypeImg = img.getContentType();
-            System.out.println("Type " + contentTypeImg);
 
             if (!contentTypeImg.startsWith("image")) {
 
@@ -181,7 +169,6 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
 
             // We then check the parameter is valid (in this case right format)
             String contentTypeAudio = taudio.getContentType();
-            System.out.println("Type " + contentTypeAudio);
 
             if (!contentTypeAudio.startsWith("audio")) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -190,57 +177,51 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             }
 
             String imgName = Paths.get(img.getSubmittedFileName()).getFileName().toString().replaceAll("\\s","");
-            System.out.println("Filename: " + imgName);
 
             String audioName = Paths.get(taudio.getSubmittedFileName()).getFileName().toString().replaceAll("\\s","");
-            System.out.println("Filename: " + audioName);
 
             String imgOutputPath = imgFP + imgName; //folderPath inizialized in init
-            System.out.println("Output path: " + imgOutputPath);
 
             File imgFile = new File(imgOutputPath);
 
             String audioOutputPath = audioFP + audioName; //folderPath inizialized in init
-            System.out.println("Output path: " + audioOutputPath);
 
             File audioFile = new File(audioOutputPath);
 
             try (InputStream imgContent = img.getInputStream()) {
-                // TODO: WHAT HAPPENS IF A FILE WITH THE SAME NAME ALREADY EXISTS?
-                // you could override it, send an error or
-                // rename it, for example, if I need to upload images to an album, and for each image
-                //I also save other data, I could save the image as {image_id}.jpg using the id of the db
 
                 Files.copy(imgContent, imgFile.toPath());
                 System.out.println("Image saved correctly!");
 
             } catch (FileAlreadyExistsException e) {
+
                 System.out.println("Image saved correctly!");
+
             } catch (Exception e) {
+
                 e.printStackTrace();
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 out.println("Error occurred while saving the image! Retry");
-                //error += "Error occurred while saving the image! Retry";
-                //resp.sendRedirect(error);
+
                 return;
             }
 
 
             try (InputStream audioContent = taudio.getInputStream()) {
-                // TODO: WHAT HAPPENS IF A FILE WITH THE SAME NAME ALREADY EXISTS?
-                // you could override it, send an error or
-                // rename it, for example, if I need to upload images to an album, and for each image I also save other data, I could save the image as {image_id}.jpg using the id of the db
 
                 Files.copy(audioContent, audioFile.toPath());
                 System.out.println("Track audio saved correctly!");
 
-                //resp.sendRedirect("ShowImage?filename=" + imgName);
             } catch (FileAlreadyExistsException e) {
+
                 System.out.println("Track audio saved correctly!");
+
             } catch (Exception e) {
+
                 e.printStackTrace();
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 out.println("Error occurred while saving the audio file! Retry");
+
                 return;
             }
 
@@ -250,14 +231,17 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             Track track = new Track(tTitle, album, audioName, u.getUsername());
 
             try {
-                System.out.println("Ora aggiungo la track al server");
+
                 td.addTrack(track.getTitle(), track.getAlbum(), track.getMp3Uri(), track.getUser());
                 System.out.println("Track aggiunta corettamente al server");
+
             } catch (SQLException e){
+
                 e.printStackTrace();
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 out.println("Error occurred while saving the track in the database (SQL exception)");
                 return;
+
             } catch (Exception e) {
 
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);

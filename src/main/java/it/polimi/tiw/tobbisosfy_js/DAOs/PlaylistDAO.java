@@ -164,7 +164,6 @@ public class PlaylistDAO {
         result.next();
 
         boolean t = result.getBoolean("def");
-        System.out.println(result.getBoolean("def"));
 
         if(t){
             queryTracks =
@@ -182,13 +181,10 @@ public class PlaylistDAO {
                             "WHERE pl.ID=? ORDER BY position";  //creo query che seleziona le canzoni (tentativo di JOIN)
         }
 
-        System.out.println(queryTracks);
-
         ps = con.prepareStatement(queryTracks);  //settaggio altro statement
         ps.setInt(1,pid);
         resultTrack = ps.executeQuery();  //mando la query definitiva che mi da tutte le canzoni
 
-        System.out.println("SONO QUIIIII");
 
         if (resultTrack.isBeforeFirst()) {
             resultTrack.next();
@@ -246,7 +242,7 @@ public class PlaylistDAO {
                 con.rollback();
                 throw new Exception("ATTENZIONE qualcosa è andato storto: update playlist");
             }
-            System.out.println("Ho settato false la playlist: "+idp);
+
         } catch (SQLException e) {
             con.rollback();
             throw new Exception("Non è stato possibile modificare il valore della playlist");
@@ -339,7 +335,6 @@ public class PlaylistDAO {
                 throw new Exception("ATTENZIONE qualcosa è andato storto: reset contains");
             }
 
-            System.out.println("Ho messo a posto la traccia: "+trIDs.get(i)+" che ha posizione nuova: "+i);
         }
 
     }

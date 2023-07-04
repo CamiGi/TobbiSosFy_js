@@ -48,6 +48,7 @@ public class UpdateOrder extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
         ServletContext ctx = getServletContext();
         String trackPath = ctx.getInitParameter("trackpath"),
                 imgPath = ctx.getInitParameter("imgpath");
@@ -65,10 +66,11 @@ public class UpdateOrder extends HttpServlet {
         int pID = Integer.parseInt(req.getParameter("pID"));
 
         if(sngs_s.length != 0) {
+
             for (int i = 0; i < sngs_s.length; i++) {
                 trIDs.add(Integer.parseInt(sngs_s[i]));
             }
-            System.out.println("GLI ID: "+trIDs);
+
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             out.println("Error: there is no songs to order");
@@ -78,13 +80,18 @@ public class UpdateOrder extends HttpServlet {
 
 
         try {
+
             playlist = playlistDAO.getPlaylistFromId(pID, user);
+
         } catch (SQLException e){
+
             e.printStackTrace();
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.println("Error occurred while finding the playlist in the database (SQL exception)");
             return;
+
         } catch (Exception e) {
+
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             out.println("Error occurred while finding the playlist in the database");
             return;
@@ -130,7 +137,6 @@ public class UpdateOrder extends HttpServlet {
             return;
         }
 
-        System.out.println("è andato tutto bene");
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.sendRedirect(ctxPath+"/ShowPlaylist?playlist="+playlist.getId());
 

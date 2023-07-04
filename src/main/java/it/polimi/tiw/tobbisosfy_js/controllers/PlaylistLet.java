@@ -87,7 +87,6 @@ public class PlaylistLet  extends HttpServlet {
         if(!(ptitle == null || songs.size() == 0 )  ) {
 
             String playlistTitle = new String(ptitle.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
-            System.out.println("Titolo preso: "+playlistTitle+" "+ trackPath + " " + imgPath);
             ArrayList<Track> sng = new ArrayList<>();
 
             for (int song : songs) {
@@ -100,15 +99,11 @@ public class PlaylistLet  extends HttpServlet {
                 }
             }
 
-            System.out.println("Canzoni prese");
-
             Date d = new Date(System.currentTimeMillis());
             Playlist playlist = new Playlist(playlistTitle, d, u, true);
 
             try {
-                System.out.println("Invio nuova playlist");
                 pd.addPlaylist(playlist, sng);
-                System.out.println("Inviata nuova playlist");
             } catch (SQLException e){
                 e.printStackTrace();
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
@@ -124,7 +119,6 @@ public class PlaylistLet  extends HttpServlet {
             out.println("Missing parameters in the 'Add a new playlist' form");
             return;
         }
-        System.out.println("è andato tutto bene");
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.sendRedirect(ctxPath+"/Home");
     }

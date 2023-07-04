@@ -56,7 +56,6 @@ public class ShowPlaylist extends HttpServlet {
         String jsonPTracks;
         PrintWriter out = resp.getWriter();
 
-        System.out.println("Start searching for playlist");
         try {
             plID = Integer.parseInt(req.getParameter("playlist"));
             playlist = plFinder.getPlaylistFromId(plID, user);
