@@ -72,7 +72,8 @@
         document.getElementById("backPlaylist").addEventListener('click',
             (e) => {
                 e.preventDefault();
-                show("playerPage", false);
+                document.body.style.removeProperty("background-image");
+                show("PlayerPage", false);
                 show("PlaylistPage", true);
             });
 
@@ -86,7 +87,8 @@
         document.getElementById("goHome").addEventListener('click',
             (e) => {
                 e.preventDefault();
-                show("playerPage", false);
+                document.body.style.removeProperty("background-image");
+                show("PlayerPage", false);
                 show("HomePage", true);
             });
 

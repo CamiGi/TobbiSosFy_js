@@ -10,8 +10,8 @@ html {
 body{
     background: rgb(13, 16, 23);
     color: ivory;
-    min-height: 100vh;
-    min-width: 100vh;
+    /*min-height: 100vh;
+    min-width: 100vh;*/
 }
 
 .username{
@@ -405,24 +405,24 @@ input {
     border: 1px solid rgb(26, 31, 37);
     border-radius: 4px;
 }
-/*
+
 .nav_el {
     margin-left: 10px;
     margin-right: 10px;
 }
- */
-
+/*
 .back {
     position: absolute;
     top: 5%;
     right: 5%;
 
-    /*background-color: rgba(0, 0, 0, 0.5);*/
+    background-color: rgba(0, 0, 0, 0.5);
     padding: 15px 25px;
 
     border: 1px solid rgb(100, 100, 100);
     border-radius: 30px;
 }
+*/
 
 .nav_el:hover{
     font-size: 18px;
@@ -433,10 +433,6 @@ input {
 .nav {
     margin-top: 130px;
     border-color: ivory;
-}
-
-.back td + td {
-    border-left: 2px solid black;
 }
 
 td.entry {
@@ -539,8 +535,7 @@ a:hover {
     width: 445px;
     padding: 30px 25px 20px;
     border-radius: 6px;
-    border-color: ivory;
-    border: solid;
+    border: solid ivory;
     margin-top: 0;
     margin-left: 15%;
 }
@@ -610,6 +605,10 @@ a:hover {
 
 #error1, #error2 {
     color: red;
+}
+
+#goHome, #backPlaylist {
+    color: black;
 }
 
 .sub{

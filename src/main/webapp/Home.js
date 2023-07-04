@@ -253,7 +253,7 @@ function showDivs(mp, np, nt){
         e.preventDefault();
         let form = e.target.closest("form");
 
-        if (confirm("Everything is correct?")) {
+        if (confirm("You cannot delete or modify a track, do you want to add it to your collection?")) {
             makeCall("POST", 'Home', form,
                 function (x) {
                     if (x.readyState === XMLHttpRequest.DONE) {
