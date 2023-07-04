@@ -51,7 +51,6 @@ public class Register extends HttpServlet {
             return;
         }
 
-        //does all the controls on the password
         if (pwd.length() < 8) {
             response.setStatus(HttpServletResponse.SC_NOT_ACCEPTABLE);
             out.println("Password length must be at least 8 chars");

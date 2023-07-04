@@ -14,7 +14,6 @@ public class Logout extends HttpServlet{
 
     public Logout() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 @MultipartConfig
 @WebServlet("/Home")
-public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN ALTRA SOLO PER L?ALTRA COSA playlist - track
+public class TrackLet extends HttpServlet {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -64,7 +64,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         PlaylistDAO playlistDAO = new PlaylistDAO(connection);
         TrackDAO trackDAO = new TrackDAO(connection);
-        this.setU((User) req.getSession().getAttribute("user"));  //setto lo user che mi serve per tutta la classe
+        this.setU((User) req.getSession().getAttribute("user"));
         ArrayList<Playlist> playlists;
         ArrayList<Track> songs;
 
@@ -155,7 +155,6 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             String agenre = new String(albumGenre.getInputStream().readAllBytes(), StandardCharsets.UTF_8);
             Genre aGenre = Genre.valueOf(agenre.toUpperCase());
 
-            // We then check the parameter is valid (in this case right format)
             String contentTypeImg = img.getContentType();
 
             if (!contentTypeImg.startsWith("image")) {
@@ -166,8 +165,6 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
                 return;
             }
 
-
-            // We then check the parameter is valid (in this case right format)
             String contentTypeAudio = taudio.getContentType();
 
             if (!contentTypeAudio.startsWith("audio")) {
@@ -180,11 +177,11 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
 
             String audioName = Paths.get(taudio.getSubmittedFileName()).getFileName().toString().replaceAll("\\s","");
 
-            String imgOutputPath = imgFP + imgName; //folderPath inizialized in init
+            String imgOutputPath = imgFP + imgName;
 
             File imgFile = new File(imgOutputPath);
 
-            String audioOutputPath = audioFP + audioName; //folderPath inizialized in init
+            String audioOutputPath = audioFP + audioName;
 
             File audioFile = new File(audioOutputPath);
 

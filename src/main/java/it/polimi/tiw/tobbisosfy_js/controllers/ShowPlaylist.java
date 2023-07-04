@@ -128,7 +128,6 @@ public class ShowPlaylist extends HttpServlet {
             out.println(e.getMessage());
             return;
         }
-        System.out.println("OKKKKKKKKKKKKK");
         resp.setStatus(HttpServletResponse.SC_OK);
     }
 
