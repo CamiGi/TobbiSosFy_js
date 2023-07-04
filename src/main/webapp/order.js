@@ -113,7 +113,11 @@ function go(pid) {
                         let message = x.responseText;
                         switch (x.status) {
                             case 200:
-                                location.reload();
+                                parseJSON(message);
+                                printButtons();
+                                printGroup();
+                                printTracksToAdd();
+                                alert("Order updated");
                                 break;
                             default:
                                 warn(x.status, x.responseText);

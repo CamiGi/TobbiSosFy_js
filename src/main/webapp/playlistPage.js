@@ -142,7 +142,7 @@
         this.image = ctx + "/resources/images/" + image;
     }
 
-    let parseJSON = (resp) => {
+    var parseJSON = (resp) => {
         let trs = JSON.parse(resp);
         let t;
         group = 0;
@@ -158,7 +158,7 @@
         }
     }
 
-    let printButtons = () => {     //shows/hides prev/next button in the playlist page
+    var printButtons = () => {     //shows/hides prev/next button in the playlist page
         let prevB = "prevButton";
         let nextB = "nextButton";
 
@@ -175,7 +175,7 @@
         }
     }
 
-    let printGroup = () => {     //prints a group of 1~5 tracks in the playlist page
+    var printGroup = () => {     //prints a group of 1~5 tracks in the playlist page
         let tab = document.getElementById("tab");
         let table = document.createElement("TABLE");
         let row = table.insertRow(0);
@@ -213,7 +213,7 @@
         }
     }
 
-    let printTracksToAdd = () => {   //prints the tracks a user can add to a playlist in the playlist page
+    var printTracksToAdd = () => {   //prints the tracks a user can add to a playlist in the playlist page
         let form = document.querySelector('.frm');
         let el;
         let input;

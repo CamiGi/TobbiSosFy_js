@@ -52,7 +52,7 @@ public class TrackLet extends HttpServlet { //SERVLET DA SPECIFICARE E FARNE UN 
             e.printStackTrace();
         }
 
-        imgFP = getServletContext().getInitParameter("imagepath");
+        imgFP = getServletContext().getInitParameter("imgpath");
         audioFP = getServletContext().getInitParameter("trackpath");
     }
 
