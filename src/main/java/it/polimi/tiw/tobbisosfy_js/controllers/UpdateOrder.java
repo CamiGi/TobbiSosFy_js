@@ -7,7 +7,6 @@ import it.polimi.tiw.tobbisosfy_js.beans.User;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.UnavailableException;
-import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +17,7 @@ import java.net.ServerSocket;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
-@MultipartConfig
+
 @WebServlet("/UpdateOrder")
 public class UpdateOrder extends HttpServlet {
 
@@ -46,27 +45,26 @@ public class UpdateOrder extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ServletContext ctx = getServletContext();
         String trackPath = ctx.getInitParameter("trackpath"),
                 imgPath = ctx.getInitParameter("imgpath");
         PlaylistDAO playlistDAO = new PlaylistDAO(connection);
-        String ctxPath = req.getContextPath();
 
         ArrayList<Integer> trIDs = new ArrayList<>();
         User user = (User) req.getSession().getAttribute("user");
 
-        String[] sngs_s = req.getParameterValues("gigi");
+        String[] sngs_s = req.getParameterValues("sng");
         PrintWriter out = resp.getWriter();
 
 
-        int pID = Integer.parseInt(req.getParameter("pID"));
+        String pID_s = req.getParameter("ffoorrmm");
+        int pID =Integer.parseInt(pID_s);
 
         if(sngs_s.length != 0) {
             for (int i = 0; i < sngs_s.length; i++) {
                 trIDs.add(Integer.parseInt(sngs_s[i]));
             }
-            System.out.println("GLI ID: "+trIDs);
         } else {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
             out.println("Error: there is no songs to order");
@@ -86,7 +84,7 @@ public class UpdateOrder extends HttpServlet {
             out.println("Error occurred while finding the playlist in the database");
             return;
         }
-
+/*
         try {
             playlistDAO.setDefFalse(playlist);
         } catch (SQLException e){
@@ -99,23 +97,6 @@ public class UpdateOrder extends HttpServlet {
             out.println("Error occurred while finding the playlist in the database");
             return;
         }
-
-        try {
-            playlistDAO.resetContains(trIDs, playlist.getId());
-        } catch (SQLException e){
-            e.printStackTrace();
-            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-            out.println("Error occurred while finding the update of contains in the database (SQL exception)");
-            return;
-        } catch (Exception e) {
-            resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-            out.println("Error occurred while finding the update of contains in the database");
-            return;
-        }
-
-        System.out.println("è andato tutto bene");
-        resp.setStatus(HttpServletResponse.SC_OK);
-        resp.sendRedirect(ctxPath+"/ShowPlaylist?playlist="+playlist.getId());
-
+*/
     }
 }

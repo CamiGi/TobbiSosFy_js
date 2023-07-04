@@ -11,7 +11,6 @@ let playlists;
 let u_name;
 let u;
 let u_psw;
-let no_song;
 let no_pl;
 
 window.onload = function() {
@@ -23,23 +22,15 @@ window.onload = function() {
             switch(x.readyState){
                 case XMLHttpRequest.DONE:
 
-                    no_song = false;
                     no_pl = false;
 
                     //document.getElementById("empty_pl").style.visibility = 'hidden';
-                    document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
-                    document.getElementById("youdonthaveanysong").style.margin = 'none';
 
                     document.getElementById("myplaylists").style.visibility = 'visible';
                     document.getElementById("newPlaylist").style.visibility = 'hidden';
                     document.getElementById("newTrack").style.visibility = 'hidden';
 
                     showDivs(true, false, false);
-
-                    /*document.getElementById("PlaylistPage").style.visibility = 'hidden';
-                    document.getElementById("PlayerPage").style.visibility = 'hidden';
-                    document.getElementById("ErrorPage").style.visibility = 'hidden';*/
-                    //Per nascondere un div uso la classe hidden, non c'é bisogno di fare stile.visibility
 
                     document.getElementById("navMP").onclick = function(){showDivs(true, false, false)};
                     document.getElementById("navNP").onclick = function(){showDivs(false,true,false)};
@@ -112,9 +103,9 @@ window.onload = function() {
                     let li;
 
                     if(tracks.length === 0){
-                        no_song = true;
+                        selection.innerText = "You don't have any song";
                     } else {
-
+                        selection.replaceChildren();
                         for (let i = 0; i < tracks.length; i++) {
                             li = document.createElement("BR");
                             inp = document.createElement("INPUT");
@@ -153,7 +144,6 @@ function showDivs(mp, np, nt){
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'hidden';
         //document.getElementById("empty_pl").style.visibility = 'hidden';
-        document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
         if(no_pl){
             document.getElementById("empty_pl").style.visibility = 'visible';
         }
@@ -161,59 +151,14 @@ function showDivs(mp, np, nt){
         document.getElementById("myplaylists").style.visibility = 'hidden';
         document.getElementById("newPlaylist").style.visibility = 'visible';
         document.getElementById("newTrack").style.visibility = 'hidden';
-        document.getElementById("empty_pl").style.visibility = 'hidden';
-        document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
-        if(no_song){
-            document.getElementById("youdonthaveanysong").style.visibility = 'visible';
-        }
+        //document.getElementById("empty_pl").style.visibility = 'hidden';
     } else if(nt){
         document.getElementById("myplaylists").style.visibility = 'hidden';
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'visible';
         //document.getElementById("empty_pl").style.visibility = 'hidden';
-        document.getElementById("youdonthaveanysong").style.visibility = 'hidden';
     }
 }
-
-
-(function() { // avoid variables ending up in the global scope
-    document.getElementById("addNewTrack").addEventListener('click', (e) => {
-        e.preventDefault();
-        let form = e.target.closest("form");
-        let t_title = form.elements[0].value;
-        let t_audio = form.elements[1].value;
-        let t_aname = form.elements[2].value;
-        let t_ayear = form.elements[3].value;
-        let t_aimg = form.elements[4].value;
-        let t_artname = form.elements[6].value;
-
-        if (form.checkValidity()) {
-            if(t_title == '' || t_aname == '' || t_artname == '' || t_ayear == '' ){
-                console.log("ERRORE");
-                return;
-            }
-
-            makeCall("POST", 'Home', form,
-                function(x) {
-                    if (x.readyState === XMLHttpRequest.DONE) {
-                        let message = x.responseText;
-                        switch (x.status) {
-                            case 200:
-                                location.reload();
-                                break;
-                            default:
-                                warn(x.status, x.responseText);
-                                break;
-                        }
-                    }
-                }
-            );
-        } else {
-            form.reportValidity();
-        }
-    });
-
-})();
 
 (function() { // avoid variables ending up in the global scope
     document.getElementById("addNewPlaylist").addEventListener('click', (e) => {
@@ -243,6 +188,7 @@ function showDivs(mp, np, nt){
                         switch (x.status) {
                             case 200:
                                 location.reload();
+                                alert("Playlist added to your collection");
                                 break;
                             default:
                                 warn(x.status, x.responseText);
@@ -256,4 +202,74 @@ function showDivs(mp, np, nt){
         }
     });
 
+})();
+
+(() => {
+    document.getElementById("2Step2").addEventListener('click', (e) => {
+        let form = e.target.closest("form");
+        let t_title = form.elements[0].value;
+        let t_file = form.elements[1].files.length;
+
+        e.preventDefault();
+        if (t_title !== "" && t_file > 0) {
+            document.getElementById("error1").innerText = "";
+            show("step1", false);
+            show("step2", true);
+        } else {
+            document.getElementById("error1").innerText = "Compile all the fields and upload all the required files to go on";
+        }
+    });
+
+    document.getElementById("2Step3").addEventListener('click', (e) => {
+        let form = e.target.closest("form");
+        let t_artname = form.elements[3].value;
+        let t_aname = form.elements[4].value;
+        let t_ayear = form.elements[5].value;
+        let t_albumArt = form.elements[6].files.length;
+
+        e.preventDefault();
+        if(t_artname !== "" && t_aname !== "" && t_ayear !== "" && t_albumArt > 0) {
+            document.getElementById("error2").innerText = "";
+            show("step2", false);
+            show("step3", true);
+        } else {
+            document.getElementById("error2").innerText = "Compile all the fields and upload all the required files to go on";
+        }
+    });
+
+    document.getElementById("backStep1").addEventListener('click', (e) => {
+        e.preventDefault();
+        show("step2", false);
+        show("step1", true);
+    });
+
+    document.getElementById("backStep2").addEventListener('click', (e) => {
+        e.preventDefault();
+        show("step3", false);
+        show("step2", true);
+    });
+
+    document.getElementById("addNewTrack").addEventListener('click', (e) => {
+        e.preventDefault();
+        let form = e.target.closest("form");
+
+        if (confirm("Everything is correct?")) {
+            makeCall("POST", 'Home', form,
+                function (x) {
+                    if (x.readyState === XMLHttpRequest.DONE) {
+                        let message = x.responseText;
+                        switch (x.status) {
+                            case 200:
+                                location.reload();
+                                alert("Song added to your collection");
+                                break;
+                            default:
+                                warn(x.status, x.responseText);
+                                break;
+                        }
+                    }
+                }
+            );
+        }
+    });
 })();

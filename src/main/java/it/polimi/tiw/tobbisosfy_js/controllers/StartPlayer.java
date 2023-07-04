@@ -63,6 +63,12 @@ public class StartPlayer extends HttpServlet {
             return;
         }
 
+        if (track == null) {
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.println("Couldn't find the requested track");
+            return;
+        }
+
         response.setStatus(HttpServletResponse.SC_OK);
     }
 

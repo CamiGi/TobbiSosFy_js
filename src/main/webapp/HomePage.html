@@ -32,118 +32,136 @@
         <div class="newTrack" id="newTrack" style="visibility: hidden;">
             <p>Add a new track</p>
             <form action="Home" method="POST" enctype="multipart/form-data">
-                <label for="ttitle">Track Title</label><br>
-                <input class="text" type="text" id="ttitle" name="ttitle" required="required"><br>
-                <label for="audio" >Select audio file: </label>
-                <input class="tfile" type="file" name="audio" id="audio" required="required"><br>
-                <label for="talbum">Album</label><br>
-                <input class="text" type="text" id="talbum" name="talbum" required="required"><br>
-                <label for="dalbum">Year of release: </label>
-                <select class="text" name="dalbum" id="dalbum" required="required">
-                </select>
-                <br>
-                <label for="img" >Select album image: </label>
-                <input class="afile" type="file" name="img" id="img" required="required"><br>
-                <fieldset id="galbum">
-                    <legend>Genre</legend>
-                        <table>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="classic" value="CLASSIC" name="g" checked="checked">
-                                    <label for ="classic" class="lalabel">Classic</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="jazz" value="JAZZ" name="g">
-                                    <label for="jazz" class="lalabel">Jazz</label><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="blues" value="BLUES" name="g">
-                                    <label for="blues" class="lalabel">Blues</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="gospel" value="GOSPEL" name="g">
-                                    <label for="gospel" class="lalabel">Gospel</label><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="soul" value="SOUL" name="g">
-                                    <label for="soul" class="lalabel">Soul</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="pop" value="POP" name="g">
-                                    <label for="pop" class="lalabel">Pop</label><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="rock" value="ROCK" name="g">
-                                    <label for="rock" class="lalabel">Rock</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="country" value="COUNTRY" name="g">
-                                    <label for="country" class="lalabel">Country</label><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="disco" value="DISCO" name="g">
-                                    <label for="disco" class="lalabel">Disco</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="techno" value="TECHNO" name="g">
-                                    <label for="techno" class="lalabel">Techno</label><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="raggae" value="RAGGAE" name="g">
-                                    <label for="raggae" class="lalabel">Raggae</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="salsa" value="SALSA" name="g">
-                                    <label for="salsa" class="lalabel">Salsa</label><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="flamenco" value="FLAMENCO" name="g">
-                                    <label for="flamenco" class="lalabel">Flamenco</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="hiphop" value="HIPHOP" name="g">
-                                    <label for="hiphop" class="lalabel">Hip-Hop</label><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="metal" value="METAL" name="g">
-                                    <label for="metal" class="lalabel">Metal</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="funk" value="FUNK" name="g">
-                                    <label for="funk" class="lalabel">Funk</label><br>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="radio" id="rap" value="RAP" name="g">
-                                    <label for="rap" class="lalabel">Rap</label>
-                                </td>
-                                <td>
-                                    <input type="radio" id="trap" value="TRAP" name="g">
-                                    <label for="trap" class="lalabel">Trap</label><br>
-                                </td>
-                            </tr>
-                    </table>
-                </fieldset>
-                <br>
-                <label for="aname">Artist name</label><br>
-                <input class="text" type="text" id="aname" name="aname" required="required"><br>
+                <div id="step1">
+                    <label for="ttitle">Track Title</label><br>
+                    <input class="text" type="text" id="ttitle" name="ttitle" placeholder="Title of the song" required="required"><br>
+                    <label for="audio" >Select audio file: </label>
+                    <input class="tfile" type="file" name="audio" id="audio" required="required"><br><br>
+                    <p id="error1"></p>
+                    <div class="movement">
+                        <input type="button" value="Next" class="nextStep" id="2Step2">
+                    </div>
+                </div>
+                <div class="hidden" id="step2">
+                    <label for="aname">Artist name</label><br>
+                    <input class="text" type="text" id="aname" name="aname" placeholder="Song artist" required="required"><br>
+                    <label for="talbum">Album</label><br>
+                    <input class="text" type="text" id="talbum" name="talbum" placeholder="Song album" required="required"><br>
+                    <label for="dalbum">Year of release: </label>
+                    <select class="text" name="dalbum" id="dalbum" required="required">
+                    </select>
+                    <br>
+                    <label for="img" >Select album image: </label>
+                    <input class="afile" type="file" name="img" id="img" required="required"><br><br>
+                    <p id="error2"></p>
+                    <div class="movement">
+                        <input type="button" value="Previous" class="prevStep" id="backStep1">
+                        <input type="button" value="Next" class="nextStep" id="2Step3">
+                    </div>
+                </div>
+                <div class="hidden" id="step3">
+                    <fieldset id="galbum">
+                        <legend>Genre</legend>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="classic" value="CLASSIC" name="g" checked="checked">
+                                        <label for ="classic" class="lalabel">Classic</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="jazz" value="JAZZ" name="g">
+                                        <label for="jazz" class="lalabel">Jazz</label><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="blues" value="BLUES" name="g">
+                                        <label for="blues" class="lalabel">Blues</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="gospel" value="GOSPEL" name="g">
+                                        <label for="gospel" class="lalabel">Gospel</label><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="soul" value="SOUL" name="g">
+                                        <label for="soul" class="lalabel">Soul</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="pop" value="POP" name="g">
+                                        <label for="pop" class="lalabel">Pop</label><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="rock" value="ROCK" name="g">
+                                        <label for="rock" class="lalabel">Rock</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="country" value="COUNTRY" name="g">
+                                        <label for="country" class="lalabel">Country</label><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="disco" value="DISCO" name="g">
+                                        <label for="disco" class="lalabel">Disco</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="techno" value="TECHNO" name="g">
+                                        <label for="techno" class="lalabel">Techno</label><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="raggae" value="RAGGAE" name="g">
+                                        <label for="raggae" class="lalabel">Raggae</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="salsa" value="SALSA" name="g">
+                                        <label for="salsa" class="lalabel">Salsa</label><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="flamenco" value="FLAMENCO" name="g">
+                                        <label for="flamenco" class="lalabel">Flamenco</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="hiphop" value="HIPHOP" name="g">
+                                        <label for="hiphop" class="lalabel">Hip-Hop</label><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="metal" value="METAL" name="g">
+                                        <label for="metal" class="lalabel">Metal</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="funk" value="FUNK" name="g">
+                                        <label for="funk" class="lalabel">Funk</label><br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="rap" value="RAP" name="g">
+                                        <label for="rap" class="lalabel">Rap</label>
+                                    </td>
+                                    <td>
+                                        <input type="radio" id="trap" value="TRAP" name="g">
+                                        <label for="trap" class="lalabel">Trap</label><br>
+                                    </td>
+                                </tr>
+                        </table>
+                    </fieldset>
+                    <br>
+                    <div class="movement">
+                        <input type="button" value="Previous" class="prevStep" id="backStep2">
+                        <input type="submit" value="Submit" class="nextStep" id="addNewTrack">
+                    </div>
+                </div>
 
-                <input type="submit" value="Submit" id="addNewTrack"><br>
             </form>
         </div>
 
@@ -151,14 +169,12 @@
             <p>Add a new playlist</p>
             <form action="PLinsert" method="POST" enctype="multipart/form-data">
                 <label for="ptitle">Playlist Title</label><br>
-                <input class="text" type="text" id="ptitle" name="ptitle" required="required"><br>
+                <input class="text" type="text" id="ptitle" name="ptitle" placeholder="Choose a title" required="required"><br>
                 <fieldset class="fs">
                     <legend>My songs</legend><br>
-                        <label id="youdonthaveanysong">You don't have any song</label>
-                        <div id="selectionSong">
-                            <br>
-                        </div>
+                        <div id="selectionSong"></div>
                 </fieldset>
+                <br><br>
                 <input type="submit" value="Submit" id="addNewPlaylist"><br>
             </form>
         </div>

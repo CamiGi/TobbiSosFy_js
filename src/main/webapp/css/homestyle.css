@@ -53,7 +53,7 @@ select {
 .logout, .back, .update{
     font-size: 13px;
     font-weight: 700;
-    color: black !important;
+    color: black;
     line-height: 14px;
 
     position: absolute;
@@ -175,15 +175,15 @@ input[type="submit"]{
     color: cadetblue;
     font-weight: 700;
     border-radius: 10px;
-    margin-top: 15px;
+    /*margin-top: 15px;*/
     border-color: white;
     border-width: 1px;
     padding: 5px;
     position: relative;
-    flex: auto;
+    /*flex: auto;*/
 }
 
-input[type="submit"]:hover{
+input[type="submit"]:hover, input[type="button"]:hover{
     left: 0.5em;
     padding: 7px;
 }
@@ -205,6 +205,10 @@ input[type="checkbox"]{
  */
 input[type="checkbox"]:hover{
     left:.1em;
+}
+
+input[type="button"] {
+    border-color: white;
 }
 
 .button {
@@ -310,7 +314,6 @@ h1 {
     margin-top: 140px;
     height: 70%;
     min-height: 400px;
-    max-height: 70%;
     min-width: 900px;
 
     background-color: rgb(22, 27, 33);
@@ -402,6 +405,12 @@ input {
     border: 1px solid rgb(26, 31, 37);
     border-radius: 4px;
 }
+/*
+.nav_el {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+ */
 
 .back {
     position: absolute;
@@ -417,6 +426,7 @@ input {
 
 .nav_el:hover{
     font-size: 18px;
+    transform: translate(0, -10%);
     text-underline: none !important;
 }
 
@@ -566,4 +576,37 @@ a:hover {
 
 .item.dragging :where(.details){
     opacity: 0;
+}
+
+.prevStep {
+    margin-right: -81px;
+}
+
+.nextStep{
+    margin-left: 250px;
+}
+
+#galbum {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 280px;
+}
+
+.movement {
+    width: 100%;
+    position: absolute;
+    top: 480px;
+}
+
+#step1, #step2, #step3 {
+    width: 320px;
+    background-color: rgb(22, 27, 33);
+    border-radius: 24px;
+    height: 420px;
+    padding: 20px;
+}
+
+#error1, #error2 {
+    color: red;
 }

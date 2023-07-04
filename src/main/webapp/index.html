@@ -18,11 +18,11 @@
         <form action="#">
             <div class="field">
                 username<br><br>
-                <input type="text" name="username" required="required">
+                <input type="text" name="username" required="required" placeholder="John Doe">
             </div>
             <div class="field">
                 password<br><br>
-                <input type="password" name="pwd" required="required">
+                <input type="password" name="pwd" required="required" placeholder="Y0ur_pwd">
             </div>
             <p id="errLog"></p>
             <div class="field">
@@ -42,17 +42,25 @@
         <form action="#">
             <div class="field">
                 username<br><br><label>
-                <input type="text" name="nickname" required="required">
+                <input type="text" name="nickname" minlength="8" maxlength="20"
+                       required="required"
+                       title="Must contain at least 8 and at most 20 characters"
+                       placeholder="Choose a nickname">
             </label>
             </div>
             <div class="field">
                 password*<br><br><label>
-                <input type="text" name="password" required="required">
+                <input type="text" name="password" minlength="8" maxlength="20"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])" required="required"
+                       title="Must contain at least one  number, one uppercase
+                       and lowercase letter, one special character, at least 8 and
+                       at most 20 characters" placeholder="Choose a password">
             </label>
             </div>
             <div class="field">
                 confirm password*<br><br><label>
-                <input type="text" name="conf" required="required">
+                <input type="text" name="conf" required="required"
+                       placeholder="Digit your password again">
             </label>
             </div>
             <p id="errReg"></p>

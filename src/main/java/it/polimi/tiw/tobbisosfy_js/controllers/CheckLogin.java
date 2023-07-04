@@ -81,7 +81,7 @@ public class CheckLogin extends HttpServlet {
             response.setContentType("application/json");
             response.setCharacterEncoding("UTF-8");
             response.getWriter().println(usrn);
-            response.sendRedirect("http://localhost:8080/TobbiSosFy_js_war_exploded/"+"/Home");
+            //response.sendRedirect("Home");
 
             return;
         }
