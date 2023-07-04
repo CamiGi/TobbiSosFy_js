@@ -542,6 +542,7 @@ a:hover {
     border-color: ivory;
     border: solid;
     margin-top: 0;
+    margin-left: 15%;
 }
 
 .item .details img{
@@ -601,7 +602,7 @@ a:hover {
 
 #step1, #step2, #step3 {
     width: 320px;
-    background-color: rgb(22, 27, 33);
+    background-color: rgb(39 44 49);
     border-radius: 24px;
     height: 420px;
     padding: 20px;
@@ -609,4 +610,9 @@ a:hover {
 
 #error1, #error2 {
     color: red;
+}
+
+.sub{
+    margin-left: 47%;
+    margin-top: 15px;
 }

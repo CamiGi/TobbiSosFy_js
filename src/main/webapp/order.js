@@ -37,7 +37,7 @@ function go(pid) {
             item.setAttribute("name", "sng");
             item.setAttribute("value",playlistTracks[i].id);
             div.setAttribute("class", "details");
-            span.innerText = playlistTracks[i].title + " - " + playlistTracks[i].album.title + " - " + playlistTracks[i].album.genre + " - " + playlistTracks[i].album.artist.artistName;
+            span.innerText = playlistTracks[i].title + " - " + playlistTracks[i].album.title + " - " + playlistTracks[i].album.genre + " - " + playlistTracks[i].album.artist;
             img.setAttribute("src", playlistTracks[i].album.image);
 
 
