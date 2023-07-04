@@ -16,7 +16,6 @@
                     const urlParams = new URLSearchParams(qs);
 
                     ctx = window.location.pathname.substring(0, window.location.pathname.indexOf("/", 1));
-                    console.log(ctx);
                     playlist = urlParams.get('playlist');
                     document.getElementById("title").lastElementChild.innerText = e.target.innerText;
                     show("HomePage", false);
@@ -274,13 +273,34 @@
                         makeCall("POST", form.parentElement.getAttribute("action"),
                             form.parentNode, (x) => {
                                 if (x.readyState === XMLHttpRequest.DONE) {
-                                    let message = x.responseText;
                                     if (x.status === 200) {
-                                        parseJSON(message);
-                                        printButtons();
-                                        printGroup();
-                                        printTracksToAdd();
-                                        alert("Song added to playlist");
+                                        makeCall("GET", "ShowPlaylist?playlist="+playlist, null,
+                                            (x) => {
+
+                                                switch (x.readyState) {
+                                                    case XMLHttpRequest.UNSENT:
+                                                        alert("Couldn't send the request, please try later");
+                                                        break;
+                                                    case XMLHttpRequest.LOADING:
+                                                        document.getElementById("tab").textContent = "Playlist loading, please wait...";
+                                                        break;
+                                                    case XMLHttpRequest.DONE:
+                                                        let resp = x.responseText;
+
+                                                        if (x.status === 200) {
+                                                            parseJSON(resp);
+                                                            printButtons();
+                                                            printGroup();
+                                                            printTracksToAdd();
+                                                            show("PlaylistPage", true);
+                                                            go(playlist);
+                                                        }
+                                                        else {//errorpage
+                                                            warn(x.status, x.responseText);
+                                                        }
+                                                }
+                                            }
+                                        );
                                     }
                                     else {
                                         warn("PlaylistPage", x.status, x.responseText);

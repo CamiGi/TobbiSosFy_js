@@ -41,13 +41,14 @@ public class PlaylistDAO {
         result.next();
 
         int code;
-        if(!result.isBeforeFirst()){  //se non ho già la playlist
-            String queryNewPlaylist = "INSERT INTO playlist VALUES (?, ?, ?, ?)";
+        if(!result.isBeforeFirst()){
+            String queryNewPlaylist = "INSERT INTO playlist VALUES (?, ?, ?, ?, ?)";
             ps = con.prepareStatement(queryNewPlaylist);
             ps.setString(1, null);
             ps.setString(2,playlist.getTitle());
             ps.setDate(3,playlist.getDate());
             ps.setString(4,playlist.getUser());
+            ps.setInt(5,0);
             code = ps.executeUpdate();
         } else {
             throw new Exception("ATTENZIONE qualcosa non è andato bene: 500");
@@ -73,7 +74,7 @@ public class PlaylistDAO {
         result = ps.executeQuery();
         result.next();
 
-        if(!result.isBeforeFirst()){  //se non ho già la tupla
+        if(!result.isBeforeFirst()){
 
             for (Track t : tracks){
                 String queryNewContains = "INSERT INTO contains VALUES(?, ?, ?)";
@@ -134,8 +135,6 @@ public class PlaylistDAO {
         ps.setInt(2, track.getId());
         result = ps.executeQuery();
 
-        result.next();
-
         if(result.isBeforeFirst()){
             return true;
         } else if (!result.isBeforeFirst()) {
@@ -171,26 +170,25 @@ public class PlaylistDAO {
                             "FROM playlist as pl INNER JOIN contains as ct ON ct.playlistID=pl.id " +
                             "INNER JOIN track as tr on ct.trackID=tr.ID " +
                             "INNER JOIN album as al on tr.albumID=al.ID " +
-                            "WHERE pl.ID=? ORDER BY year DESC";  //creo query che seleziona le canzoni (tentativo di JOIN)
+                            "WHERE pl.ID=? ORDER BY year DESC";
         } else {
             queryTracks =
                     "SELECT tr.ID, year " +
                             "FROM playlist as pl INNER JOIN contains as ct ON ct.playlistID=pl.id " +
                             "INNER JOIN track as tr on ct.trackID=tr.ID " +
                             "INNER JOIN album as al on tr.albumID=al.ID " +
-                            "WHERE pl.ID=? ORDER BY position";  //creo query che seleziona le canzoni (tentativo di JOIN)
+                            "WHERE pl.ID=? ORDER BY position";
         }
 
-        ps = con.prepareStatement(queryTracks);  //settaggio altro statement
+        ps = con.prepareStatement(queryTracks);
         ps.setInt(1,pid);
-        resultTrack = ps.executeQuery();  //mando la query definitiva che mi da tutte le canzoni
+        resultTrack = ps.executeQuery();
 
 
         if (resultTrack.isBeforeFirst()) {
             resultTrack.next();
             while (!resultTrack.isAfterLast()) {
                 tid = resultTrack.getInt("tr.ID");
-                //rs.add(td.getTrack(tid));  //uso il metodo privato che dato un id di Track restituisce l'oggetto Track
                 rs.add(td.getTrack(tid, playlist.getUser()));
                 resultTrack.next();
             }

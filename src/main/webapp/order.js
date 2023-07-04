@@ -87,9 +87,7 @@ function go(pid) {
         document.getElementById("ffoorrmm").addEventListener('click', (e) => {
             e.preventDefault();
             let form = document.getElementById("ffoorrmm");
-            console.log(form.elements);
             let p_songs = document.getElementsByName("sng");
-            console.log(p_songs);
             let ss = [];
             for(let i = 0; i < p_songs.length; i++){
                 ss.push(p_songs[i].value);
@@ -102,7 +100,7 @@ function go(pid) {
                 gigi.setAttribute("name", "gigi");
                 gigi.setAttribute("checked", "checked");
                 gigi.setAttribute("value", ss[i]);
-                console.log(gigi);
+                gigi.setAttribute("class", "gigi");
                 form.appendChild(gigi);
             }
 
@@ -117,7 +115,7 @@ function go(pid) {
                                 printButtons();
                                 printGroup();
                                 printTracksToAdd();
-                                alert("Order updated");
+                                go(pid);
                                 break;
                             default:
                                 warn(x.status, x.responseText);

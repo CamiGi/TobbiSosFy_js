@@ -16,8 +16,6 @@ window.onload = function() {
 
                     no_pl = false;
 
-                    //document.getElementById("empty_pl").style.visibility = 'hidden';
-
                     document.getElementById("myplaylists").style.visibility = 'visible';
                     document.getElementById("newPlaylist").style.visibility = 'hidden';
                     document.getElementById("newTrack").style.visibility = 'hidden';
@@ -135,7 +133,6 @@ function showDivs(mp, np, nt){
         document.getElementById("myplaylists").style.visibility = 'visible';
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'hidden';
-        //document.getElementById("empty_pl").style.visibility = 'hidden';
         if(no_pl){
             document.getElementById("empty_pl").style.visibility = 'visible';
         }
@@ -143,16 +140,14 @@ function showDivs(mp, np, nt){
         document.getElementById("myplaylists").style.visibility = 'hidden';
         document.getElementById("newPlaylist").style.visibility = 'visible';
         document.getElementById("newTrack").style.visibility = 'hidden';
-        //document.getElementById("empty_pl").style.visibility = 'hidden';
     } else if(nt){
         document.getElementById("myplaylists").style.visibility = 'hidden';
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'visible';
-        //document.getElementById("empty_pl").style.visibility = 'hidden';
     }
 }
 
-(function() { // avoid variables ending up in the global scope
+(function() {
     document.getElementById("addNewPlaylist").addEventListener('click', (e) => {
         e.preventDefault();
         let form = e.target.closest("form");
@@ -221,9 +216,11 @@ function showDivs(mp, np, nt){
 
         e.preventDefault();
         if(t_artname !== "" && t_aname !== "" && t_ayear !== "" && t_albumArt > 0) {
+
             document.getElementById("error2").innerText = "";
             show("step2", false);
             show("step3", true);
+
         } else {
             document.getElementById("error2").innerText = "Compile all the fields and upload all the required files to go on";
         }

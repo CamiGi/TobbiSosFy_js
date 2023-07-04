@@ -1,5 +1,6 @@
 {
     var initPlayer = () => {
+
         document.querySelectorAll(".il").forEach(link => {
             link.addEventListener('click', (e) => {
                 e.preventDefault();
@@ -23,7 +24,6 @@
                     case XMLHttpRequest.DONE:
                         if (x.status === 200) {
                             for (let i=0; i<playlistTracks.length; i++) {
-                                console.log(playlistTracks[i].id + " VS " + urlParams.get('track'));
                                 if (playlistTracks[i].id == urlParams.get('track')) {
                                     track = playlistTracks[i];
                                     break;

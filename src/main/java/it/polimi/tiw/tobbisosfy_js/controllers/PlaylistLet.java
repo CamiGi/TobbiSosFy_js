@@ -82,8 +82,6 @@ public class PlaylistLet  extends HttpServlet {
             return;
         }
 
-        System.out.println(ptitle);
-
         if(!(ptitle == null || songs.size() == 0 )  ) {
 
             String playlistTitle = new String(ptitle.getInputStream().readAllBytes(), StandardCharsets.UTF_8);

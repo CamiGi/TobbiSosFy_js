@@ -128,8 +128,8 @@ public class ShowPlaylist extends HttpServlet {
             out.println(e.getMessage());
             return;
         }
-
-        doGet(req, resp);
+        System.out.println("OKKKKKKKKKKKKK");
+        resp.setStatus(HttpServletResponse.SC_OK);
     }
 
     @Override

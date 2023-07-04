@@ -1,6 +1,6 @@
 window.onload = () => {
+
     let register = document.getElementById("register");
-    //register.onclick = show("registration", true);
     register.addEventListener('click',
         (e) => {
             e.preventDefault();
@@ -10,7 +10,7 @@ window.onload = () => {
 };
 
 let back = document.getElementById("backLogin");
-//register.onclick = show("registration", true);
+
 register.addEventListener('click',
     (e) => {
         e.preventDefault();
@@ -18,7 +18,7 @@ register.addEventListener('click',
         show("login", true);
     });
 
-(() => { // avoid variables ending up in the global scope
+(() => {
     document.getElementById("loginButton").addEventListener('click', (e) => {
         let form = e.target.closest("form");
         e.preventDefault();
