@@ -18,21 +18,23 @@
         <form action="#">
             <div class="field">
                 username<br><br>
-                <input type="text" name="username" required="required" placeholder="John Doe">
+                <input class="in" type="text" name="username" required="required" placeholder="John Doe">
             </div>
             <div class="field">
                 password<br><br>
-                <input type="password" name="pwd" required="required" placeholder="Y0ur_pwd">
+                <input class="in" id="pwd" type="password" name="pwd" required="required" placeholder="Y0ur_pwd">
             </div>
+            <br>
+            <input type="checkbox" id="check">Show Password
             <p id="errLog"></p>
             <div class="field">
-                <input id="loginButton" type="submit" value="login">
+                <input class="in" id="loginButton" type="submit" value="login">
             </div>
         </form>
     </div>
     <div class="box2">
         New to TobbiSosFy? Register
-            <a id="register" href="RegistrationPage.html">here</a>!
+            <a id="register" href="index.html">here</a>!
     </div>
 </div>
 
@@ -42,16 +44,16 @@
         <form action="#">
             <div class="field">
                 username<br><br><label>
-                <input type="text" name="nickname" minlength="8" maxlength="20"
+                <input class="in" type="text" name="nickname" maxlength="20"
                        required="required"
-                       title="Must contain at least 8 and at most 20 characters"
+                       title="Must contain at most 20 characters"
                        placeholder="Choose a nickname">
             </label>
             </div>
             <div class="field">
                 password*<br><br><label>
-                <input type="text" name="password" minlength="8" maxlength="20"
-                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])" required="required"
+                <input class="in" type="text" name="password" maxlength="20"
+                       pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required="required"
                        title="Must contain at least one  number, one uppercase
                        and lowercase letter, one special character, at least 8 and
                        at most 20 characters" placeholder="Choose a password">
@@ -59,7 +61,7 @@
             </div>
             <div class="field">
                 confirm password*<br><br><label>
-                <input type="text" name="conf" required="required"
+                <input class="in" type="text" name="conf" required="required"
                        placeholder="Digit your password again">
             </label>
             </div>

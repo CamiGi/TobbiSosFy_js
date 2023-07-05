@@ -13,6 +13,10 @@ window.onload = function() {
             switch(x.readyState){
                 case XMLHttpRequest.DONE:
 
+                    if (x.status !== 200) {
+                        warn(x.status, x.message);
+                        break;
+                    }
                     document.getElementById("myplaylists").style.visibility = 'visible';
                     document.getElementById("newPlaylist").style.visibility = 'hidden';
                     document.getElementById("newTrack").style.visibility = 'hidden';
@@ -32,7 +36,6 @@ window.onload = function() {
                     playlists = ans[0];
                     tracks = tracks["Tracks"];
                     playlists = playlists["Playlists"];
-                    let t = tracks[0];
                     u = ans[2];
                     u_name = u["Us_name"];
                     u_psw = u["Us_psw"];
@@ -110,7 +113,7 @@ window.onload = function() {
                     initPlPage();
                     break;
                 case XMLHttpRequest.UNSENT:
-                    window.reportError("Couldn't send the request, try later");
+                    alert("Couldn't send the request, please try later");
                     break;
                 case XMLHttpRequest.LOADING:
                     document.getElementById("pllysts").innerText = "Home page is loading, please wait...";
@@ -151,8 +154,6 @@ function showDivs(mp, np, nt){
             }
         }
 
-        let username = document.getElementById("username").innerText;
-
         if (form.checkValidity()) {
             if(p_title === '' || ss.length === 0){
                 console.log("ERRORE");
@@ -191,7 +192,6 @@ function showDivs(mp, np, nt){
         playlists = ans[0];
         tracks = tracks["Tracks"];
         playlists = playlists["Playlists"];
-        let t = tracks[0];
         u = ans[2];
         u_name = u["Us_name"];
         u_psw = u["Us_psw"];
@@ -283,7 +283,7 @@ function showDivs(mp, np, nt){
             show("step1", false);
             show("step2", true);
         } else {
-            document.getElementById("error1").innerText = "Compile all the fields and upload all the required files to go on";
+            document.getElementById("error1").innerText = "Compile all the fields and upload all the required files to continue";
         }
     });
 
@@ -302,7 +302,7 @@ function showDivs(mp, np, nt){
             show("step3", true);
 
         } else {
-            document.getElementById("error2").innerText = "Compile all the fields and upload all the required files to go on";
+            document.getElementById("error2").innerText = "Compile all the fields and upload all the required files to continue";
         }
     });
 

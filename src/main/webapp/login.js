@@ -1,24 +1,16 @@
 window.onload = () => {
-
-    let register = document.getElementById("register");
-    register.addEventListener('click',
-        (e) => {
-            e.preventDefault();
-            show("login", false);
-            show("registration", true);
+    document.getElementById("register").addEventListener('click', (e) => {
+        e.preventDefault();
+        show("login", false);
+        show("registration", true);
     });
-};
 
-let back = document.getElementById("backLogin");
-
-register.addEventListener('click',
-    (e) => {
+    document.getElementById("backLogin").addEventListener('click', (e) => {
         e.preventDefault();
         show("registration", false);
         show("login", true);
     });
 
-(() => {
     document.getElementById("loginButton").addEventListener('click', (e) => {
         let form = e.target.closest("form");
         e.preventDefault();
@@ -28,20 +20,20 @@ register.addEventListener('click',
                     if (x.readyState === XMLHttpRequest.DONE) {
                         let message = x.responseText;
                         switch (x.status) {
-                        case 200:
-                            sessionStorage.setItem('username', message);
-                            console.log("Welcome "+sessionStorage.getItem('username'));
-                            window.location.href = 'HomePage.html';
-                            break;
-                        case 400: // bad request
-                            document.getElementById("errLog").textContent = message;
-                            break;
-                        case 401: // unauthorized
-                            document.getElementById("errLog").textContent = message;
-                            break;
-                        case 500: // server error
-                            document.getElementById("errLog").textContent = message;
-                            break;
+                            case 200:
+                                sessionStorage.setItem('username', message);
+                                console.log("Welcome "+sessionStorage.getItem('username'));
+                                window.location.href = 'HomePage.html';
+                                break;
+                            case 400: // bad request
+                                document.getElementById("errLog").textContent = message;
+                                break;
+                            case 401: // unauthorized
+                                document.getElementById("errLog").textContent = message;
+                                break;
+                            case 500: // server error
+                                document.getElementById("errLog").textContent = message;
+                                break;
                         }
                     }
                 }
@@ -51,9 +43,6 @@ register.addEventListener('click',
         }
     });
 
-})();
-
-(() => {
     document.getElementById("regButton").addEventListener('click',
         (e) => {
             e.preventDefault();
@@ -137,4 +126,14 @@ register.addEventListener('click',
                 form.reportValidity();
             }
         });
-})();
+
+    document.getElementById("check").addEventListener('click', (e) => {
+        let x = document.getElementById("pwd");
+        if (x.type === "password") {
+            x.type = "text";
+        } else {
+            x.type = "password";
+        }
+    });
+
+}

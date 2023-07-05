@@ -317,6 +317,11 @@
                     }
                 });
         } else {
+            input = document.getElementById("addTracksToPlaylist");
+
+            if (input !== null) {
+                input.remove();
+            }
             form.innerText = "This playlist already contains all your tracks";
         }
     }

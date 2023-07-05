@@ -36,7 +36,7 @@ h2 {
     padding: 10px;
 }
 
-input {
+input.in {
     background-color: rgb(13, 16, 23);
 
     font-family: "Arial", sans-serif;
@@ -83,7 +83,7 @@ a:link {
 }
 
 a:visited {
-    color: grey;
+    color: deepskyblue;
     text-decoration: none;
 }
 
