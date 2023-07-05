@@ -85,6 +85,8 @@ public class ShowPlaylist extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String[] tracks = req.getParameterValues("tracks");
+        String ctxPath = req.getContextPath();
+        System.out.println(tracks);
         ArrayList<Integer> trIDs;
         PlaylistDAO plfinder = new PlaylistDAO(connection);
         Playlist playlist;
@@ -107,17 +109,21 @@ public class ShowPlaylist extends HttpServlet {
             return;
         }
 
-        if (tracks == null) {
+        trIDs = new ArrayList<>();
+
+        for (String track : tracks) {
+            trIDs.add(Integer.parseInt(track));
+        }
+
+        System.out.println(trIDs);
+
+        if (trIDs.size() == 0) {
             resp.setStatus(HttpServletResponse.SC_LENGTH_REQUIRED);
             out.println("Add at least one song to the playlist");
             return;
         }
-        trIDs = new ArrayList<>();
 
         try {
-            for (String track : tracks) {
-                trIDs.add(Integer.parseInt(track));
-            }
             plfinder.addSongsToPlaylist(playlist, trIDs);
         } catch (NumberFormatException e) {
             resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
@@ -128,7 +134,10 @@ public class ShowPlaylist extends HttpServlet {
             out.println(e.getMessage());
             return;
         }
+
         resp.setStatus(HttpServletResponse.SC_OK);
+        resp.sendRedirect(ctxPath+"/ShowPlaylist?playlist="+playlist.getId());
+        System.out.println("DONE");
     }
 
     @Override

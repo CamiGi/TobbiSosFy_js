@@ -220,6 +220,7 @@
         let label;
         let t;
         let check;
+        let send = false;
         form.replaceChildren();
 
         for (let i = 0; i < tracks.length; i++) {
@@ -238,12 +239,10 @@
                 input = document.createElement("INPUT");
                 input.setAttribute("type", "checkbox");
                 input.setAttribute("name", "tracks");
-                input.setAttribute("id", "tta" + t.id);
                 input.setAttribute("value", t.id);
                 el.appendChild(input);
 
                 label = document.createElement("LABEL");
-                label.setAttribute("for", "tta" + t.id);
                 label.innerText = t.title + " - " + t.album.title + " - " + t.album.genre + " - "
                     + t.album.artist.artistName;
                 label.className = "lalabel";
@@ -267,51 +266,44 @@
             document.getElementById("addTracksToPlaylist").addEventListener('click',
                 (e) => {
                     e.preventDefault();
+                    console.log("HERE 1");
                     let tracks = document.getElementsByName("tracks");
+                    console.log(tracks);
+                    let ss = [];
 
-                    if (tracks.length > 0) {
-                        makeCall("POST", form.parentElement.getAttribute("action"),
-                            form.parentNode, (x) => {
-                                if (x.readyState === XMLHttpRequest.DONE) {
-                                    if (x.status === 200) {
-                                        makeCall("GET", "ShowPlaylist?playlist="+playlist, null,
-                                            (x) => {
+                    for(let i = 0; i < tracks.length; i++){
+                        if(tracks[i].checked){
+                            ss.push(tracks[i]);
+                        }
+                    }
 
-                                                switch (x.readyState) {
-                                                    case XMLHttpRequest.UNSENT:
-                                                        alert("Couldn't send the request, please try later");
-                                                        break;
-                                                    case XMLHttpRequest.LOADING:
-                                                        document.getElementById("tab").textContent = "Playlist loading, please wait...";
-                                                        break;
-                                                    case XMLHttpRequest.DONE:
-                                                        let resp = x.responseText;
-
-                                                        if (x.status === 200) {
-                                                            parseJSON(resp);
-                                                            printButtons();
-                                                            printGroup();
-                                                            printTracksToAdd();
-                                                            show("PlaylistPage", true);
-                                                            go(playlist);
-                                                        }
-                                                        else {//errorpage
-                                                            warn(x.status, x.responseText);
-                                                        }
-                                                }
-                                            }
-                                        );
-                                    }
-                                    else {
-                                        warn("PlaylistPage", x.status, x.responseText);
+                    console.log(ss);
+                    console.log("HERE 2");
+                    if (ss.length > 0) {
+                        send = true;
+                        if(send) {
+                            send = false;
+                            makeCall("POST", form.parentElement.getAttribute("action"),
+                                form.parentNode, (x) => {
+                                    console.log("HERE 3");
+                                    if (x.readyState === XMLHttpRequest.DONE) {
+                                        if (x.status === 200) {
+                                            console.log("HERE 4");
+                                           location.reload();
+                                        } else {
+                                            console.log("HERE 5");
+                                            warn("PlaylistPage", x.status, x.responseText);
+                                        }
                                     }
                                 }
-                            }
-                        );
+                            );
+                        }
                     } else {
+                        console.log("HERE 6");
                         alert("Check at least one track");
                     }
-                });
+                    console.log("HERE 7");
+            });
         } else {
             form.innerText = "This playlist already contains all your tracks";
         }

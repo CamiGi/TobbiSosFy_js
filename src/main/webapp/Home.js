@@ -72,7 +72,7 @@ window.onload = function() {
 
                     //setto la pagina NewTrack
                     let select = document.getElementById("dalbum");
-                    for(let i =2024; i>1899; i--){
+                    for(let i = 2023; i>1899; i--){
                         let h = document.createElement("OPTION");
                         h.innerText = i;
                         h.setAttribute("name", "year");
