@@ -220,8 +220,8 @@
         let label;
         let t;
         let check;
-        form.replaceChildren();
 
+        form.replaceChildren();
         for (let i = 0; i < tracks.length; i++) {
             t = tracks[i];
             check = true;
@@ -254,14 +254,17 @@
         }
 
         if (input !== undefined) {
-            if (document.getElementById("addTracksToPlaylist") === null) {
-                input = document.createElement("input");
-                input.setAttribute("type", "submit");
-                input.setAttribute("id", "addTracksToPlaylist");
-                input.setAttribute("value", "Submit");
-                input.className = "center";
-                form.parentNode.appendChild(input);
+            input = document.getElementById("addTracksToPlaylist");
+
+            if (input !== null) {
+                input.remove();
             }
+            input = document.createElement("input");
+            input.setAttribute("type", "submit");
+            input.setAttribute("id", "addTracksToPlaylist");
+            input.setAttribute("value", "Submit");
+            input.className = "center";
+            form.parentNode.appendChild(input);
             form.parentElement.setAttribute("action", "ShowPlaylist?playlist=" + playlist);
 
             document.getElementById("addTracksToPlaylist").addEventListener('click',
