@@ -269,9 +269,6 @@ function showDivs(mp, np, nt){
         initPlPage();
     }
 
-})();
-
-(() => {
     document.getElementById("2Step2").addEventListener('click', (e) => {
         let form = e.target.closest("form");
         let t_title = form.elements[0].value;
@@ -342,4 +339,5 @@ function showDivs(mp, np, nt){
             );
         }
     });
+
 })();

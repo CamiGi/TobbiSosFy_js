@@ -15,12 +15,12 @@ function go(pid) {
     submit = document.createElement("INPUT");
     document.getElementById("updatePlaylist").style.visibility='hidden';
 
-    if (playlistTracks.length == 0) {
+    if (playlistTracks.length === 0) {
         div = document.createElement("DIV");
-        div.innerText = "Non ci sono canzoni in questa playlist";
+        div.innerText = "There are not tracks in this playlist";
     } else {
 
-        submit.style.zIndex=3;
+        submit.style.zIndex="3";
 
         list.replaceChildren();
 
