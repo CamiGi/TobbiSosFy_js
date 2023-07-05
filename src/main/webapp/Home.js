@@ -165,7 +165,9 @@ function showDivs(mp, np, nt){
                         let message = x.responseText;
                         switch (x.status) {
                             case 200:
-                                location.reload();
+                                parseJSON(message);
+
+                                showDivs(false, true, false);
                                 alert("Playlist added to your collection");
                                 break;
                             default:
@@ -179,6 +181,93 @@ function showDivs(mp, np, nt){
             form.reportValidity();
         }
     });
+
+    let parseJSON = (resp) => {
+        let res = JSON.parse(resp);
+        let ans = res["Answer"];
+
+        //setto i dati
+        tracks = ans[1];
+        playlists = ans[0];
+        tracks = tracks["Tracks"];
+        playlists = playlists["Playlists"];
+        let t = tracks[0];
+        u = ans[2];
+        u_name = u["Us_name"];
+        u_psw = u["Us_psw"];
+
+        //setto lo username, playlists e tracks
+        document.getElementById("username").innerText = u_name;
+
+        //setto la pagina playlist
+        let dl = document.getElementById("pllysts");
+        let anchor;
+        let dt;
+        let dd;
+
+        if(playlists.length === 0){
+            dt = document.createElement("DT");
+            dt.innerText = "You don't have any playlist yet";
+            dl.replaceChildren(dt);
+        } else {
+            dl.replaceChildren();
+
+            for (let i = 0; i < playlists.length; i++) {
+                anchor = document.createElement("A");
+                dt = document.createElement("DT");
+                dt.setAttribute("name", "halo");
+                dd = document.createElement("DD");
+                anchor.setAttribute("id", "p" + i);
+                anchor.className = "ply";
+                anchor.setAttribute("href", "ShowPlaylist?playlist=" + playlists[i].id);
+                anchor.innerHTML = playlists[i].title;
+                dt.appendChild(anchor);
+                dl.appendChild(dt);
+                dd.setAttribute("id", "pdate" + i);
+                dd.innerHTML = playlists[i].date;
+                dl.appendChild(dd);
+            }
+        }
+
+        //setto la pagina NewTrack
+        let select = document.getElementById("dalbum");
+        for(let i = 2023; i>1899; i--){
+            let h = document.createElement("OPTION");
+            h.innerText = i;
+            h.setAttribute("name", "year");
+            select.appendChild(h);
+        }
+
+
+        //setto la pagina NewPlaylist
+        let selection = document.getElementById("selectionSong");
+        let inp;
+        let lab;
+        let li;
+
+        if(tracks.length === 0){
+            selection.innerText = "You don't have any song";
+        } else {
+            selection.replaceChildren();
+            for (let i = 0; i < tracks.length; i++) {
+                li = document.createElement("BR");
+                inp = document.createElement("INPUT");
+                inp.setAttribute("type", "checkbox");
+                inp.setAttribute("name", "song");
+                inp.setAttribute("value", tracks[i].id);
+                lab = document.createElement("LABEL");
+                lab.setAttribute("class", "lalabel");
+                lab.innerText = tracks[i].title + " - " + tracks[i].album.title + " - " + tracks[i].album.genre + " - " + tracks[i].album.artist.artistName;
+
+                selection.appendChild(inp);
+                selection.appendChild(lab);
+                selection.appendChild(li);
+
+            }
+        }
+
+        initPlPage();
+    }
 
 })();
 
@@ -240,7 +329,8 @@ function showDivs(mp, np, nt){
                         let message = x.responseText;
                         switch (x.status) {
                             case 200:
-                                location.reload();
+                                parseJSON(message);
+                                showDivs(false, false, true);
                                 alert("Song added to your collection");
                                 break;
                             default:

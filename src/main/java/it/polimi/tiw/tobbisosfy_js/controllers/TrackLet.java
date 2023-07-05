@@ -252,6 +252,7 @@ public class TrackLet extends HttpServlet {
             return;
         }
         resp.setStatus(HttpServletResponse.SC_OK);
+        resp.sendRedirect(ctxPath+"/Home");
     }
 
     @Override
