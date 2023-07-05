@@ -12,7 +12,7 @@ public class Playlist {
     private final Boolean def;
 
     public Playlist(String title, Date date, User user, Boolean def) {
-        this.title =title.toLowerCase();
+        this.title =title;
         this.date=date;
         this.user = user.getUsername();
         this.def = def;

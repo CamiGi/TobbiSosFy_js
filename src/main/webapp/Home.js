@@ -3,7 +3,6 @@ let playlists;
 let u_name;
 let u;
 let u_psw;
-let no_pl;
 
 window.onload = function() {
 
@@ -13,8 +12,6 @@ window.onload = function() {
         (x) => {
             switch(x.readyState){
                 case XMLHttpRequest.DONE:
-
-                    no_pl = false;
 
                     document.getElementById("myplaylists").style.visibility = 'visible';
                     document.getElementById("newPlaylist").style.visibility = 'hidden';
@@ -50,7 +47,9 @@ window.onload = function() {
                     let dd;
 
                     if(playlists.length === 0){
-                        no_pl = true;
+                        dt = document.createElement("DT");
+                        dt.innerText = "You don't have any playlist yet";
+                        dl.replaceChildren(dt);
                     } else {
                         dl.replaceChildren();
 
@@ -69,11 +68,6 @@ window.onload = function() {
                             dd.innerHTML = playlists[i].date;
                             dl.appendChild(dd);
                         }
-                    }
-                    if(no_pl){
-                        dt = document.createElement("DT");
-                        dt.innerText = "You don't have any playlist yet";
-                        dl.replaceChildren(dt)
                     }
 
                     //setto la pagina NewTrack
@@ -133,9 +127,6 @@ function showDivs(mp, np, nt){
         document.getElementById("myplaylists").style.visibility = 'visible';
         document.getElementById("newPlaylist").style.visibility = 'hidden';
         document.getElementById("newTrack").style.visibility = 'hidden';
-        if(no_pl){
-            document.getElementById("empty_pl").style.visibility = 'visible';
-        }
     } else if(np){
         document.getElementById("myplaylists").style.visibility = 'hidden';
         document.getElementById("newPlaylist").style.visibility = 'visible';

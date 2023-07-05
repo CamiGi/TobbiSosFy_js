@@ -128,7 +128,7 @@
         this.id = id;
         this.title = title;
         this.album = new Album(album["title"], album["year"], album["genre"], album["artist"], album["imgUri"]);
-        this.uri = ctx + "/resources/tracks/" + uri;
+        this.uri = "GetAudioFile?name=" + uri;
         this.user = user;
     }
 
@@ -137,7 +137,7 @@
         this.year = year;
         this.genre = genre;
         this.artist = artist["artistName"];
-        this.image = ctx + "/resources/images/" + image;
+        this.image = "GetImageFile?name=" + image;
     }
 
     var parseJSON = (resp) => {

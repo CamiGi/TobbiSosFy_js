@@ -173,9 +173,9 @@ public class TrackLet extends HttpServlet {
                 return;
             }
 
-            String imgName = Paths.get(img.getSubmittedFileName()).getFileName().toString().replaceAll("\\s","");
+            String imgName = Paths.get(img.getSubmittedFileName()).getFileName().toString();
 
-            String audioName = Paths.get(taudio.getSubmittedFileName()).getFileName().toString().replaceAll("\\s","");
+            String audioName = Paths.get(taudio.getSubmittedFileName()).getFileName().toString();
 
             String imgOutputPath = imgFP + imgName;
 
@@ -252,7 +252,6 @@ public class TrackLet extends HttpServlet {
             return;
         }
         resp.setStatus(HttpServletResponse.SC_OK);
-        resp.sendRedirect(ctxPath+"/Home");
     }
 
     @Override

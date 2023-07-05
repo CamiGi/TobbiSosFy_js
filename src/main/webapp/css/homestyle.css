@@ -455,7 +455,7 @@ td.data {
     transform: translate(-50%, -50%);
 
     background-color: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(2px);
+    backdrop-filter: blur(4px);
 
     border: 1px solid rgb(100, 100, 100);
     border-radius: 32px;
