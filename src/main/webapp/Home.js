@@ -329,6 +329,8 @@ function showDivs(mp, np, nt){
                                 parseHome(message);
                                 showDivs(false, false, true);
                                 alert("Song added to your collection");
+                                show("step3", false);
+                                show("step1", true);
                                 break;
                             default:
                                 warn(x.status, x.responseText);

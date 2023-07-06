@@ -48,7 +48,7 @@ public class PlaylistDAO {
             ps.setString(2,playlist.getTitle());
             ps.setDate(3,playlist.getDate());
             ps.setString(4,playlist.getUser());
-            ps.setInt(5,0);
+            ps.setInt(5,1);
             code = ps.executeUpdate();
         } else {
             throw new Exception("ATTENZIONE qualcosa non è andato bene: 500");
