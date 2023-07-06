@@ -46,15 +46,21 @@
             })
         });
 
-        document.getElementById("goHome").addEventListener('click', () => {
-            show("PlayerPage", false);
-            show("HomePage", true);
-        });
+        document.getElementById("goHome").addEventListener('click',
+            (e) => {
+                e.preventDefault();
+                document.body.style.removeProperty("background-image");
+                show("PlayerPage", false);
+                show("HomePage", true);
+            });
 
-        document.getElementById("backPlaylist").addEventListener('click', () => {
-            show("PlayerPage", false);
-            show("PlaylistPage", true);
-        });
+        document.getElementById("backPlaylist").addEventListener('click',
+            (e) => {
+                e.preventDefault();
+                document.body.style.removeProperty("background-image");
+                show("PlayerPage", false);
+                show("PlaylistPage", true);
+            });
     }
 
     function printInfo(track) {

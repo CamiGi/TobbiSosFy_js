@@ -3,6 +3,7 @@
     let group;
     let playlist;
     let ctx;
+    let initialized = false;
 
     var initPlPage = () => {
         document.querySelectorAll('.ply').forEach(link => {
@@ -48,80 +49,68 @@
             })
         });
 
-        document.getElementById("prevButton").addEventListener('click',
-            (e) => {
-                e.preventDefault();
+        if (!initialized) {
+            document.getElementById("prevButton").addEventListener('click',
+                (e) => {
+                    e.preventDefault();
 
-                if(group > 0) {
-                    group -= 5;
-                }
-                printButtons();
-                printGroup();
-            });
+                    if (group > 0) {
+                        group -= 5;
+                    }
+                    printButtons();
+                    printGroup();
+                });
 
-        document.getElementById("nextButton").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                group += 5;
-                printButtons();
-                printGroup();
-            });
+            document.getElementById("nextButton").addEventListener('click',
+                (e) => {
+                    e.preventDefault();
+                    group += 5;
+                    printButtons();
+                    printGroup();
+                });
 
-        document.getElementById("backPlaylist").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                document.body.style.removeProperty("background-image");
-                show("PlayerPage", false);
-                show("PlaylistPage", true);
-            });
+            document.getElementById("backHome").addEventListener('click',
+                (e) => {
+                    e.preventDefault();
+                    show("PlaylistPage", false);
+                    show("HomePage", true);
+                });
 
-        document.getElementById("backHome").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                show("PlaylistPage", false);
-                show("HomePage", true);
-            });
+            document.getElementById("showForm").addEventListener('click',
+                (e) => {
+                    e.preventDefault();
+                    show("trks", false);
+                    show("order", false);
+                    e.target.className = "activeTab";
+                    show("frm", true);
+                    document.getElementById("showTab").className = "backgroundTab";
+                    document.getElementById("showMod").className = "backgroundTab";
+                });
 
-        document.getElementById("goHome").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                document.body.style.removeProperty("background-image");
-                show("PlayerPage", false);
-                show("HomePage", true);
-            });
+            document.getElementById("showTab").addEventListener('click',
+                (e) => {
+                    e.preventDefault();
+                    show("frm", false);
+                    show("order", false);
+                    e.target.className = "activeTab";
+                    show("trks", true);
+                    document.getElementById("showForm").className = "backgroundTab";
+                    document.getElementById("showMod").className = "backgroundTab";
+                });
 
-        document.getElementById("showForm").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                show("trks", false);
-                show("order", false);
-                e.target.className = "activeTab";
-                show("frm", true);
-                document.getElementById("showTab").className = "backgroundTab";
-                document.getElementById("showMod").className = "backgroundTab";
-            });
+            document.getElementById("showMod").addEventListener('click',
+                (e) => {
+                    e.preventDefault();
+                    show("frm", false);
+                    show("trks", false);
+                    e.target.className = "activeTab";
+                    show("order", true);
+                    document.getElementById("showForm").className = "backgroundTab";
+                    document.getElementById("showTab").className = "backgroundTab";
+                });
 
-        document.getElementById("showTab").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                show("frm", false);
-                show("order", false);
-                e.target.className = "activeTab";
-                show("trks", true);
-                document.getElementById("showForm").className = "backgroundTab";
-                document.getElementById("showMod").className = "backgroundTab";
-            });
-
-        document.getElementById("showMod").addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                show("frm", false);
-                show("trks", false);
-                e.target.className = "activeTab";
-                show("order", true);
-                document.getElementById("showForm").className = "backgroundTab";
-                document.getElementById("showTab").className = "backgroundTab";
-            });
+            initialized = true;
+        }
     };
 
     function Track (id, title, album, uri, user) {
@@ -191,6 +180,7 @@
                 image = document.createElement("IMG");
                 image.setAttribute("src", track.album.image);
                 image.setAttribute("alt", "Album art");
+                image.className = "smallImg";
                 data.appendChild(image);
 
                 anchor = document.createElement("A");
