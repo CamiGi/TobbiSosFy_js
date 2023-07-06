@@ -166,7 +166,7 @@ function showDivs(mp, np, nt){
                         let message = x.responseText;
                         switch (x.status) {
                             case 200:
-                                parseJSON(message);
+                                parseHome(message);
 
                                 showDivs(false, true, false);
                                 alert("Playlist added to your collection");
@@ -183,7 +183,7 @@ function showDivs(mp, np, nt){
         }
     });
 
-    let parseJSON = (resp) => {
+    let parseHome = (resp) => {
         let res = JSON.parse(resp);
         let ans = res["Answer"];
 
@@ -326,7 +326,7 @@ function showDivs(mp, np, nt){
                         let message = x.responseText;
                         switch (x.status) {
                             case 200:
-                                parseJSON(message);
+                                parseHome(message);
                                 showDivs(false, false, true);
                                 alert("Song added to your collection");
                                 break;

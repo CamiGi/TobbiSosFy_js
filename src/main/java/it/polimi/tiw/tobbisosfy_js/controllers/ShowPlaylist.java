@@ -137,7 +137,6 @@ public class ShowPlaylist extends HttpServlet {
 
         resp.setStatus(HttpServletResponse.SC_OK);
         resp.sendRedirect(ctxPath+"/ShowPlaylist?playlist="+playlist.getId());
-        System.out.println("DONE");
     }
 
     @Override
